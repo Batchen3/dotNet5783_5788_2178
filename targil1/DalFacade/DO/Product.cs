@@ -1,22 +1,28 @@
-﻿using System.Diagnostics;
-using System.Xml.Linq;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace DO;
-
-public struct Product
+namespace Do
 {
-    public int productId { get; set; }
-    public string productName { get; set; }
-    public enumCategory productCategory { get; set; }
-    public double productPrice { get; set; }
-    public int productAmountInStock { get; set; }
+    public struct Product
+    {
 
-    public override string ToString() => $@"
-       Product ID: {productId},
-       Product name: {productName}, 
-       category: {productCategory},
-       Price: {productPrice},
-       Amount in stock: {productAmountInStock}";
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public Category Category { get; set; }//enum category
+        public int InStock { get; set; }
+        public int Parve { get; set; }
 
+        public override string ToString() => $@"
+            Product ID:{ID}: 
+            Name:{Name}:, 
+            category:{Category},
+    	    Price: {Price},
+    	     Amount in stock: {InStock}
+            ";
 
+    }
 }

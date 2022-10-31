@@ -1,8 +1,15 @@
-﻿namespace DO;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-public enum enumCategory
+namespace Do
 {
-    cats , dogs , fish , snakes
+    public enum Category
+    {
+        cups,//כוסות.
+        cakes,//עוגות
+        cookies//עוגיות
+    }
 }
-
-

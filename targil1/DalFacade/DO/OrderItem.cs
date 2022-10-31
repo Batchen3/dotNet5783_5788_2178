@@ -1,21 +1,26 @@
-﻿using System.Diagnostics;
-using System.Xml.Linq;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace DO;
+namespace Do
 
-public struct OrderItem
 {
-    public int orderItemId { get; set; }
-    public int orderId { get; set; }
-    public int itemId { get; set; }
+    public struct OrderItem
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int OrderID { get; set; }
+        public double Price { get; set; }
+        public int Amount { get; set; }
 
-    public double priceForUnit { get; set; }
-    public int amount { get; set; }
+        public override string ToString() => $@"
+            Product ID:{ProductID}, 
+             Order ID :{OrderID}
+    	     Price: {Price}
+    	     Amount in order: {Amount}
+            ";
 
-    public override string ToString() => $@"
-       OrderItem ID: {orderItemId},
-       Order ID: {orderId}, 
-       Item ID: {itemId},
-       Price For Unit: {priceForUnit},
-       Amount: {amount}";
+    }
 }

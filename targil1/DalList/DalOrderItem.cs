@@ -4,7 +4,6 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-using DO;
 using System;
 using static Dal.DataSource;
 
@@ -12,116 +11,96 @@ namespace Dal;
 
 public class DalOrderItem
 {
-
-
-    public int create(DO.OrderItem orderItem)
+    public int create(Do.OrderItem oi)
     {
-        orderItem.orderItemId = config.OrderItemId;
-        if (config.curentIndexOrderItem == arrayOrderItem.Length-1)
-            throw new Exception("array is full");
-        arrayOrderItem[config.curentIndexOrderItem++] = orderItem;
-            return orderItem.orderId;
-    }
-
-    public DO.OrderItem read(int orderItemId)
+        oi.ID = Config.IdOrderItem;
+        if (Config.moneOrderItem > arrayOrderItem.Length)
+            throw new Exception("the orderItems array is full");
+        else
+            arrayOrderItem[Config.moneOrderItem++] = oi;
+        return oi.ID;
+    }//create order item
+    public Do.OrderItem read(int id)
     {
-        for (int i = 0; i < config.curentIndexOrderItem; i++)
+        for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].orderItemId == orderItemId)
+            if (arrayOrderItem[i].ID == id)
                 return arrayOrderItem[i];
         }
-        throw new Exception("orderItem not found");
-    }
-
-    public void delete(int orderItemId)
+        throw new Exception("the orderItem not found");
+    }//read order item
+    public Do.OrderItem readByOrderAndProduct(int idOrder, int idProduct)
     {
-        for (int i = 0; i < config.curentIndexOrderItem ; i++)
+        for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].orderItemId == orderItemId)
-                arrayOrderItem[i]= arrayOrderItem[config.curentIndexOrderItem--];
-        }
-    }
-
-    public  void update(DO.OrderItem orderItem)
-    {
-        bool found=false;
-        int i;
-        for (i = 0; i < config.curentIndexOrderItem&&found==false; i++)
-        {
-            if (arrayOrderItem[i].orderItemId == orderItem.orderItemId)
-            { 
-                arrayOrderItem[i] = orderItem;
-                found=true; 
-            }
-        }
-        if (i ==config.curentIndexOrderItem)
-            throw new Exception("orderItem not found");
-    }
-    public DO.OrderItem[] readAll()
-    {
-        DO.OrderItem[] allOrderItems = new DO.OrderItem[config.curentIndexOrderItem];
-        for (int i = 0; i < config.curentIndexProduct; i++)
-        {
-            allOrderItems[i] = arrayOrderItem[i];
-        }
-        return allOrderItems;
-    }
-
-
-    //function to  read all the orderProducts in specific order
-    public int[] ReadAllProductInOrder(int orderId)
-    {
-        try
-        {
-         read(orderId);
-        }
-        catch (Exception)
-        {
-
-            throw new Exception("there isnt such a order");
-        }
-         int[] _arrOrderProductsToReturn = new int[config.OrderItemId];
-        for (int i = 0, j = 0; i < config.OrderItemId; i++)
-        {
-            if (arrayOrderItem[i].orderId == orderId)
-            {
-                _arrOrderProductsToReturn[j++] = arrayOrderItem[i].orderItemId;
-            }
-
-        }
-        return _arrOrderProductsToReturn;
-    }
-
-    //function to read order product by order id and  product id
-    public DO.OrderItem ProductItemByOrderIDProductID(int orderId, int productId)
-    {
-        try
-        {
-           read(orderId);
-        }
-        catch (Exception)
-        {
-
-            throw new Exception("there isnt such an order");
-        }
-        try
-        {
-          read(productId);
-        }
-        catch (Exception)
-        {
-
-            throw new Exception("there isnt such a product");
-        }
-        for (int i = 0; i < config.OrderItemId; i++)
-        {
-            if (arrayOrderItem[i].orderId == orderId && arrayOrderItem[i].itemId == productId)
-            {
+            if (arrayOrderItem[i].OrderID == idOrder && arrayOrderItem[i].ProductID == idProduct)
                 return arrayOrderItem[i];
+        }
+        throw new Exception("the orderItem not found");
+    }//read order item by order id and product id
+    public Do.OrderItem[] readByOrder(int idOrder)
+    {
+        Do.OrderItem[] arr = new Do.OrderItem[Config.moneOrderItem];
+        int counter = 0;
+        for (int i = 0; i < Config.moneOrderItem; i++)
+        {
+            if (arrayOrderItem[i].OrderID == idOrder)
+            {
+                arr[counter] = arrayOrderItem[i];
+                counter++;
+            }
+        }
+        return arr;
+    }//read by order id
+    public Do.OrderItem[] readAll()
+    {
+        Do.OrderItem[] tmpOrderItem = new Do.OrderItem[Config.moneOrderItem];
+        for (int i = 0; i < Config.moneOrderItem; i++)
+        {
+            tmpOrderItem[i] = arrayOrderItem[i];
+        }
+        return tmpOrderItem;
+    }//read all order item
+    public void update(Do.OrderItem oi)
+    {
+        int j;
+        bool isExist = false;
+        for (j = 0; j < Config.moneOrderItem && !isExist; j++)
+        {
+            if (arrayOrderItem[j].ID == oi.ID)
+                isExist = true;
+
+        }
+        if (!isExist)
+            throw new Exception("this order item is not exist");
+        for (int i = 0; i < Config.moneOrderItem; i++)
+        {
+            if (arrayOrderItem[i].ID == oi.ID)
+                arrayOrderItem[i] = oi;
+        }
+    }//update the order item
+    public void delete(int id)
+    {
+        int j;
+        bool isExist = false;
+        for (j = 0; j < Config.moneOrderItem && !isExist; j++)
+        {
+            if (arrayOrderItem[j].ID == id)
+                isExist = true;
+
+        }
+        if (!isExist)
+            throw new Exception("this order item is not exist");
+        for (int i = 0; i < Config.moneOrderItem; i++)
+        {
+            if (arrayOrderItem[i].ID == id)
+            {
+                if (i == Config.moneOrderItem)
+                    Config.moneOrderItem--;
+                else
+                    arrayOrderItem[i] = arrayOrderItem[Config.moneOrderItem--];
             }
 
         }
-        throw new Exception("item product wasnt found");
-
-    }
+    }//delete order item by id
 }

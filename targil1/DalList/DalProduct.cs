@@ -4,68 +4,88 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
+using Do;
 using System;
+namespace Dal;
 using static Dal.DataSource;
 
-namespace Dal;
+
 
 public class DalProduct
 {
-    public int create(DO.Product product)
+    public int create(Product p)
     {
-        if (config.curentIndexProduct == arrayProduct.Length - 1)
-            throw new Exception("array is full");
-        for (int i = 0; i < config.curentIndexProduct; i++)
+        if (Config.moneProduct == arrayProduct.Length - 1)
+            throw new Exception("the products array is full");
+        else
         {
-            if (arrayProduct[i].productId == product.productId)
-                throw new Exception("productId already exists");
+            for (int j = 0; j < Config.moneProduct; j++)
+            {
+                if (arrayOrder[j].ID == p.ID)
+                    throw new Exception("the product is alredy exist");
+            }
+            arrayProduct[Config.moneProduct++] = p;
         }
-        arrayProduct[config.curentIndexProduct++] = product;
-            return product.productId;
-        
-    }
-
-    public DO.Product read(int productId)
+        return p.ID;
+    }//add product to arr
+    public Product read(int id)
     {
-        for (int i = 0; i < config.curentIndexProduct; i++)
+        for (int i = 0; i < Config.moneProduct; i++)
         {
-            if (arrayProduct[i].productId == productId)
+            if (arrayProduct[i].ID == id)
                 return arrayProduct[i];
         }
-        throw new Exception("Product not found");
-    }
+        throw new Exception("the product not found");
+    }//read the product according id
 
-    public void delete(int productId)
+    public Product[] readAll()
     {
-        for (int i = 0; i < config.curentIndexProduct; i++)
+        Product[] tmpProducts = new Product[Config.moneProduct];
+        for (int i = 0; i < Config.moneProduct; i++)
         {
-            if (arrayProduct[i].productId == productId)
-                arrayProduct[i] = arrayProduct[config.curentIndexProduct--];
+            tmpProducts[i] = arrayProduct[i];
         }
-    }
-    public void update(DO.Product product)
+        return tmpProducts;
+    }//read all products
+    public void update(Do.Product p)
     {
-        bool found = false;
-        int i;
-        for (i = 0; i < config.curentIndexProduct && found == false; i++)
+        int j;
+        bool isExist = false;
+        for (j = 0; j < Config.moneProduct && !isExist; j++)
         {
-            if (arrayProduct[i].productId == product.productId)
+            if (arrayProduct[j].ID == p.ID)
+                isExist = true;
+        }
+        if (!isExist)
+            throw new Exception("this product is not exist");
+        for (int i = 0; i < Config.moneProduct; i++)
+        {
+            if (arrayProduct[i].ID == p.ID)
+                arrayProduct[i] = p;
+        }
+    }//update a product 
+    public void delete(int id)
+    {
+        int j;
+        bool isExist = false;
+        for (j = 0; j < Config.moneProduct && !isExist; j++)
+        {
+            if (arrayProduct[j].ID == id)
+                isExist = true;
+        }
+        if (!isExist)
+            throw new Exception("this product is not exist");
+        for (int i = 0; i < Config.moneProduct; i++)
+        {
+            if (arrayProduct[i].ID == id)
             {
-                arrayProduct[i] = product;
-                found = true;
+                if (i == Config.moneProduct)
+                    Config.moneProduct--;
+                else
+                    arrayProduct[i] = arrayProduct[Config.moneProduct--];
             }
-        }
-        if (i == config.curentIndexProduct)
-            throw new Exception("product not found");
-    }
 
-    public DO.Product[] readAll()
-    {
-        DO.Product[] allProducts = new DO.Product[config.curentIndexProduct];
-        for (int i = 0; i < config.curentIndexProduct; i++)
-        {
-            allProducts[i] =arrayProduct[i];
         }
-            return allProducts;
-    }
+    }//delete a product according id
+
 }

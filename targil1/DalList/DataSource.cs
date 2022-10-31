@@ -1,5 +1,12 @@
-﻿using System;
-using System.Net;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+
+
+
+using System;
 
 namespace Dal;
 
@@ -7,144 +14,194 @@ static internal class DataSource
 {
     static DataSource()
     {
-        s_Initialize();
+        s_initialize();
     }
-    const int SIZE_ARRAY_ORDER = 100;
-    const int SIZE_ARRAY_ORDERITEM = 200;
-    const int SIZE_ARRAY_PRODUCT = 50;
-    static int curentIndexOrder = 0;
-    static int curentIndexOrderItem = 0;
-    static int curentIndexProduct = 0;
-    readonly static Random random = new Random();
-    static internal DO.Order[] arrayOrder = new DO.Order[SIZE_ARRAY_ORDER];
-    private static void addOrder(DO.Order order)
-    {
-        arrayOrder[config.curentIndexOrder++] = order;
-    }
-    static internal DO.OrderItem[] arrayOrderItem = new DO.OrderItem[SIZE_ARRAY_ORDERITEM];
-    private static void addOrderItem(DO.OrderItem orderItem)
-    {
-        arrayOrderItem[config.curentIndexOrderItem++] = orderItem;
-    }
-    static internal DO.Product[] arrayProduct = new DO.Product[SIZE_ARRAY_PRODUCT];
-    private static void addProduct(DO.Product product)
-    {
-        arrayProduct[config.curentIndexProduct++] = product;
-    }
-    private static void s_Initialize()
-    {
-        int daysForSending, daysForDeliver;
-        (DO.enumCategory productCategory, string productName)[] animals = new[] { 
-            (DO.enumCategory.dogs, "Sausage Dog"), 
-            (DO.enumCategory.cats,"Ragdoll Cat"),
-            (DO.enumCategory.fish, "Gold Fish"),  
-            (DO.enumCategory.snakes,"Corn Snake"), 
-            (DO.enumCategory.snakes,"Milk Snake"), 
-            (DO.enumCategory.dogs,"Germans Shepherd Dog"), 
-            (DO.enumCategory.fish,"angelfish"), 
-            (DO.enumCategory.snakes,"Garter Snake"),
-            (DO.enumCategory.dogs,"Labrador Retriever Dog"), 
-            (DO.enumCategory.dogs,"Poodle Dog")};
 
-        for (int i = 0; i < 10; i++)
+    static readonly Random rand = new Random();
+    const int NUMPRODUCTS = 50;
+    static internal Do.Product[] arrayProduct = new Do.Product[NUMPRODUCTS];
+    const int NUMORDERS = 100;
+    static internal Do.Order[] arrayOrder = new Do.Order[NUMORDERS];
+    const int NUMORDERITEM = 200;
+    static internal Do.OrderItem[] arrayOrderItem = new Do.OrderItem[NUMORDERITEM];
+    private static void addProduct(Do.Product p)
+    {
+        if (Config.moneProduct > arrayProduct.Length)
+            Console.WriteLine("arrayProduct is full");
+        else
         {
-            DO.Product product = new DO.Product();
-            int randomProductId = config.ProductId;
-            for (int j = 0; j < arrayProduct.Length; j++)
+            arrayProduct[Config.moneProduct] = p;
+            Config.moneProduct++;
+        }
+    }
+    private static void addOrder(Do.Order o)
+    {
+        if (Config.moneOrder > arrayOrder.Length)
+            Console.WriteLine("arrayOrder is full");
+        else
+        {
+            arrayOrder[Config.moneOrder] = o;
+            Config.moneOrder++;
+        }
+    }
+    private static void addOrderItem(Do.OrderItem oi)
+    {
+        if (Config.moneOrderItem > arrayOrderItem.Length)
+            System.Console.WriteLine("arrayOrderItem is full");
+        else
+        {
+            arrayOrderItem[Config.moneOrderItem] = oi;
+            Config.moneOrderItem++;
+        }
+    }
+
+
+    private static void s_initialize()
+    {
+        int index, daysShip, daysDelivery, id;
+        (string, Do.Category)[] tInfoOfProduct = new[] {("mousse",Do.Category.cups),
+          ("chocolate_balls",Do.Category.cups),
+          ("Cheesecake",Do.Category.cakes),
+          ("kurason",Do.Category.cookies),
+          ("rogalach",Do.Category.cookies),
+          ("makaroon",Do.Category.cookies),
+          ("alfachores",Do.Category.cookies),
+          ("mousse_cake",Do.Category.cakes),
+          ("oreo_cups",Do.Category.cups),
+          ("lotus_cups",Do.Category.cups)};
+
+
+        for (int i = 0; i < tInfoOfProduct.Length; i++)
+        {
+            Do.Product p = new Do.Product();
+            index = (int)rand.NextInt64(10);
+            id = (int)rand.NextInt64(100000, 999999);
+            bool flag = false;//checks if there are two equal ids
+            bool flag2 = true;
+            while (!flag)
             {
-                if (randomProductId == arrayProduct[j].productId)
+                for (int j = 0; j < Config.moneProduct && flag2; j++)
                 {
-                    randomProductId = config.ProductId;
-                    j = 0;
+                    if (arrayOrder[j].ID == p.ID)
+                        flag2 = false;
+                }
+                if (!flag2)
+                    id = (int)rand.NextInt64(100000, 999999);
+                else
+                {
+                    flag = true;
                 }
             }
-            product.productId= randomProductId;
-            product.productName = animals[i].productName;
-            product.productCategory = animals[i].productCategory;
-            product.productPrice = random.NextDouble();
-            product.productAmountInStock = (int)random.NextInt64(0,20);
-            addProduct(product);
-        }
-        (string clientName, string clientEmail, string addressForDelivery)[] orders = new[] {
-            ("Tamar Boyer", "Tamar3758@gmail.com","Uziel 78"),
-            ("Rachel Cohen", "Rachel1234@gmail.com","Argov 8"),
-            ("Ruty Elyiach", "Ruty4567@gmail.com","David Meretz 72"),
-            ("Batya Shapira", "Batya8520@gmail.com","Agasi 1"),
-            ("Chana Rotenberg", "Chana7542@gmail.com","Hapisga 29"),
-            ("Michal Levy", "Michal8888@gmail.com","Casuto 2"),
-            ("Yudit Shub", "Yudit7832@gmail.com","Rashi 111"),
-            ("Tzipi Chevroni", "Tzipi2222@gmail.com","Lilach 87"),
-            ("Shira Rozenthal", "Shira8543@gmail.com","Kadish Looz 3"),
-            ("Esther Ebert", "Esther7544@gmail.com","Bayit Vegan 75"),
-            ("Leah Yudlov", "Leah5632@gmail.com","Elyashiv 19"),
-            ("Chaya Rosenberg", "Chaya1111@gmail.com","Moshe Zilberg 15"),
-            ("Shani Zeevi", "Shani1254@gmail.com","Mutzafi 79"),
-            ("Hadassah Teib", "Hadassah4566@gmail.com","Broyer 84"),
-            ("Orit Reiter", "Orit7520@gmail.com","Mintz 44"),
-            ("Dasi Feld", "Dasi7899@gmail.com","sulam Yaacov 6"),
-            ("Shifra Fisher", "Shifra4500@gmail.com","Zolti 96"),
-            ("Tzvi Madmon", "Tzvi3333@gmail.com","Fatal 82"),
-            ("Yaacov Goldsmidth", "Yaacov5566@gmail.com","Brand 102"),
-            ("Yitzchak Omesi", "Yitzchak1010@gmail.com","Druk 73"),};
-
-        for (int i = 0; i < 20; i++)
-        {
-            daysForSending = (int)random.NextInt64(2, 3);
-            daysForDeliver = (int)random.NextInt64(4, 12);
-            DO.Order order = new DO.Order();
-            order.orderId = config.OrderId;
-            order.clientName = orders[i].clientName;
-            order.clientEmail = orders[i].clientEmail;
-            order.addressForDelivery = orders[i].addressForDelivery;
-            order.dateOrdered = DateTime.MinValue;
-            TimeSpan tdaysForSending = new TimeSpan(daysForSending, 0, 0, 0);
-            order.dateSent = order.dateOrdered.Add(tdaysForSending);
-            TimeSpan tdaysForDeliver = new TimeSpan(daysForDeliver, 0, 0, 0);
-            order.dateDelivered = order.dateSent.Add(tdaysForDeliver);
-            addOrder(order);
-        }
-   
-        for (int i = 0; i < 10; i++)
-        {
-            int randomOrder = (int)random.NextInt64(0, curentIndexOrder);
-            int randomProduct = (int)random.NextInt64(0, curentIndexProduct);
-            int randomAmount = (int)random.NextInt64(1, 10);
-            DO.OrderItem orderItem = new DO.OrderItem();
-            orderItem.orderItemId = config.OrderItemId;
-            orderItem.orderId = arrayOrder[randomOrder].orderId;
-            orderItem.itemId = arrayProduct[randomProduct].productId;
-            orderItem.priceForUnit = arrayProduct[randomProduct].productPrice;
-            orderItem.amount = randomAmount;
-            addOrderItem(orderItem);
+            p.ID = id;
+            p.Name = tInfoOfProduct[index].Item1;
+            p.Price = ((double)rand.NextDouble() + 0.05) * 100;
+            p.Category = tInfoOfProduct[index].Item2;
+            p.InStock = (int)rand.NextInt64(10, 100);
+            p.Parve = (int)rand.NextInt64(1);
+            addProduct(p);
         }
 
+        (string, string, string)[] tInfoOfOrder = new[] {("ayala_miler","ayala@gmail.com","rashi_4"),
+            ("yael_choen","yael@gmail.com","moshe_raz_9"),
+           ("miri_levi","miri@gmail.com","brand_3"),
+           ("shira_hever","shira_hever@gmail.com","hapisga_8"),
+          ("leha_kaz","leha_kaz@gmail.com","mozafi_9"),
+          ("chaya_tov","chaya@gmail.com","eliashiv_55"),
+          ("shani_tyb","shani_tyb@gmail.com","mintz_43"),
+          ("orit_raiter","orit_raiter@gmail.com","sulam_taakov_2"),
+          ("hadasa_zehavi","hadasa_zehavi@gmail.com","yigal_9"),
+           ("david_fisher","david_fisher@gmail.com","tlalim_4"),
+        ("yedidia_madmon","yedidia_madmon@gmail.com","revivim_34"),
+            ("yaakov_omesi","yaakov_omesi@gmail.com","hadaf_hayomi_7"),
+           ("batya_boier","batya_boier@gmail.com","fatal_6"),
+           ("miriam_erlanger","miriam_erlanger@gmail.com","druk_5"),
+          ("efrat_yelin","efrat_yelin@gmail.com","chavakuk_3"),
+          ("tamar_bloyi","tamar_bloyi@gmail.com","yirmiyahoo_11"),
+          ("shirel_bashari","shirel_bashari@gmail.com","king_david_1"),
+          ("menachem_gros","menachem_gros@gmail.com","zolti_40"),
+          ("shifra_levi","shifra_levi@gmail.com","rozental_88"),
+           ("tzvi_hevert","tzvi_hevert@gmail.com","chahaneman_78")};
+
+        for (int i = 0; i < tInfoOfOrder.Length; i++)
+        {
+            Do.Order o = new Do.Order();
+            index = (int)rand.NextInt64(10);
+            daysShip = (int)rand.NextInt64(1, 3);
+            daysDelivery = (int)rand.NextInt64(3, 7);
+            o.ID = Config.IdOrder;
+            o.CustomerName = tInfoOfOrder[index].Item1;
+            o.CustomerEmail = tInfoOfOrder[index].Item2;
+            o.CustomerAddress = tInfoOfOrder[index].Item3;
+            o.OrderDate = DateTime.Now;
+            if (i < tInfoOfOrder.Length * 0.2)//20% with just order date
+            {
+                o.ShipDate = DateTime.MinValue;
+                o.Delivery = DateTime.MinValue;
+            }
+            else
+            {
+                TimeSpan tDaysShip = new TimeSpan(daysShip, 0, 0, 0);
+                o.ShipDate = o.OrderDate.Add(tDaysShip);
+                if (i < tInfoOfOrder.Length * 0.2 + (tInfoOfOrder.Length * 0.8 * 0.6))//60% of 80% with order, ship and delivery dates.
+                {
+                    TimeSpan tDaysDelivery = new TimeSpan(daysDelivery, 0, 0, 0);
+                    o.Delivery = o.OrderDate.Add(tDaysDelivery);
+                }
+                else
+                    o.Delivery = DateTime.MinValue;//the other with just order and ship dates.
+            }
+            addOrder(o);
+        }
+
+        for (int i = 0; i < 20; i++)//doing item to evrey order.
+        {
+            Do.OrderItem oi = new Do.OrderItem();
+            index = (int)rand.NextInt64(10);
+            oi.ID = Config.IdOrderItem;
+            oi.ProductID = arrayProduct[index].ID;
+            oi.OrderID = arrayOrder[i].ID;
+            oi.Price = arrayProduct[index].Price;
+            oi.Amount = (int)rand.NextInt64(30);
+            addOrderItem(oi);
+        }
+        int counter = 0;
+        for (int i = 20; i < 40; i++)//adding items to order not more than 3 items
+        {
+            Do.OrderItem oi = new Do.OrderItem();
+            index = (int)rand.NextInt64(1, 4);
+            for (int j = 0; j < index; j++)
+            {
+                oi.OrderID = arrayOrder[counter].ID;
+                int iProduct = (int)rand.NextInt64(Config.moneProduct);
+                oi.ID = Config.IdOrderItem;
+                oi.ProductID = arrayProduct[iProduct].ID;
+                oi.Price = arrayProduct[iProduct].Price;
+                oi.Amount = (int)rand.NextInt64(30);
+                addOrderItem(oi);
+            }
+            i = +index;
+            counter++;
+        }
     }
 
-    static internal class config 
+    static internal class Config
     {
-       internal static int curentIndexOrder = 0;
-       internal static int curentIndexOrderItem = 0;
-       internal static int curentIndexProduct = 0;
-       static private int productId = (int) random.NextInt64(100000, 1000000);
-       static public int ProductId
-        {
-            get { return productId= (int)random.NextInt64(100000, 1000000);  }
-     
-        }
-        static private int orderId = 0;
-        
-        static public int OrderId
-        {
-            get { return orderId++; }
-        }
-        static private int orderItemId = 0;
-        static public int OrderItemId
-        {
-            get { return orderItemId++; }
+        internal static int moneProduct = 0;
+        internal static int moneOrder = 0;
+        internal static int moneOrderItem = 0;
 
+        private static int idOrder = 88417;
+        static public int IdOrder
+        {
+            get { return idOrder++; }
         }
 
-
+        private static int idOrderItem = 5223122;
+        static public int IdOrderItem
+        {
+            get { return idOrderItem++; }
+        }
     }
+
 
 }

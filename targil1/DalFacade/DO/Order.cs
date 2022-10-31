@@ -1,33 +1,30 @@
-﻿namespace DO;
-//nnn
-public struct Order
-{
-    public int orderId { get; set; }
-    public string clientName { get; set; }
-    public string clientEmail { get; set; }
-    public string addressForDelivery { get; set; }
-    public DateTime dateOrdered { get; set; }
-    public DateTime dateSent { get; set; }
-    public DateTime dateDelivered { get; set; }
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-    public override string ToString() => $@"
-       Order ID: {orderId},
-       Client Name: {clientName},
-       Client Email: {clientEmail},
-       Address For Delivery: {addressForDelivery},
-       Date Ordered: {dateOrdered},
-       Date Sent: {dateSent},
-       Date Delivered: {dateDelivered}";
-    // זאת גרסה ישנה לעומת הקודמת
-    //public override string ToString()
-    //{
-    //    return $@"
-    //   Order ID: {orderId},
-    //   Client Name: {clientName},
-    //   Client Email: {clientEmail},
-    //   Address For Delivery: {addressForDelivery},
-    //   Date Ordered: {dateOrdered},
-    //   Date Sent: {dateSent},
-    //   Date Delivered: {dateDelivered}";
-    //}
+namespace Do
+{
+    public struct Order
+    {
+        public int ID { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerAddress { get; set; }
+        public System.DateTime OrderDate { get; set; }
+        public System.DateTime ShipDate { get; set; }//נמסר למשלוחן
+        public System.DateTime Delivery { get; set; } //הגיע לללקוח
+
+        public override string ToString() => $@"
+            Product ID{ID}, 
+             Customer Name:{CustomerName}
+    	     Customer Email: {CustomerEmail}
+    	    CustomerAddress: {CustomerAddress}
+    	    Order Date: {OrderDate}
+    	    Ship Date: {ShipDate}
+    	    Delivery: {Delivery}
+`
+            ";
+    }
 }
