@@ -32,7 +32,6 @@ class Program
                 p.Parve = int.Parse(Console.ReadLine());
                 try
                 {
-
                     dalProduct.create(p);
                     Console.WriteLine("the product was added");
                 }
