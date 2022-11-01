@@ -12,7 +12,7 @@ public struct Product
     public int ID { get; set; }
     public string Name { get; set; }
     public double Price { get; set; }
-    public Category Category { get; set; }//enum category
+    public ECategory Category { get; set; }//enum category
     public int InStock { get; set; }
     public int Parve { get; set; }
 

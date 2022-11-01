@@ -6,7 +6,7 @@
 
 namespace DO;
 
-public enum Category
+public enum ECategory
 {
     cups,//כוסות.
     cakes,//עוגות

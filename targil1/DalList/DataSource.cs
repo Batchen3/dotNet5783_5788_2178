@@ -59,16 +59,16 @@ static internal class DataSource
     private static void s_initialize()
     {
         int index, daysShip, daysDelivery, id;
-        (string, Category)[] tInfoOfProduct = new[] {("mousse",Category.cups),
-          ("chocolate_balls",Category.cups),
-          ("Cheesecake",Category.cakes),
-          ("kurason",Category.cookies),
-          ("rogalach",Category.cookies),
-          ("makaroon",Category.cookies),
-          ("alfachores",Category.cookies),
-          ("mousse_cake",Category.cakes),
-          ("oreo_cups",Category.cups),
-          ("lotus_cups",Category.cups)};
+        (string, ECategory)[] tInfoOfProduct = new[] {("mousse",ECategory.cups),
+          ("chocolate_balls",ECategory.cups),
+          ("Cheesecake",ECategory.cakes),
+          ("kurason",ECategory.cookies),
+          ("rogalach",ECategory.cookies),
+          ("makaroon",ECategory.cookies),
+          ("alfachores",ECategory.cookies),
+          ("mousse_cake",ECategory.cakes),
+          ("oreo_cups",ECategory.cups),
+          ("lotus_cups",ECategory.cups)};
 
 
         for (int i = 0; i < tInfoOfProduct.Length; i++)

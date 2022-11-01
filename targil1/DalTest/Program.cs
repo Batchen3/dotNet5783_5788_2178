@@ -25,7 +25,7 @@ class Program
                 Console.WriteLine("enter product's price");
                 p.Price = double.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                p.Category = (Category)int.Parse(Console.ReadLine());
+                p.Category = (ECategory)int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's instock");
                 p.InStock = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's parve(0/1)");
@@ -72,7 +72,7 @@ class Program
                     Console.WriteLine("enter product's price");
                     pUpdate.Price = double.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                    pUpdate.Category = (Category)int.Parse(Console.ReadLine());
+                    pUpdate.Category = (ECategory)int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's instock");
                     pUpdate.InStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's parve(0/1)");
