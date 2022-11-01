@@ -4,7 +4,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-using Do;
+using DO;
 using System;
 namespace Dal;
 using static Dal.DataSource;
@@ -47,7 +47,7 @@ public class DalProduct
         }
         return tmpProducts;
     }//read all products
-    public void update(Do.Product p)
+    public void update(Product p)
     {
         int j;
         bool isExist = false;

@@ -1,4 +1,4 @@
-﻿using Do;
+﻿using DO;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -15,7 +15,6 @@ class Program
     {
         switch (x)
         {
-
             case 'a'://add
 
                 Product p = new Product();

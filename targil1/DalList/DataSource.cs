@@ -5,7 +5,7 @@
 //using System.Threading.Tasks;
 
 
-
+using DO;
 using System;
 
 namespace Dal;
@@ -19,12 +19,12 @@ static internal class DataSource
 
     static readonly Random rand = new Random();
     const int NUMPRODUCTS = 50;
-    static internal Do.Product[] arrayProduct = new Do.Product[NUMPRODUCTS];
+    static internal Product[] arrayProduct = new Product[NUMPRODUCTS];
     const int NUMORDERS = 100;
-    static internal Do.Order[] arrayOrder = new Do.Order[NUMORDERS];
+    static internal Order[] arrayOrder = new Order[NUMORDERS];
     const int NUMORDERITEM = 200;
-    static internal Do.OrderItem[] arrayOrderItem = new Do.OrderItem[NUMORDERITEM];
-    private static void addProduct(Do.Product p)
+    static internal OrderItem[] arrayOrderItem = new OrderItem[NUMORDERITEM];
+    private static void addProduct(Product p)
     {
         if (Config.moneProduct > arrayProduct.Length)
             Console.WriteLine("arrayProduct is full");
@@ -34,7 +34,7 @@ static internal class DataSource
             Config.moneProduct++;
         }
     }
-    private static void addOrder(Do.Order o)
+    private static void addOrder(Order o)
     {
         if (Config.moneOrder > arrayOrder.Length)
             Console.WriteLine("arrayOrder is full");
@@ -44,7 +44,7 @@ static internal class DataSource
             Config.moneOrder++;
         }
     }
-    private static void addOrderItem(Do.OrderItem oi)
+    private static void addOrderItem(OrderItem oi)
     {
         if (Config.moneOrderItem > arrayOrderItem.Length)
             System.Console.WriteLine("arrayOrderItem is full");
@@ -59,21 +59,21 @@ static internal class DataSource
     private static void s_initialize()
     {
         int index, daysShip, daysDelivery, id;
-        (string, Do.Category)[] tInfoOfProduct = new[] {("mousse",Do.Category.cups),
-          ("chocolate_balls",Do.Category.cups),
-          ("Cheesecake",Do.Category.cakes),
-          ("kurason",Do.Category.cookies),
-          ("rogalach",Do.Category.cookies),
-          ("makaroon",Do.Category.cookies),
-          ("alfachores",Do.Category.cookies),
-          ("mousse_cake",Do.Category.cakes),
-          ("oreo_cups",Do.Category.cups),
-          ("lotus_cups",Do.Category.cups)};
+        (string, Category)[] tInfoOfProduct = new[] {("mousse",Category.cups),
+          ("chocolate_balls",Category.cups),
+          ("Cheesecake",Category.cakes),
+          ("kurason",Category.cookies),
+          ("rogalach",Category.cookies),
+          ("makaroon",Category.cookies),
+          ("alfachores",Category.cookies),
+          ("mousse_cake",Category.cakes),
+          ("oreo_cups",Category.cups),
+          ("lotus_cups",Category.cups)};
 
 
         for (int i = 0; i < tInfoOfProduct.Length; i++)
         {
-            Do.Product p = new Do.Product();
+            Product p = new Product();
             index = (int)rand.NextInt64(10);
             id = (int)rand.NextInt64(100000, 999999);
             bool flag = false;//checks if there are two equal ids
@@ -124,7 +124,7 @@ static internal class DataSource
 
         for (int i = 0; i < tInfoOfOrder.Length; i++)
         {
-            Do.Order o = new Do.Order();
+            Order o = new Order();
             index = (int)rand.NextInt64(10);
             daysShip = (int)rand.NextInt64(1, 3);
             daysDelivery = (int)rand.NextInt64(3, 7);
@@ -155,7 +155,7 @@ static internal class DataSource
 
         for (int i = 0; i < 20; i++)//doing item to evrey order.
         {
-            Do.OrderItem oi = new Do.OrderItem();
+            OrderItem oi = new OrderItem();
             index = (int)rand.NextInt64(10);
             oi.ID = Config.IdOrderItem;
             oi.ProductID = arrayProduct[index].ID;
@@ -167,7 +167,7 @@ static internal class DataSource
         int counter = 0;
         for (int i = 20; i < 40; i++)//adding items to order not more than 3 items
         {
-            Do.OrderItem oi = new Do.OrderItem();
+            OrderItem oi = new OrderItem();
             index = (int)rand.NextInt64(1, 4);
             for (int j = 0; j < index; j++)
             {

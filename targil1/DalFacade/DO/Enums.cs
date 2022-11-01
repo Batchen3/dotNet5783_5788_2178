@@ -4,12 +4,11 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-namespace Do
+namespace DO;
+
+public enum Category
 {
-    public enum Category
-    {
-        cups,//כוסות.
-        cakes,//עוגות
-        cookies//עוגיות
-    }
+    cups,//כוסות.
+    cakes,//עוגות
+    cookies//עוגיות
 }

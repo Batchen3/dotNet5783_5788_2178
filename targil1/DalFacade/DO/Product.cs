@@ -4,19 +4,19 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-namespace Do
+namespace DO;
+
+public struct Product
 {
-    public struct Product
-    {
 
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public Category Category { get; set; }//enum category
-        public int InStock { get; set; }
-        public int Parve { get; set; }
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public Category Category { get; set; }//enum category
+    public int InStock { get; set; }
+    public int Parve { get; set; }
 
-        public override string ToString() => $@"
+    public override string ToString() => $@"
             Product ID:{ID}: 
             Name:{Name}:, 
             category:{Category},
@@ -24,5 +24,4 @@ namespace Do
     	     Amount in stock: {InStock}
             ";
 
-    }
 }

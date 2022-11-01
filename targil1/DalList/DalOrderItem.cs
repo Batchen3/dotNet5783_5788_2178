@@ -4,6 +4,8 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
+
+using DO;
 using System;
 using static Dal.DataSource;
 
@@ -11,7 +13,7 @@ namespace Dal;
 
 public class DalOrderItem
 {
-    public int create(Do.OrderItem oi)
+    public int create(OrderItem oi)
     {
         oi.ID = Config.IdOrderItem;
         if (Config.moneOrderItem > arrayOrderItem.Length)
@@ -20,7 +22,7 @@ public class DalOrderItem
             arrayOrderItem[Config.moneOrderItem++] = oi;
         return oi.ID;
     }//create order item
-    public Do.OrderItem read(int id)
+    public OrderItem read(int id)
     {
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
@@ -29,7 +31,7 @@ public class DalOrderItem
         }
         throw new Exception("the orderItem not found");
     }//read order item
-    public Do.OrderItem readByOrderAndProduct(int idOrder, int idProduct)
+    public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
     {
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
@@ -38,9 +40,9 @@ public class DalOrderItem
         }
         throw new Exception("the orderItem not found");
     }//read order item by order id and product id
-    public Do.OrderItem[] readByOrder(int idOrder)
+    public OrderItem[] readByOrder(int idOrder)
     {
-        Do.OrderItem[] arr = new Do.OrderItem[Config.moneOrderItem];
+        OrderItem[] arr = new OrderItem[Config.moneOrderItem];
         int counter = 0;
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
@@ -52,16 +54,16 @@ public class DalOrderItem
         }
         return arr;
     }//read by order id
-    public Do.OrderItem[] readAll()
+    public OrderItem[] readAll()
     {
-        Do.OrderItem[] tmpOrderItem = new Do.OrderItem[Config.moneOrderItem];
+        OrderItem[] tmpOrderItem = new OrderItem[Config.moneOrderItem];
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
             tmpOrderItem[i] = arrayOrderItem[i];
         }
         return tmpOrderItem;
     }//read all order item
-    public void update(Do.OrderItem oi)
+    public void update(OrderItem oi)
     {
         int j;
         bool isExist = false;
