@@ -15,18 +15,18 @@ public class DalOrderItem
 {
     public int create(OrderItem oi)
     {
-        oi.id = Config.IdOrderItem;
+        oi._id = Config.IdOrderItem;
         if (Config.moneOrderItem > arrayOrderItem.Length)
             throw new Exception("the orderItems array is full");
         else
             arrayOrderItem[Config.moneOrderItem++] = oi;
-        return oi.id;
+        return oi._id;
     }//create order item
     public OrderItem read(int id)
     {
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].id == id)
+            if (arrayOrderItem[i]._id == id)
                 return arrayOrderItem[i];
         }
         throw new Exception("the orderItem not found");
@@ -35,7 +35,7 @@ public class DalOrderItem
     {
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].orderID == idOrder && arrayOrderItem[i].productID == idProduct)
+            if (arrayOrderItem[i]._orderID == idOrder && arrayOrderItem[i]._productID == idProduct)
                 return arrayOrderItem[i];
         }
         throw new Exception("the orderItem not found");
@@ -46,7 +46,7 @@ public class DalOrderItem
         int counter = 0;
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].orderID == idOrder)
+            if (arrayOrderItem[i]._orderID == idOrder)
             {
                 arr[counter] = arrayOrderItem[i];
                 counter++;
@@ -69,7 +69,7 @@ public class DalOrderItem
         bool isExist = false;
         for (j = 0; j < Config.moneOrderItem && !isExist; j++)
         {
-            if (arrayOrderItem[j].id == oi.id)
+            if (arrayOrderItem[j]._id == oi._id)
                 isExist = true;
 
         }
@@ -77,7 +77,7 @@ public class DalOrderItem
             throw new Exception("this order item is not exist");
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].id == oi.id)
+            if (arrayOrderItem[i]._id == oi._id)
                 arrayOrderItem[i] = oi;
         }
     }//update the order item
@@ -87,7 +87,7 @@ public class DalOrderItem
         bool isExist = false;
         for (j = 0; j < Config.moneOrderItem && !isExist; j++)
         {
-            if (arrayOrderItem[j].id == id)
+            if (arrayOrderItem[j]._id == id)
                 isExist = true;
 
         }
@@ -95,7 +95,7 @@ public class DalOrderItem
             throw new Exception("this order item is not exist");
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i].id == id)
+            if (arrayOrderItem[i]._id == id)
             {
                 if (i == Config.moneOrderItem)
                     Config.moneOrderItem--;

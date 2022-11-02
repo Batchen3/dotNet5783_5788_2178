@@ -8,18 +8,18 @@ namespace DO;
 
 public struct OrderItem
 {
-    public int id { get; set; }
-    public int productID { get; set; }
-    public int orderID { get; set; }
-    public double price { get; set; }
-    public int amount { get; set; }
+    public int _id { get; set; }
+    public int _productID { get; set; }
+    public int _orderID { get; set; }
+    public double _price { get; set; }
+    public int _amount { get; set; }
 
     public override string ToString() => $@"
-            ID:{id}
-            Product ID:{productID}, 
-             Order ID :{orderID}
-    	     Price: {price}
-    	     Amount in order: {amount}
+            ID:{_id}
+            Product ID:{_productID}, 
+             Order ID :{_orderID}
+    	     Price: {_price}
+    	     Amount in order: {_amount}
             ";
 
 }

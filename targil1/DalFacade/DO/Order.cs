@@ -8,22 +8,22 @@ namespace DO;
 
 public struct Order
 {
-    public int id { get; set; }
-    public string customerName { get; set; }
-    public string customerEmail { get; set; }
-    public string customerAddress { get; set; }
-    public System.DateTime orderDate { get; set; }
-    public System.DateTime shipDate { get; set; }//נמסר למשלוחן
-    public System.DateTime delivery { get; set; } //הגיע לללקוח
+    public int _id { get; set; }
+    public string _customerName { get; set; }
+    public string _customerEmail { get; set; }
+    public string _customerAddress { get; set; }
+    public System.DateTime _orderDate { get; set; }
+    public System.DateTime _shipDate { get; set; }//נמסר למשלוחן
+    public System.DateTime _delivery { get; set; } //הגיע לללקוח
 
     public override string ToString() => $@"
-            Product ID{id}, 
-             Customer Name:{customerName}
-    	     Customer Email: {customerEmail}
-    	    CustomerAddress: {customerAddress}
-    	    Order Date: {orderDate}
-    	    Ship Date: {shipDate}
-    	    Delivery: {delivery}
+            Product ID{_id}, 
+             Customer Name:{_customerName}
+    	     Customer Email: {_customerEmail}
+    	    CustomerAddress: {_customerAddress}
+    	    Order Date: {_orderDate}
+    	    Ship Date: {_shipDate}
+    	    Delivery: {_delivery}
 `
             ";
 }

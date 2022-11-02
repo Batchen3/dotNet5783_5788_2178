@@ -82,7 +82,7 @@ static internal class DataSource
             {
                 for (int j = 0; j < Config.moneProduct && flag2; j++)
                 {
-                    if (arrayOrder[j].id == p.id)
+                    if (arrayOrder[j]._id == p._id)
                         flag2 = false;
                 }
                 if (!flag2)
@@ -92,12 +92,12 @@ static internal class DataSource
                     flag = true;
                 }
             }
-            p.id = id;
-            p.name = tInfoOfProduct[index].Item1;
-            p.price = ((double)rand.NextDouble() + 0.05) * 100;
-            p.category = tInfoOfProduct[index].Item2;
-            p.inStock = (int)rand.NextInt64(10, 100);
-            p.parve = (int)rand.NextInt64(1);
+            p._id = id;
+            p._name = tInfoOfProduct[index].Item1;
+            p._price = ((double)rand.NextDouble() + 0.05) * 100;
+            p._category = tInfoOfProduct[index].Item2;
+            p._inStock = (int)rand.NextInt64(10, 100);
+            p._parve = (int)rand.NextInt64(1);
             addProduct(p);
         }
 
@@ -128,27 +128,27 @@ static internal class DataSource
             index = (int)rand.NextInt64(10);
             daysShip = (int)rand.NextInt64(1, 3);
             daysDelivery = (int)rand.NextInt64(3, 7);
-            o.id = Config.IdOrder;
-            o.customerName = tInfoOfOrder[index].Item1;
-            o.customerEmail = tInfoOfOrder[index].Item2;
-            o.customerAddress = tInfoOfOrder[index].Item3;
-            o.orderDate = DateTime.Now;
+            o._id = Config.IdOrder;
+            o._customerName = tInfoOfOrder[index].Item1;
+            o._customerEmail = tInfoOfOrder[index].Item2;
+            o._customerAddress = tInfoOfOrder[index].Item3;
+            o._orderDate = DateTime.Now;
             if (i < tInfoOfOrder.Length * 0.2)//20% with just order date
             {
-                o.shipDate = DateTime.MinValue;
-                o.delivery = DateTime.MinValue;
+                o._shipDate = DateTime.MinValue;
+                o._delivery = DateTime.MinValue;
             }
             else
             {
                 TimeSpan tDaysShip = new TimeSpan(daysShip, 0, 0, 0);
-                o.shipDate = o.orderDate.Add(tDaysShip);
+                o._shipDate = o._orderDate.Add(tDaysShip);
                 if (i < tInfoOfOrder.Length * 0.2 + (tInfoOfOrder.Length * 0.8 * 0.6))//60% of 80% with order, ship and delivery dates.
                 {
                     TimeSpan tDaysDelivery = new TimeSpan(daysDelivery, 0, 0, 0);
-                    o.delivery = o.orderDate.Add(tDaysDelivery);
+                    o._delivery = o._orderDate.Add(tDaysDelivery);
                 }
                 else
-                    o.delivery = DateTime.MinValue;//the other with just order and ship dates.
+                    o._delivery = DateTime.MinValue;//the other with just order and ship dates.
             }
             addOrder(o);
         }
@@ -157,11 +157,11 @@ static internal class DataSource
         {
             OrderItem oi = new OrderItem();
             index = (int)rand.NextInt64(10);
-            oi.id = Config.IdOrderItem;
-            oi.productID = arrayProduct[index].id;
-            oi.orderID = arrayOrder[i].id;
-            oi.price = arrayProduct[index].price;
-            oi.amount = (int)rand.NextInt64(30);
+            oi._id = Config.IdOrderItem;
+            oi._productID = arrayProduct[index]._id;
+            oi._orderID = arrayOrder[i]._id;
+            oi._price = arrayProduct[index]._price;
+            oi._amount = (int)rand.NextInt64(30);
             addOrderItem(oi);
         }
         int counter = 0;
@@ -171,12 +171,12 @@ static internal class DataSource
             index = (int)rand.NextInt64(1, 4);
             for (int j = 0; j < index; j++)
             {
-                oi.orderID = arrayOrder[counter].id;
+                oi._orderID = arrayOrder[counter]._id;
                 int iProduct = (int)rand.NextInt64(Config.moneProduct);
-                oi.id = Config.IdOrderItem;
-                oi.productID = arrayProduct[iProduct].id;
-                oi.price = arrayProduct[iProduct].price;
-                oi.amount = (int)rand.NextInt64(30);
+                oi._id = Config.IdOrderItem;
+                oi._productID = arrayProduct[iProduct]._id;
+                oi._price = arrayProduct[iProduct]._price;
+                oi._amount = (int)rand.NextInt64(30);
                 addOrderItem(oi);
             }
             i = +index;
