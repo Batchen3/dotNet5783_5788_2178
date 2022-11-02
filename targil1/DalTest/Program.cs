@@ -7,10 +7,10 @@ using System.Security.Cryptography;
 namespace DalTest;
 class Program
 {
+
     private static Dal.DalProduct dalProduct = new Dal.DalProduct();
     private static Dal.DalOrder dalOrder = new Dal.DalOrder();
     private static Dal.DalOrderItem dalOrderItem = new Dal.DalOrderItem();
-
     public static void InfoOfProduct(char x)
     {
         switch (x)
@@ -289,6 +289,7 @@ class Program
     }
     public static void Main(string[] args)
     {
+       //dalProduct.d();
         Console.WriteLine("for product press 1");
         Console.WriteLine("for order press 2");
         Console.WriteLine("for item in order press 3");

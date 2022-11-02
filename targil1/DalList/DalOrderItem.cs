@@ -15,7 +15,7 @@ public class DalOrderItem
 {
     public int create(OrderItem oi)
     {
-        oi._id = Config.IdOrderItem;
+        oi._id = Config.IdOrderItem++;
         if (Config.moneOrderItem > arrayOrderItem.Length)
             throw new Exception("the orderItems array is full");
         else

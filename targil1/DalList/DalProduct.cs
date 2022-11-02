@@ -13,19 +13,22 @@ using static Dal.DataSource;
 
 public class DalProduct
 {
+    //public void d() {
+    //    mm();
+    //}
     public int create(Product p)
     {
-        if (Config.moneProduct == arrayProduct.Length - 1)
-            throw new Exception("the products array is full");
-        else
+        //if (Config.moneProduct == arrayProduct.Length - 1)
+        //    throw new Exception("the products array is full");
+        //else
+        //{
+        for (int j = 0; j < Config.moneProduct; j++)
         {
-            for (int j = 0; j < Config.moneProduct; j++)
-            {
-                if (arrayOrder[j]._id == p._id)
-                    throw new Exception("the product is alredy exist");
-            }
-            arrayProduct[Config.moneProduct++] = p;
+            if (arrayProduct[j]._id == p._id)
+                throw new Exception("the product is alredy exist");
         }
+        arrayProduct[Config.moneProduct++] = p;
+        //}
         return p._id;
     }//add product to arr
 

@@ -14,7 +14,7 @@ public class DalOrder
 {
     public int create(Order o)
     {
-        o._id = Config.IdOrder;
+        o._id = Config.IdOrder++;
         if (Config.moneOrder > arrayOrder.Length)
             throw new Exception("the orders array is full");
         else

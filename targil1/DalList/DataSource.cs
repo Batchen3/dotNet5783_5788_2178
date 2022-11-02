@@ -16,7 +16,31 @@ static internal class DataSource
     {
         s_initialize();
     }
+    static internal class Config
+    {
+        internal static int moneProduct = 0;
+        internal static int moneOrder = 0;
+        internal static int moneOrderItem = 0;
 
+        private static int idOrder = 88417;
+        static public int IdOrder
+        {
+            get { return idOrder; }
+            set { idOrder = value; }
+        }
+
+        private static int idOrderItem = 5223122;
+        static public int IdOrderItem
+        {
+            get { return idOrderItem; }
+            set { idOrderItem = value; }
+        }
+    }
+    
+    //public static void mm()
+    //{
+    //    Console.WriteLine("ij");
+    //}
     static readonly Random rand = new Random();
     const int NUMPRODUCTS = 50;
     static internal Product[] arrayProduct = new Product[NUMPRODUCTS];
@@ -24,6 +48,7 @@ static internal class DataSource
     static internal Order[] arrayOrder = new Order[NUMORDERS];
     const int NUMORDERITEM = 200;
     static internal OrderItem[] arrayOrderItem = new OrderItem[NUMORDERITEM];
+
     private static void addProduct(Product p)
     {
         if (Config.moneProduct > arrayProduct.Length)
@@ -59,7 +84,7 @@ static internal class DataSource
     private static void s_initialize()
     {
         int index, daysShip, daysDelivery, id;
-        (string, ECategory)[] tInfoOfProduct = new[] {("mousse",ECategory.cups),
+        (string, ECategory)[] tInfoOfProduct = {("mousse",ECategory.cups),
           ("chocolate_balls",ECategory.cups),
           ("Cheesecake",ECategory.cakes),
           ("kurason",ECategory.cookies),
@@ -70,12 +95,12 @@ static internal class DataSource
           ("oreo_cups",ECategory.cups),
           ("lotus_cups",ECategory.cups)};
 
-
+ 
         for (int i = 0; i < tInfoOfProduct.Length; i++)
         {
             Product p = new Product();
-            index = (int)rand.NextInt64(10);
-            id = (int)rand.NextInt64(100000, 999999);
+            index = (int)rand.Next(10);
+            id = (int)rand.Next(100000, 999999999);
             bool flag = false;//checks if there are two equal ids
             bool flag2 = true;
             while (!flag)
@@ -86,22 +111,23 @@ static internal class DataSource
                         flag2 = false;
                 }
                 if (!flag2)
-                    id = (int)rand.NextInt64(100000, 999999);
+                    id = (int)rand.Next(100000, 999999999);
                 else
                 {
                     flag = true;
                 }
             }
             p._id = id;
+           
             p._name = tInfoOfProduct[index].Item1;
             p._price = ((double)rand.NextDouble() + 0.05) * 100;
             p._category = tInfoOfProduct[index].Item2;
-            p._inStock = (int)rand.NextInt64(10, 100);
-            p._parve = (int)rand.NextInt64(1);
+            p._inStock = (int)rand.Next(10, 100);
+            p._parve = (int)rand.Next(2);
             addProduct(p);
         }
 
-        (string, string, string)[] tInfoOfOrder = new[] {("ayala_miler","ayala@gmail.com","rashi_4"),
+        (string, string, string)[] tInfoOfOrder = {("ayala_miler","ayala@gmail.com","rashi_4"),
             ("yael_choen","yael@gmail.com","moshe_raz_9"),
            ("miri_levi","miri@gmail.com","brand_3"),
            ("shira_hever","shira_hever@gmail.com","hapisga_8"),
@@ -125,10 +151,10 @@ static internal class DataSource
         for (int i = 0; i < tInfoOfOrder.Length; i++)
         {
             Order o = new Order();
-            index = (int)rand.NextInt64(10);
-            daysShip = (int)rand.NextInt64(1, 3);
-            daysDelivery = (int)rand.NextInt64(3, 7);
-            o._id = Config.IdOrder;
+            index = (int)rand.Next(20);
+            daysShip = (int)rand.Next(1, 3);
+            daysDelivery = (int)rand.Next(3, 7);
+            o._id = Config.IdOrder++;
             o._customerName = tInfoOfOrder[index].Item1;
             o._customerEmail = tInfoOfOrder[index].Item2;
             o._customerAddress = tInfoOfOrder[index].Item3;
@@ -156,52 +182,31 @@ static internal class DataSource
         for (int i = 0; i < 20; i++)//doing item to evrey order.
         {
             OrderItem oi = new OrderItem();
-            index = (int)rand.NextInt64(10);
-            oi._id = Config.IdOrderItem;
+            index = (int)rand.Next(10);
+            oi._id = Config.IdOrderItem++;
             oi._productID = arrayProduct[index]._id;
             oi._orderID = arrayOrder[i]._id;
             oi._price = arrayProduct[index]._price;
-            oi._amount = (int)rand.NextInt64(30);
+            oi._amount = (int)rand.Next(30);
             addOrderItem(oi);
         }
         int counter = 0;
         for (int i = 20; i < 40; i++)//adding items to order not more than 3 items
         {
             OrderItem oi = new OrderItem();
-            index = (int)rand.NextInt64(1, 4);
+            index = (int)rand.Next(1, 4);
             for (int j = 0; j < index; j++)
             {
                 oi._orderID = arrayOrder[counter]._id;
-                int iProduct = (int)rand.NextInt64(Config.moneProduct);
-                oi._id = Config.IdOrderItem;
+                int iProduct = (int)rand.Next(10);
+                oi._id = Config.IdOrderItem++;
                 oi._productID = arrayProduct[iProduct]._id;
                 oi._price = arrayProduct[iProduct]._price;
-                oi._amount = (int)rand.NextInt64(30);
+                oi._amount = (int)rand.Next(30);
                 addOrderItem(oi);
             }
             i = +index;
             counter++;
         }
     }
-
-    static internal class Config
-    {
-        internal static int moneProduct = 0;
-        internal static int moneOrder = 0;
-        internal static int moneOrderItem = 0;
-
-        private static int idOrder = 88417;
-        static public int IdOrder
-        {
-            get { return idOrder++; }
-        }
-
-        private static int idOrderItem = 5223122;
-        static public int IdOrderItem
-        {
-            get { return idOrderItem++; }
-        }
-    }
-
-
 }
