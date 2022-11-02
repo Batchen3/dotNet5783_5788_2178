@@ -7,6 +7,7 @@
 
 using DO;
 using System;
+using System.Xml.Linq;
 
 namespace Dal;
 
@@ -95,10 +96,10 @@ static internal class DataSource
           ("oreo_cups",ECategory.cups),
           ("lotus_cups",ECategory.cups)};
 
- 
-        for (int i = 0; i < tInfoOfProduct.Length; i++)
+
+        for (int i = 0; i < 10; i++)
         {
-            Product p = new Product();
+            
             index = (int)rand.Next(10);
             id = (int)rand.Next(100000, 999999999);
             bool flag = false;//checks if there are two equal ids
@@ -107,7 +108,7 @@ static internal class DataSource
             {
                 for (int j = 0; j < Config.moneProduct && flag2; j++)
                 {
-                    if (arrayOrder[j]._id == p._id)
+                    if (arrayOrder[j]._id == id)
                         flag2 = false;
                 }
                 if (!flag2)
@@ -117,8 +118,8 @@ static internal class DataSource
                     flag = true;
                 }
             }
+            Product p = new Product();
             p._id = id;
-           
             p._name = tInfoOfProduct[index].Item1;
             p._price = ((double)rand.NextDouble() + 0.05) * 100;
             p._category = tInfoOfProduct[index].Item2;
