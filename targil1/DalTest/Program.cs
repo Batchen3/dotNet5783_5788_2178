@@ -11,7 +11,7 @@ class Program
     private static Dal.DalOrder dalOrder = new Dal.DalOrder();
     private static Dal.DalOrderItem dalOrderItem = new Dal.DalOrderItem();
 
-    public static void infoOfProduct(char x)
+    public static void InfoOfProduct(char x)
     {
         switch (x)
         {
@@ -101,7 +101,7 @@ class Program
                 break;
         }
     }
-    public static void infoOfOrder(char x)
+    public static void InfoOfOrder(char x)
     {
         switch (x)
         {
@@ -185,7 +185,7 @@ class Program
                 break;
         }
     }
-    public static void infoOfOrderItem(char x)
+    public static void InfoOfOrderItem(char x)
     {
         switch (x)
         {
@@ -306,7 +306,7 @@ class Program
                     Console.WriteLine("for update a product press d");
                     Console.WriteLine("for delete a product press e");
                     x = char.Parse(Console.ReadLine());
-                    infoOfProduct(x);//doing this function 
+                    InfoOfProduct(x);//doing this function 
                     break;
                 case 2:
                     Console.WriteLine("for add an order press a");
@@ -315,7 +315,7 @@ class Program
                     Console.WriteLine("for update an order press d");
                     Console.WriteLine("for delete an order press e");
                     x = char.Parse(Console.ReadLine());
-                    infoOfOrder(x); //doing this function 
+                    InfoOfOrder(x); //doing this function 
                     break;
                 case 3:
                     Console.WriteLine("for add an item in order press a");
@@ -326,7 +326,7 @@ class Program
                     Console.WriteLine("for read an item in order by id of order and product press f");
                     Console.WriteLine("for read an items in order press g");
                     x = char.Parse(Console.ReadLine());
-                    infoOfOrderItem(x);//doing this function 
+                    InfoOfOrderItem(x);//doing this function 
                     break;
                 default:
                     break;

@@ -13,8 +13,8 @@ public struct Order
     public string _customerEmail { get; set; }
     public string _customerAddress { get; set; }
     public System.DateTime _orderDate { get; set; }
-    public System.DateTime _shipDate { get; set; }//נמסר למשלוחן
-    public System.DateTime _delivery { get; set; } //הגיע לללקוח
+    public System.DateTime _shipDate { get; set; }//arrive to the delivery
+    public System.DateTime _delivery { get; set; } //arrive to the customer
 
     public override string ToString() => $@"
             Product ID{_id}, 
