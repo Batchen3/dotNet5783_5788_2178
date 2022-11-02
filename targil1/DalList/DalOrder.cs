@@ -14,18 +14,18 @@ public class DalOrder
 {
     public int create(Order o)
     {
-        o.ID = Config.IdOrder;
+        o.id = Config.IdOrder;
         if (Config.moneOrder > arrayOrder.Length)
             throw new Exception("the orders array is full");
         else
             arrayOrder[Config.moneOrder++] = o;
-        return o.ID;
+        return o.id;
     }//create an order
     public Order read(int id)
     {
         for (int i = 0; i < Config.moneOrder; i++)
         {
-            if (arrayOrder[i].ID == id)
+            if (arrayOrder[i].id == id)
                 return arrayOrder[i];
         }
         throw new Exception("the order not found");
@@ -45,7 +45,7 @@ public class DalOrder
         bool isExist = false;
         for (j = 0; j < Config.moneOrder && !isExist; j++)
         {
-            if (arrayOrder[j].ID == o.ID)
+            if (arrayOrder[j].id == o.id)
                 isExist = true;
 
         }
@@ -53,7 +53,7 @@ public class DalOrder
             throw new Exception("this order is not exist");
         for (int i = 0; i < Config.moneOrder; i++)
         {
-            if (arrayOrder[i].ID == o.ID)
+            if (arrayOrder[i].id == o.id)
                 arrayOrder[i] = o;
         }
     }//update the order
@@ -63,7 +63,7 @@ public class DalOrder
         bool isExist = false;
         for (j = 0; j < Config.moneOrder && !isExist; j++)
         {
-            if (arrayOrder[j].ID == id)
+            if (arrayOrder[j].id == id)
                 isExist = true;
 
         }
@@ -71,7 +71,7 @@ public class DalOrder
             throw new Exception("this order is not exist");
         for (int i = 0; i < Config.moneOrder; i++)
         {
-            if (arrayOrder[i].ID == id)
+            if (arrayOrder[i].id == id)
             {
                 if (i == Config.moneOrder)
                     Config.moneOrder--;

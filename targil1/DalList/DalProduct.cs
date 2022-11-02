@@ -21,18 +21,18 @@ public class DalProduct
         {
             for (int j = 0; j < Config.moneProduct; j++)
             {
-                if (arrayOrder[j].ID == p.ID)
+                if (arrayOrder[j].id == p.id)
                     throw new Exception("the product is alredy exist");
             }
             arrayProduct[Config.moneProduct++] = p;
         }
-        return p.ID;
+        return p.id;
     }//add product to arr
     public Product read(int id)
     {
         for (int i = 0; i < Config.moneProduct; i++)
         {
-            if (arrayProduct[i].ID == id)
+            if (arrayProduct[i].id == id)
                 return arrayProduct[i];
         }
         throw new Exception("the product not found");
@@ -53,14 +53,14 @@ public class DalProduct
         bool isExist = false;
         for (j = 0; j < Config.moneProduct && !isExist; j++)
         {
-            if (arrayProduct[j].ID == p.ID)
+            if (arrayProduct[j].id == p.id)
                 isExist = true;
         }
         if (!isExist)
             throw new Exception("this product is not exist");
         for (int i = 0; i < Config.moneProduct; i++)
         {
-            if (arrayProduct[i].ID == p.ID)
+            if (arrayProduct[i].id == p.id)
                 arrayProduct[i] = p;
         }
     }//update a product 
@@ -70,14 +70,14 @@ public class DalProduct
         bool isExist = false;
         for (j = 0; j < Config.moneProduct && !isExist; j++)
         {
-            if (arrayProduct[j].ID == id)
+            if (arrayProduct[j].id == id)
                 isExist = true;
         }
         if (!isExist)
             throw new Exception("this product is not exist");
         for (int i = 0; i < Config.moneProduct; i++)
         {
-            if (arrayProduct[i].ID == id)
+            if (arrayProduct[i].id == id)
             {
                 if (i == Config.moneProduct)
                     Config.moneProduct--;

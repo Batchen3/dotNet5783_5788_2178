@@ -9,19 +9,20 @@ namespace DO;
 public struct Product
 {
 
-    public int ID { get; set; }
-    public string Name { get; set; }
-    public double Price { get; set; }
-    public ECategory Category { get; set; }//enum category
-    public int InStock { get; set; }
-    public int Parve { get; set; }
+    public int id { get; set; }
+    public string name { get; set; }
+    public double price { get; set; }
+    public ECategory category { get; set; }//enum category
+    public int inStock { get; set; }
+    public int parve { get; set; }
 
     public override string ToString() => $@"
-            Product ID:{ID}: 
-            Name:{Name}:, 
-            category:{Category},
-    	    Price: {Price},
-    	     Amount in stock: {InStock}
+            Product ID:{id}: 
+            Name:{name}:, 
+            category:{category},
+    	    Price: {price},
+    	     Amount in stock: {inStock},
+             Parve:{parve}
             ";
 
 }

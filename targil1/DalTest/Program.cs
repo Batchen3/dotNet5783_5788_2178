@@ -19,17 +19,17 @@ class Program
 
                 Product p = new Product();
                 Console.WriteLine("enter product's id to add");
-                p.ID = int.Parse(Console.ReadLine());
+                p.id = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's name");
-                p.Name = Console.ReadLine();
+                p.name = Console.ReadLine();
                 Console.WriteLine("enter product's price");
-                p.Price = double.Parse(Console.ReadLine());
+                p.price = double.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                p.Category = (ECategory)int.Parse(Console.ReadLine());
+                p.category = (ECategory)int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's instock");
-                p.InStock = int.Parse(Console.ReadLine());
+                p.inStock = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's parve(0/1)");
-                p.Parve = int.Parse(Console.ReadLine());
+                p.parve = int.Parse(Console.ReadLine());
                 try
                 {
 
@@ -66,17 +66,17 @@ class Program
                 {
                     Console.WriteLine(dalProduct.read(idUpdate));
                     Product pUpdate = new Product();
-                    pUpdate.ID = idUpdate;
+                    pUpdate.id = idUpdate;
                     Console.WriteLine("enter product's name");
-                    pUpdate.Name = Console.ReadLine();
+                    pUpdate.name = Console.ReadLine();
                     Console.WriteLine("enter product's price");
-                    pUpdate.Price = double.Parse(Console.ReadLine());
+                    pUpdate.price = double.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                    pUpdate.Category = (ECategory)int.Parse(Console.ReadLine());
+                    pUpdate.category = (ECategory)int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's instock");
-                    pUpdate.InStock = int.Parse(Console.ReadLine());
+                    pUpdate.inStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's parve(0/1)");
-                    pUpdate.Parve = int.Parse(Console.ReadLine());
+                    pUpdate.parve = int.Parse(Console.ReadLine());
                     dalProduct.update(pUpdate);
 
                 }
@@ -108,15 +108,15 @@ class Program
             case 'a'://add
                 Order o = new Order();
                 Console.WriteLine("enter order's customer name");
-                o.CustomerName = Console.ReadLine();
+                o.customerName = Console.ReadLine();
                 Console.WriteLine("enter order's customer email");
-                o.CustomerEmail = Console.ReadLine();
+                o.customerEmail = Console.ReadLine();
                 Console.WriteLine("enter order's date");
-                o.OrderDate = Convert.ToDateTime(Console.ReadLine());
+                o.orderDate = Convert.ToDateTime(Console.ReadLine());
                 Console.WriteLine("enter order's date of ship");
-                o.ShipDate = Convert.ToDateTime(Console.ReadLine());
+                o.shipDate = Convert.ToDateTime(Console.ReadLine());
                 Console.WriteLine("enter order's date of delivery");
-                o.Delivery = Convert.ToDateTime(Console.ReadLine());
+                o.delivery = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
                     dalOrder.create(o);
@@ -151,17 +151,17 @@ class Program
                 {
                     Console.WriteLine(dalOrder.read(idUpdate));
                     Order oUpdate = new Order();
-                    oUpdate.ID = idUpdate;
+                    oUpdate.id = idUpdate;
                     Console.WriteLine("enter order's customer name");
-                    oUpdate.CustomerName = Console.ReadLine();
+                    oUpdate.customerName = Console.ReadLine();
                     Console.WriteLine("enter order's customer email");
-                    oUpdate.CustomerEmail = Console.ReadLine();
+                    oUpdate.customerEmail = Console.ReadLine();
                     Console.WriteLine("enter order's date");
-                    oUpdate.OrderDate = Convert.ToDateTime(Console.ReadLine());
+                    oUpdate.orderDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of ship");
-                    oUpdate.ShipDate = Convert.ToDateTime(Console.ReadLine());
+                    oUpdate.shipDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of delivery");
-                    oUpdate.Delivery = Convert.ToDateTime(Console.ReadLine());
+                    oUpdate.delivery = Convert.ToDateTime(Console.ReadLine());
                     dalOrder.update(oUpdate);
                 }
                 catch (Exception ex)
@@ -192,13 +192,13 @@ class Program
             case 'a'://add
                 OrderItem oi = new OrderItem();
                 Console.WriteLine("enter id product of order item");
-                oi.ProductID = int.Parse(Console.ReadLine());
+                oi.productID = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter id order of order item");
-                oi.OrderID = int.Parse(Console.ReadLine());
+                oi.orderID = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter price of order item");
-                oi.Price = double.Parse(Console.ReadLine());
+                oi.price = double.Parse(Console.ReadLine());
                 Console.WriteLine("enter amount of order item");
-                oi.Amount = int.Parse(Console.ReadLine());
+                oi.amount = int.Parse(Console.ReadLine());
                 try
                 {
                     dalOrderItem.create(oi);
@@ -233,15 +233,15 @@ class Program
                 {
                     Console.WriteLine(dalOrderItem.read(idUpdate));
                     OrderItem oiUpdate = new OrderItem();
-                    oiUpdate.ID = idUpdate;
+                    oiUpdate.id = idUpdate;
                     Console.WriteLine("enter id product of order item");
-                    oiUpdate.ProductID = int.Parse(Console.ReadLine());
+                    oiUpdate.productID = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter id order of order item");
-                    oiUpdate.OrderID = int.Parse(Console.ReadLine());
+                    oiUpdate.orderID = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter price of order item");
-                    oiUpdate.Price = double.Parse(Console.ReadLine());
+                    oiUpdate.price = double.Parse(Console.ReadLine());
                     Console.WriteLine("enter amount of order item");
-                    oiUpdate.Amount = int.Parse(Console.ReadLine());
+                    oiUpdate.amount = int.Parse(Console.ReadLine());
                     dalOrderItem.update(oiUpdate);
                 }
                 catch (Exception ex)
