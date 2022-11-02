@@ -28,6 +28,7 @@ public class DalProduct
         }
         return p._id;
     }//add product to arr
+
     public Product read(int id)
     {
         for (int i = 0; i < Config.moneProduct; i++)
