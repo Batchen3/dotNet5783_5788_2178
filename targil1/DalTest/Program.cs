@@ -33,7 +33,7 @@ class Program
                 try
                 {
 
-                    dalProduct.create(p);
+                    int result=dalProduct.create(p);
                     Console.WriteLine("the product was added");
                 }
                 catch (Exception ex)
@@ -111,6 +111,8 @@ class Program
                 o._customerName = Console.ReadLine();
                 Console.WriteLine("enter order's customer email");
                 o._customerEmail = Console.ReadLine();
+                Console.WriteLine("enter order's customer address");
+                o._customerAddress = Console.ReadLine();
                 Console.WriteLine("enter order's date");
                 o._orderDate = Convert.ToDateTime(Console.ReadLine());
                 Console.WriteLine("enter order's date of ship");
@@ -156,6 +158,8 @@ class Program
                     oUpdate._customerName = Console.ReadLine();
                     Console.WriteLine("enter order's customer email");
                     oUpdate._customerEmail = Console.ReadLine();
+                    Console.WriteLine("enter order's customer address");
+                    oUpdate._customerAddress = Console.ReadLine();
                     Console.WriteLine("enter order's date");
                     oUpdate._orderDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of ship");
@@ -280,7 +284,8 @@ class Program
                 OrderItem[] allItemsInOrders = dalOrderItem.readByOrder(idOfOrder);
                 foreach (var item in allItemsInOrders)
                 {
-                    Console.WriteLine(item);
+                    if (item._orderID == idOfOrder)
+                        Console.WriteLine(item);
                 }
                 break;
             default:
@@ -289,7 +294,7 @@ class Program
     }
     public static void Main(string[] args)
     {
-       //dalProduct.d();
+       dalProduct.d();
         Console.WriteLine("for product press 1");
         Console.WriteLine("for order press 2");
         Console.WriteLine("for item in order press 3");

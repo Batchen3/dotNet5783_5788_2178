@@ -17,12 +17,12 @@ public struct Product
     public int _parve { get; set; }
 
     public override string ToString() => $@"
-            Product ID:{_id}: 
-            Name:{_name}:, 
-            category:{_category},
+            Product ID: {_id}, 
+            Name: {_name}, 
+            category: {_category},
     	    Price: {_price},
-    	     Amount in stock: {_inStock},
-             Parve:{_parve}
+    	    Amount in stock: {_inStock},
+            Parve:{_parve}
             ";
 
 }

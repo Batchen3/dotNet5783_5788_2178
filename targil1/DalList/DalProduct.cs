@@ -13,9 +13,10 @@ using static Dal.DataSource;
 
 public class DalProduct
 {
-    //public void d() {
-    //    mm();
-    //}
+    public void d()
+    {
+        mm();
+    }
     public int create(Product p)
     {
         //if (Config.moneProduct == arrayProduct.Length - 1)
@@ -79,17 +80,19 @@ public class DalProduct
         }
         if (!isExist)
             throw new Exception("this product is not exist");
+        Product[] newArr = new Product [arrayProduct.Length]  ;
+        int counter = 0;
         for (int i = 0; i < Config.moneProduct; i++)
         {
-            if (arrayProduct[i]._id == id)
+            if (arrayProduct[i]._id != id)
             {
-                if (i == Config.moneProduct)
-                    Config.moneProduct--;
-                else
-                    arrayProduct[i] = arrayProduct[Config.moneProduct--];
+                newArr[counter] = arrayProduct[i];
+                counter++;
             }
 
         }
+        Config.moneProduct--;
+        arrayProduct = newArr;
     }//delete a product according id
 
 }

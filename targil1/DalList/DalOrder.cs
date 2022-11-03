@@ -6,6 +6,7 @@
 
 using DO;
 using System;
+using System.Diagnostics.Metrics;
 using static Dal.DataSource;
 
 namespace Dal;
@@ -69,16 +70,18 @@ public class DalOrder
         }
         if (!isExist)
             throw new Exception("this order is not exist");
+        Order[] newArr = new Order[arrayOrder.Length];
+        int counter = 0;
         for (int i = 0; i < Config.moneOrder; i++)
         {
-            if (arrayOrder[i]._id == id)
+            if (arrayOrder[i]._id != id)
             {
-                if (i == Config.moneOrder)
-                    Config.moneOrder--;
-                else
-                    arrayOrder[i] = arrayOrder[Config.moneOrder--];
+                newArr[counter] = arrayOrder[i];
+                counter++;
             }
 
         }
+        Config.moneOrder--;
+        arrayOrder = newArr;
     }//delete an order
 }

@@ -37,11 +37,11 @@ static internal class DataSource
             set { idOrderItem = value; }
         }
     }
-    
-    //public static void mm()
-    //{
-    //    Console.WriteLine("ij");
-    //}
+
+    public static void mm()
+    {
+        int x;
+    }
     static readonly Random rand = new Random();
     const int NUMPRODUCTS = 50;
     static internal Product[] arrayProduct = new Product[NUMPRODUCTS];
@@ -73,7 +73,7 @@ static internal class DataSource
     private static void addOrderItem(OrderItem oi)
     {
         if (Config.moneOrderItem > arrayOrderItem.Length)
-            System.Console.WriteLine("arrayOrderItem is full");
+            Console.WriteLine("arrayOrderItem is full");
         else
         {
             arrayOrderItem[Config.moneOrderItem] = oi;
@@ -192,21 +192,21 @@ static internal class DataSource
             addOrderItem(oi);
         }
         int counter = 0;
-        for (int i = 20; i < 40; i++)//adding items to order not more than 3 items
+        for (int i = 20; i < 40; )//adding items to order not more than 3 items
         {
-            OrderItem oi = new OrderItem();
+            OrderItem oi2 = new OrderItem();
             index = (int)rand.Next(1, 4);
             for (int j = 0; j < index; j++)
             {
-                oi._orderID = arrayOrder[counter]._id;
+                oi2._orderID = arrayOrder[counter]._id;
                 int iProduct = (int)rand.Next(10);
-                oi._id = Config.IdOrderItem++;
-                oi._productID = arrayProduct[iProduct]._id;
-                oi._price = arrayProduct[iProduct]._price;
-                oi._amount = (int)rand.Next(30);
-                addOrderItem(oi);
+                oi2._id = Config.IdOrderItem++;
+                oi2._productID = arrayProduct[iProduct]._id;
+                oi2._price = arrayProduct[iProduct]._price;
+                oi2._amount = (int)rand.Next(30);
+                addOrderItem(oi2);
             }
-            i = +index;
+            i += index;
             counter++;
         }
     }

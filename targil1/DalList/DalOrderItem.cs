@@ -93,16 +93,18 @@ public class DalOrderItem
         }
         if (!isExist)
             throw new Exception("this order item is not exist");
+        OrderItem[] newArr = new OrderItem[arrayOrderItem.Length];
+        int counter = 0;
         for (int i = 0; i < Config.moneOrderItem; i++)
         {
-            if (arrayOrderItem[i]._id == id)
+            if (arrayOrderItem[i]._id != id)
             {
-                if (i == Config.moneOrderItem)
-                    Config.moneOrderItem--;
-                else
-                    arrayOrderItem[i] = arrayOrderItem[Config.moneOrderItem--];
+                newArr[counter] = arrayOrderItem[i];
+                counter++;
             }
 
         }
+        Config.moneOrderItem--;
+        arrayOrderItem = newArr;
     }//delete order item by id
 }

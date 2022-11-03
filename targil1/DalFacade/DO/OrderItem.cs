@@ -15,11 +15,11 @@ public struct OrderItem
     public int _amount { get; set; }
 
     public override string ToString() => $@"
-            ID:{_id}
-            Product ID:{_productID}, 
-             Order ID :{_orderID}
-    	     Price: {_price}
-    	     Amount in order: {_amount}
+            ID: {_id},
+            Product ID: {_productID}, 
+            Order ID : {_orderID},
+    	    Price: {_price},
+    	    Amount in order: {_amount}
             ";
 
 }

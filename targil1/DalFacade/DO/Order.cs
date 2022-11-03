@@ -17,13 +17,12 @@ public struct Order
     public System.DateTime _delivery { get; set; } //arrive to the customer
 
     public override string ToString() => $@"
-            Product ID{_id}, 
-             Customer Name:{_customerName}
-    	     Customer Email: {_customerEmail}
-    	    CustomerAddress: {_customerAddress}
-    	    Order Date: {_orderDate}
-    	    Ship Date: {_shipDate}
+            Product ID: {_id}, 
+            Customer Name: {_customerName},
+    	    Customer Email: {_customerEmail},
+    	    CustomerAddress: {_customerAddress},
+    	    Order Date: {_orderDate},
+    	    Ship Date: {_shipDate},
     	    Delivery: {_delivery}
-`
-            ";
+ ";
 }
