@@ -4,15 +4,15 @@
 
 namespace Stage0
 {
-    class Program
+    partial class Program
     {
         public static void Main(string[]args)
         {
             welcome5788();
-
+            welcome2178();
             Console.ReadKey();
         }
-
+        static partial void welcome2178();
         private static void welcome5788()
         {
             Console.WriteLine("Enter your name: ");
