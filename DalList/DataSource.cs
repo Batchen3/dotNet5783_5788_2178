@@ -19,9 +19,6 @@ static internal class DataSource
     }
     static internal class Config
     {
-        internal static int moneProduct = 0;
-        internal static int moneOrder = 0;
-        internal static int moneOrderItem = 0;
 
         private static int idOrder = 88417;
         static public int IdOrder
@@ -38,50 +35,29 @@ static internal class DataSource
         }
     }
 
-    public static void mm()
-    {
-        int x;
-    }
+    //public static void mm()
+    //{
+    //    int x=6;
+    //}
     static readonly Random rand = new Random();
-    const int NUMPRODUCTS = 50;
-    static internal Product[] arrayProduct = new Product[NUMPRODUCTS];
-    const int NUMORDERS = 100;
-    static internal Order[] arrayOrder = new Order[NUMORDERS];
-    const int NUMORDERITEM = 200;
-    static internal OrderItem[] arrayOrderItem = new OrderItem[NUMORDERITEM];
-
+    internal const int NUMPRODUCTS = 50;
+    internal const int NUMORDERS = 100;
+    internal const int NUMORDERITEM = 200;
+    static internal List<Product> s_listProduct = new List<Product> { };
+    static internal List<Order> s_listOrder = new List<Order> { };
+    static internal List<OrderItem> s_listOrderItem=new List<OrderItem> { };
     private static void addProduct(Product p)
-    {
-        if (Config.moneProduct > arrayProduct.Length)
-            Console.WriteLine("arrayProduct is full");
-        else
-        {
-            arrayProduct[Config.moneProduct] = p;
-            Config.moneProduct++;
-        }
+    {//לא צריך לעשות שאלה פה גי בטוח יש מתחת ל50 מוצרים
+            s_listProduct.Add(p);     
     }
     private static void addOrder(Order o)
     {
-        if (Config.moneOrder > arrayOrder.Length)
-            Console.WriteLine("arrayOrder is full");
-        else
-        {
-            arrayOrder[Config.moneOrder] = o;
-            Config.moneOrder++;
-        }
+        s_listOrder.Add(o);
     }
     private static void addOrderItem(OrderItem oi)
     {
-        if (Config.moneOrderItem > arrayOrderItem.Length)
-            Console.WriteLine("arrayOrderItem is full");
-        else
-        {
-            arrayOrderItem[Config.moneOrderItem] = oi;
-            Config.moneOrderItem++;
-        }
+        s_listOrderItem.Add(oi);
     }
-
-
     private static void s_initialize()
     {
         int index, daysShip, daysDelivery, id;
@@ -99,16 +75,16 @@ static internal class DataSource
 
         for (int i = 0; i < 10; i++)
         {
-            
+
             index = (int)rand.Next(10);
             id = (int)rand.Next(100000, 999999999);
             bool flag = false;//checks if there are two equal ids
             bool flag2 = true;
             while (!flag)
             {
-                for (int j = 0; j < Config.moneProduct && flag2; j++)
+                for (int j = 0; j < s_listProduct.Count && flag2; j++)
                 {
-                    if (arrayOrder[j]._id == id)
+                    if (s_listProduct[j]._id == id)
                         flag2 = false;
                 }
                 if (!flag2)
@@ -185,24 +161,24 @@ static internal class DataSource
             OrderItem oi = new OrderItem();
             index = (int)rand.Next(10);
             oi._id = Config.IdOrderItem++;
-            oi._productID = arrayProduct[index]._id;
-            oi._orderID = arrayOrder[i]._id;
-            oi._price = arrayProduct[index]._price;
+            oi._productID = s_listProduct[index]._id;
+            oi._orderID = s_listOrder[i]._id;
+            oi._price = s_listProduct[index]._price;
             oi._amount = (int)rand.Next(30);
             addOrderItem(oi);
         }
         int counter = 0;
-        for (int i = 20; i < 40; )//adding items to order not more than 3 items
+        for (int i = 20; i < 40;)//adding items to order not more than 3 items
         {
             OrderItem oi2 = new OrderItem();
             index = (int)rand.Next(1, 4);
             for (int j = 0; j < index; j++)
             {
-                oi2._orderID = arrayOrder[counter]._id;
+                oi2._orderID = s_listOrder[counter]._id;
                 int iProduct = (int)rand.Next(10);
                 oi2._id = Config.IdOrderItem++;
-                oi2._productID = arrayProduct[iProduct]._id;
-                oi2._price = arrayProduct[iProduct]._price;
+                oi2._productID = s_listProduct[iProduct]._id;
+                oi2._price = s_listProduct[iProduct]._price;
                 oi2._amount = (int)rand.Next(30);
                 addOrderItem(oi2);
             }

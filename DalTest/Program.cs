@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -8,9 +9,8 @@ namespace DalTest;
 class Program
 {
 
-    private static Dal.DalProduct dalProduct = new Dal.DalProduct();
-    private static Dal.DalOrder dalOrder = new Dal.DalOrder();
-    private static Dal.DalOrderItem dalOrderItem = new Dal.DalOrderItem();
+    private static Dal.DalList dalList = new Dal.DalList();
+    
     public static void InfoOfProduct(char x)
     {
         switch (x)
@@ -32,13 +32,16 @@ class Program
                 p._parve = int.Parse(Console.ReadLine());
                 try
                 {
-
-                    int result=dalProduct.create(p);
+                    int result= dalList.Product.Add(p);
                     Console.WriteLine("the product was added");
                 }
-                catch (Exception ex)
+                catch (ExistException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
+                }
+                catch(FullListException fEx)
+                {
+                    Console.WriteLine(fEx.Message);
                 }
                 break;
             case 'b'://read by id
@@ -46,16 +49,16 @@ class Program
                 int id = int.Parse(Console.ReadLine());
                 try
                 {
-                    Console.WriteLine(dalProduct.read(id));
+                    Console.WriteLine(dalList.Product.Get(id));
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'c'://read all
                 Console.WriteLine("all the products:");
-                Product[] arrReadAllProducts = dalProduct.readAll();
+                IEnumerable<Product> arrReadAllProducts = dalList.Product.GetAll();
                 foreach (var item in arrReadAllProducts)
                     Console.WriteLine(item);
                 break;
@@ -64,7 +67,7 @@ class Program
                 int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
                 try
                 {
-                    Console.WriteLine(dalProduct.read(idUpdate));
+                    Console.WriteLine(dalList.Product.Get(idUpdate));
                     Product pUpdate = new Product();
                     pUpdate._id = idUpdate;
                     Console.WriteLine("enter product's name");
@@ -77,12 +80,12 @@ class Program
                     pUpdate._inStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's parve(0/1)");
                     pUpdate._parve = int.Parse(Console.ReadLine());
-                    dalProduct.update(pUpdate);
+                    dalList.Product.Update(pUpdate);
 
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'e'://delete a product
@@ -90,11 +93,11 @@ class Program
                 int idDelete = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalProduct.delete(idDelete);
+                    dalList.Product.Delete(idDelete);
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             default:
@@ -121,11 +124,11 @@ class Program
                 o._delivery = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
-                    dalOrder.create(o);
+                    dalList.Order.Add(o);
                 }
-                catch (Exception ex)
+                catch (FullListException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'b'://read by id
@@ -133,16 +136,16 @@ class Program
                 int id = int.Parse(Console.ReadLine());
                 try
                 {
-                    Console.WriteLine(dalOrder.read(id));
+                    Console.WriteLine(dalList.Order.Get(id));
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'c'://read all
                 Console.WriteLine("all the orders with their customers:");
-                Order[] arrReadAllOrders = dalOrder.readAll();
+                IEnumerable<Order> arrReadAllOrders = dalList.Order.GetAll();
                 foreach (var item in arrReadAllOrders)
                     Console.WriteLine(item);
                 break;
@@ -151,7 +154,7 @@ class Program
                 int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
                 try
                 {
-                    Console.WriteLine(dalOrder.read(idUpdate));
+                    Console.WriteLine(dalList.Order.Get(idUpdate));
                     Order oUpdate = new Order();
                     oUpdate._id = idUpdate;
                     Console.WriteLine("enter order's customer name");
@@ -166,11 +169,11 @@ class Program
                     oUpdate._shipDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of delivery");
                     oUpdate._delivery = Convert.ToDateTime(Console.ReadLine());
-                    dalOrder.update(oUpdate);
+                    dalList.Order.Update(oUpdate);
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'e'://delete an order
@@ -178,11 +181,11 @@ class Program
                 int idDelete = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalOrder.delete(idDelete);
+                    dalList.Order.Delete(idDelete);
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             default:
@@ -205,11 +208,11 @@ class Program
                 oi._amount = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalOrderItem.create(oi);
+                    dalList.OrderItem.Add(oi);
                 }
-                catch (Exception ex)
+                catch (FullListException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'b'://read by id
@@ -217,16 +220,16 @@ class Program
                 int id = int.Parse(Console.ReadLine());
                 try
                 {
-                    Console.WriteLine(dalOrderItem.read(id));
+                    Console.WriteLine(dalList.OrderItem.Get(id));
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'c'://read all
                 Console.WriteLine("all the items in orders:");
-                OrderItem[] arrReadAllOrdersItems = dalOrderItem.readAll();
+                IEnumerable<OrderItem> arrReadAllOrdersItems = dalList.OrderItem.GetAll();
                 foreach (var item in arrReadAllOrdersItems)
                     Console.WriteLine(item);
                 break;
@@ -235,7 +238,7 @@ class Program
                 int idUpdate = int.Parse(Console.ReadLine());//search of the id to update
                 try
                 {
-                    Console.WriteLine(dalOrderItem.read(idUpdate));
+                    Console.WriteLine(dalList.OrderItem.Get(idUpdate));
                     OrderItem oiUpdate = new OrderItem();
                     oiUpdate._id = idUpdate;
                     Console.WriteLine("enter id product of order item");
@@ -246,11 +249,11 @@ class Program
                     oiUpdate._price = double.Parse(Console.ReadLine());
                     Console.WriteLine("enter amount of order item");
                     oiUpdate._amount = int.Parse(Console.ReadLine());
-                    dalOrderItem.update(oiUpdate);
+                    dalList.OrderItem.Update(oiUpdate);
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'e'://delete an item in order
@@ -258,11 +261,11 @@ class Program
                 int idDelete = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalOrderItem.delete(idDelete);
+                    dalList.OrderItem.Delete(idDelete);
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'f':// read item in order by ids of order and product
@@ -271,17 +274,17 @@ class Program
                 int idProduct = int.Parse(Console.ReadLine());
                 try
                 {
-                    Console.WriteLine(dalOrderItem.readByOrderAndProduct(idOrder, idProduct));
+                    Console.WriteLine(dalList.OrderItem.readByOrderAndProduct(idOrder, idProduct));
                 }
-                catch (Exception ex)
+                catch (NoSuchObjectException ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             case 'g'://read all items of specific order
                 Console.WriteLine("enter id order");
                 int idOfOrder = int.Parse(Console.ReadLine());
-                OrderItem[] allItemsInOrders = dalOrderItem.readByOrder(idOfOrder);
+                IEnumerable<OrderItem> allItemsInOrders = dalList.OrderItem.readByOrder(idOfOrder);
                 foreach (var item in allItemsInOrders)
                 {
                     if (item._orderID == idOfOrder)
@@ -294,7 +297,7 @@ class Program
     }
     public static void Main(string[] args)
     {
-       dalProduct.d();
+       // dalList.Product.d();
         Console.WriteLine("for product press 1");
         Console.WriteLine("for order press 2");
         Console.WriteLine("for item in order press 3");

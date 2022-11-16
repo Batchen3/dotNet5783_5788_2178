@@ -4,6 +4,7 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
+using DalApi;
 using DO;
 using System;
 using System.Diagnostics.Metrics;
@@ -11,77 +12,63 @@ using static Dal.DataSource;
 
 namespace Dal;
 
-public class DalOrder
+internal class DalOrder:IOrder
 {
-    public int create(Order o)
+    public int Add(Order value)
     {
-        o._id = Config.IdOrder++;
-        if (Config.moneOrder > arrayOrder.Length)
-            throw new Exception("the orders array is full");
+        value._id = Config.IdOrder++;
+        if (s_listOrder.Count == NUMORDERS)
+            throw new FullListException();
         else
-            arrayOrder[Config.moneOrder++] = o;
-        return o._id;
+            s_listOrder.Add(value);
+        return value._id;
     }//create an order
-    public Order read(int id)
+    public Order Get(int id)
     {
-        for (int i = 0; i < Config.moneOrder; i++)
+        for (int i = 0; i < s_listOrder.Count; i++)
         {
-            if (arrayOrder[i]._id == id)
-                return arrayOrder[i];
+            if (s_listOrder[i]._id == id)
+                return s_listOrder[i];
         }
-        throw new Exception("the order not found");
+        throw new NoSuchObjectException();
     }//read order according id 
-    public Order[] readAll()
+    public IEnumerable<Order> GetAll()
     {
-        Order[] tmpOrders = new Order[Config.moneOrder];
-        for (int i = 0; i < Config.moneOrder; i++)
+        List<Order> tmpOrders = new List<Order>();
+        for (int i = 0; i < s_listOrder.Count; i++)
         {
-            tmpOrders[i] = arrayOrder[i];
+            tmpOrders.Add(s_listOrder[i]);
         }
         return tmpOrders;
     }//read all the orders
-    public void update(Order o)
+    public void Update(Order value)
     {
         int j;
         bool isExist = false;
-        for (j = 0; j < Config.moneOrder && !isExist; j++)
+        for (j = 0; j < s_listOrder.Count && !isExist; j++)
         {
-            if (arrayOrder[j]._id == o._id)
-                isExist = true;
-
-        }
-        if (!isExist)
-            throw new Exception("this order is not exist");
-        for (int i = 0; i < Config.moneOrder; i++)
-        {
-            if (arrayOrder[i]._id == o._id)
-                arrayOrder[i] = o;
-        }
-    }//update the order
-    public void delete(int id)
-    {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < Config.moneOrder && !isExist; j++)
-        {
-            if (arrayOrder[j]._id == id)
-                isExist = true;
-
-        }
-        if (!isExist)
-            throw new Exception("this order is not exist");
-        Order[] newArr = new Order[arrayOrder.Length];
-        int counter = 0;
-        for (int i = 0; i < Config.moneOrder; i++)
-        {
-            if (arrayOrder[i]._id != id)
+            if (s_listOrder[j]._id == value._id)
             {
-                newArr[counter] = arrayOrder[i];
-                counter++;
+                isExist = true;
+                s_listOrder[j] = value;
             }
-
         }
-        Config.moneOrder--;
-        arrayOrder = newArr;
+        if (!isExist)
+            throw new NoSuchObjectException();
+    }//update the order
+    public void Delete(int id)
+    {
+        int j;
+        bool isExist = false;
+        for (j = 0; j < s_listOrder.Count && !isExist; j++)
+        {
+            if (s_listOrder[j]._id == id)
+            {
+                isExist = true;
+                s_listOrder.Remove(s_listOrder[j]);
+            }
+        }
+        if (!isExist)
+            throw new NoSuchObjectException();
     }//delete an order
 }

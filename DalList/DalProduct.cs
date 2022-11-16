@@ -6,93 +6,84 @@
 
 using DO;
 using System;
+using System.Linq;
+
 namespace Dal;
 using static Dal.DataSource;
+using DalApi;
 
 
 
-public class DalProduct
+internal class DalProduct:IProduct
 {
-    public void d()
+    //public void d()
+    //{
+    //    mm();
+    //}
+    public int Add(Product value)
     {
-        mm();
-    }
-    public int create(Product p)
-    {
-        //if (Config.moneProduct == arrayProduct.Length - 1)
-        //    throw new Exception("the products array is full");
-        //else
-        //{
-        for (int j = 0; j < Config.moneProduct; j++)
+        if (s_listProduct.Count == NUMPRODUCTS)
+            throw new FullListException();
+        else
         {
-            if (arrayProduct[j]._id == p._id)
-                throw new Exception("the product is alredy exist");
+            for (int j = 0; j < s_listProduct.Count; j++)
+            {
+                if (s_listProduct[j]._id == value._id) 
+                    throw new ExistException();
+            }
+            s_listProduct.Add(value);
         }
-        arrayProduct[Config.moneProduct++] = p;
-        //}
-        return p._id;
+        return value._id;
     }//add product to arr
 
-    public Product read(int id)
+    public Product Get(int id)
     {
-        for (int i = 0; i < Config.moneProduct; i++)
+        for (int i = 0; i < s_listProduct.Count; i++)
         {
-            if (arrayProduct[i]._id == id)
-                return arrayProduct[i];
+            if (s_listProduct[i]._id == id)
+                return s_listProduct[i];
         }
-        throw new Exception("the product not found");
+        throw new NoSuchObjectException();
     }//read the product according id
 
-    public Product[] readAll()
+    public IEnumerable<Product> GetAll()
     {
-        Product[] tmpProducts = new Product[Config.moneProduct];
-        for (int i = 0; i < Config.moneProduct; i++)
+        List<Product> tmpProducts = new List<Product> { };
+        for (int i = 0; i < s_listProduct.Count; i++)
         {
-            tmpProducts[i] = arrayProduct[i];
+            tmpProducts.Add(s_listProduct[i]);
         }
         return tmpProducts;
     }//read all products
-    public void update(Product p)
+    public void Update(Product value)
     {
         int j;
         bool isExist = false;
-        for (j = 0; j < Config.moneProduct && !isExist; j++)
+        for (j = 0; j < s_listProduct.Count && !isExist; j++)
         {
-            if (arrayProduct[j]._id == p._id)
-                isExist = true;
-        }
-        if (!isExist)
-            throw new Exception("this product is not exist");
-        for (int i = 0; i < Config.moneProduct; i++)
-        {
-            if (arrayProduct[i]._id == p._id)
-                arrayProduct[i] = p;
-        }
-    }//update a product 
-    public void delete(int id)
-    {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < Config.moneProduct && !isExist; j++)
-        {
-            if (arrayProduct[j]._id == id)
-                isExist = true;
-        }
-        if (!isExist)
-            throw new Exception("this product is not exist");
-        Product[] newArr = new Product [arrayProduct.Length]  ;
-        int counter = 0;
-        for (int i = 0; i < Config.moneProduct; i++)
-        {
-            if (arrayProduct[i]._id != id)
+            if (s_listProduct[j]._id == value._id)
             {
-                newArr[counter] = arrayProduct[i];
-                counter++;
+                isExist = true;
+                s_listProduct[j] = value;
             }
-
         }
-        Config.moneProduct--;
-        arrayProduct = newArr;
+        if (!isExist)
+            throw new NoSuchObjectException();
+    }//update a product 
+    public void Delete(int id)
+    {
+        int j;
+        bool isExist = false;
+        for (j = 0; j < s_listProduct.Count && !isExist; j++)
+        {
+            if (s_listProduct[j]._id == id)
+            {
+                isExist = true;
+                s_listProduct.Remove(s_listProduct[j]);
+            }
+        }
+        if (!isExist)
+            throw new NoSuchObjectException();
     }//delete a product according id
 
 }

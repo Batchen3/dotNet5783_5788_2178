@@ -5,106 +5,91 @@
 //using System.Threading.Tasks;
 
 
+using DalApi;
 using DO;
 using System;
 using static Dal.DataSource;
 
 namespace Dal;
 
-public class DalOrderItem
+internal class DalOrderItem:IOrderItem
 {
-    public int create(OrderItem oi)
+    public int Add(OrderItem value)
     {
-        oi._id = Config.IdOrderItem++;
-        if (Config.moneOrderItem > arrayOrderItem.Length)
-            throw new Exception("the orderItems array is full");
+        value._id = Config.IdOrderItem++;
+        if (s_listOrderItem.Count == NUMORDERITEM)
+            throw new FullListException();
         else
-            arrayOrderItem[Config.moneOrderItem++] = oi;
-        return oi._id;
+            s_listOrderItem.Add(value);
+        return value._id;
     }//create order item
-    public OrderItem read(int id)
+    public OrderItem Get(int id)
     {
-        for (int i = 0; i < Config.moneOrderItem; i++)
+        for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            if (arrayOrderItem[i]._id == id)
-                return arrayOrderItem[i];
+            if (s_listOrderItem[i]._id == id)
+                return s_listOrderItem[i];
         }
-        throw new Exception("the orderItem not found");
+        throw new NoSuchObjectException();
     }//read order item
     public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
     {
-        for (int i = 0; i < Config.moneOrderItem; i++)
+        for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            if (arrayOrderItem[i]._orderID == idOrder && arrayOrderItem[i]._productID == idProduct)
-                return arrayOrderItem[i];
+            if (s_listOrderItem[i]._orderID == idOrder && s_listOrderItem[i]._productID == idProduct)
+                return s_listOrderItem[i];
         }
-        throw new Exception("the orderItem not found");
+        throw new NoSuchObjectException();
     }//read order item by order id and product id
-    public OrderItem[] readByOrder(int idOrder)
+    public IEnumerable<OrderItem> readByOrder(int idOrder)
     {
-        OrderItem[] arr = new OrderItem[Config.moneOrderItem];
-        int counter = 0;
-        for (int i = 0; i < Config.moneOrderItem; i++)
+        List<OrderItem> list = new List<OrderItem>();
+        for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            if (arrayOrderItem[i]._orderID == idOrder)
+            if (s_listOrderItem[i]._orderID == idOrder)
             {
-                arr[counter] = arrayOrderItem[i];
-                counter++;
+                list.Add(s_listOrderItem[i]);
             }
         }
-        return arr;
+        return list;
     }//read by order id
-    public OrderItem[] readAll()
+    public IEnumerable<OrderItem> GetAll()
     {
-        OrderItem[] tmpOrderItem = new OrderItem[Config.moneOrderItem];
-        for (int i = 0; i < Config.moneOrderItem; i++)
+        List<OrderItem> tmpOrderItem = new List<OrderItem>();
+        for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            tmpOrderItem[i] = arrayOrderItem[i];
+            tmpOrderItem.Add(s_listOrderItem[i]);
         }
         return tmpOrderItem;
     }//read all order item
-    public void update(OrderItem oi)
+    public void Update(OrderItem value)
     {
         int j;
         bool isExist = false;
-        for (j = 0; j < Config.moneOrderItem && !isExist; j++)
+        for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
         {
-            if (arrayOrderItem[j]._id == oi._id)
-                isExist = true;
-
-        }
-        if (!isExist)
-            throw new Exception("this order item is not exist");
-        for (int i = 0; i < Config.moneOrderItem; i++)
-        {
-            if (arrayOrderItem[i]._id == oi._id)
-                arrayOrderItem[i] = oi;
-        }
-    }//update the order item
-    public void delete(int id)
-    {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < Config.moneOrderItem && !isExist; j++)
-        {
-            if (arrayOrderItem[j]._id == id)
-                isExist = true;
-
-        }
-        if (!isExist)
-            throw new Exception("this order item is not exist");
-        OrderItem[] newArr = new OrderItem[arrayOrderItem.Length];
-        int counter = 0;
-        for (int i = 0; i < Config.moneOrderItem; i++)
-        {
-            if (arrayOrderItem[i]._id != id)
+            if (s_listOrderItem[j]._id == value._id)
             {
-                newArr[counter] = arrayOrderItem[i];
-                counter++;
+                isExist = true;
+                s_listOrderItem[j] = value;
             }
-
         }
-        Config.moneOrderItem--;
-        arrayOrderItem = newArr;
+        if (!isExist)
+            throw new NoSuchObjectException();
+    }//update the order item
+    public void Delete(int id)
+    {
+        int j;
+        bool isExist = false;
+        for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
+        {
+            if (s_listOrderItem[j]._id == id)
+            {
+                isExist = true;
+                s_listOrderItem.Remove(s_listOrderItem[j]);
+            }
+        }
+        if (!isExist)
+            throw new NoSuchObjectException();
     }//delete order item by id
 }
