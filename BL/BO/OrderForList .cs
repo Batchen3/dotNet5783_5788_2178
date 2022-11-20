@@ -19,6 +19,6 @@ public class OrderForList
             Customer Name: {CustomerName}, 
             OrderStatus: {OrderStatus},
     	    Amount Of Items: {AmountOfItems},
-    	    Total Price: {TotalPrice},
+    	    Total Price: {TotalPrice}
             ";
 }

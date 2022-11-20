@@ -9,7 +9,7 @@ namespace DalTest;
 class Program
 {
 
-    private static Dal.DalList dalList = new Dal.DalList();
+    private static IDal dalList = new Dal.DalList();
     
     public static void InfoOfProduct(char x)
     {

@@ -11,6 +11,9 @@ public interface IProduct
 {
     public IEnumerable<ProductForList> GetAll();
     public IEnumerable<ProductItem> GetCatalog();
-
+    public Product Get(int id);
+    public void Add(Product p);
+    public void Delete(int id);
+    public void Update(Product id);
 
 }

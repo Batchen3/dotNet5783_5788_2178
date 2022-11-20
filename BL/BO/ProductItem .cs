@@ -15,7 +15,7 @@ public class ProductItem
     public double ProductPrice { get; set; }
     public ECategory Category { get; set; }
     public bool available { get; set; }
-    public double AmountInCart { get; set; }
+    public int AmountInCart { get; set; }
     public override string ToString() => $@"
             ProductItem ID: {ID}, 
             Product Name: {ProductName}, 
