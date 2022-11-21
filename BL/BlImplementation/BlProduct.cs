@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
 using DalApi;
 
 namespace BlImplementation;
 
-internal class BlProduct :IProduct
+internal class BlProduct : IProduct
 {
     private IDal dalList = new Dal.DalList();
     public IEnumerable<BO.ProductForList> GetAll()
@@ -18,11 +17,7 @@ internal class BlProduct :IProduct
         List<BO.ProductForList> productForList = new List<BO.ProductForList> { };
         foreach (var product in listOfProducts)
         {
-            //ID
-            BO.ProductForList productForListAdd=new BO.ProductForList();
-            productForListAdd.ProductPrice = product._price;
-            productForListAdd.ProductName = product._name;
-            productForListAdd.Category = (BO.ECategory)product._category;
+            BO.ProductForList productForListAdd = new BO.ProductForList { ID = Config.ProductForListId, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category };
             productForList.Add(productForListAdd);
         }
         return productForList;
@@ -33,12 +28,7 @@ internal class BlProduct :IProduct
         List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
         foreach (var product in listOfProducts)
         {
-            //ID
-            BO.ProductItem productItemAdd = new BO.ProductItem();
-            productItemAdd.ProductPrice = product._price;
-            productItemAdd.ProductName = product._name;
-            productItemAdd.Category = (BO.ECategory)product._category;
-            productItemAdd.available= product._inStock>0?true:false;
+            BO.ProductItem productItemAdd = new BO.ProductItem { ID = Config.ProductItemId, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category, available = product._inStock > 0 ? true : false };
             //לבנתיים אין קונה לכן הכמות במלאי שווה ל0
             productItemAdd.AmountInCart = 0;
             productItem.Add(productItemAdd);
@@ -47,6 +37,19 @@ internal class BlProduct :IProduct
     }
     public DO.Product Get(int id)
     {
+        if (id > 0)
+        {
+            try
+            {
+                DO.Product product = dalList.Product.Get(id);
+            }
+            catch (NoSuchObjectException e)
+            {
+                throw new BO.DalException(e);
+            }
+
+
+        }
 
     }
     public void Add(DO.Product p)
