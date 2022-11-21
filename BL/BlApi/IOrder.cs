@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BO;
 namespace BlApi;
 
 public interface IOrder
 {
-    public IEnumerable<OrderForList> GetOrders();
-    public Order GetDetailsOfOrder(int id);
-    public Order UpdateSentOrder(int id);
-    public Order UpdateArrivedOrder(int id);
-    public Order UpdateOrder(int id);
+    public IEnumerable<BO.OrderForList> GetOrders();
+    public BO.Order GetDetailsOfOrder(int id);
+    public BO.Order UpdateSentOrder(int id);
+    public BO.Order UpdateArrivedOrder(int id);
+    public BO.Order UpdateOrder(int id);
 }

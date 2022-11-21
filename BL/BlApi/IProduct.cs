@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlApi;
-using BO;
+
 
 public interface IProduct
 {
-    public IEnumerable<ProductForList> GetAll();
-    public IEnumerable<ProductItem> GetCatalog();
-    public Product Get(int id);
-    public void Add(Product p);
+    public IEnumerable<BO.ProductForList> GetAll();
+    public IEnumerable<BO.ProductItem> GetCatalog();
+    public BO.Product Get(int id);
+    public void Add(BO.Product p);
     public void Delete(int id);
-    public void Update(Product id);
+    public void Update(BO.Product p);
 
 }

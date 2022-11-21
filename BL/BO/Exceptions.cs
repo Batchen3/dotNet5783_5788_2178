@@ -27,3 +27,7 @@ public class NotValidException : Exception
 {
     public override string Message => "one or more parameters are not valid";
 }
+public class ProductInOrderException : Exception
+{
+    public override string Message => "can't delete: the product in order";
+}
