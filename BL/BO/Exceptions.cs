@@ -31,3 +31,7 @@ public class ProductInOrderException : Exception
 {
     public override string Message => "can't delete: the product in order";
 }
+public class DateWasException : Exception
+{
+    public override string Message => "the date was already";
+}

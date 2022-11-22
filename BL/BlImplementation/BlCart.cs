@@ -9,8 +9,6 @@ using DalApi;
 using DalFacade;
 using System.Collections;
 using Dal;
-
-
 namespace BlImplementation;
 
 internal class BlCart : ICart
@@ -34,7 +32,7 @@ internal class BlCart : ICart
                 }
             if (!exist)
             {
-                BO.OrderItem newOrderItem = new BO.OrderItem{ ID=Config.OrderItemId,ProductID = product._id,ProductName = product._name,ProductPrice = product._price, AmountsItems = 1, TotalPriceOfItems = product._price };
+                BO.OrderItem newOrderItem = new BO.OrderItem{ ID=0,ProductID = product._id,ProductName = product._name,ProductPrice = product._price, AmountsItems = 1, TotalPriceOfItems = product._price };
                 c.TotalPrice += product._price;
                 c.Items.Add(newOrderItem);
             }

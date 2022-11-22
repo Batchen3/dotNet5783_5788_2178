@@ -18,7 +18,7 @@ internal class BlProduct : BlApi.IProduct
         List<BO.ProductForList> productForList = new List<BO.ProductForList> { };
         foreach (var product in listOfProducts)
         {
-            BO.ProductForList productForListAdd = new BO.ProductForList { ID = Config.ProductForListId, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category };
+            BO.ProductForList productForListAdd = new BO.ProductForList { ID = 0, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category };
             productForList.Add(productForListAdd);
         }
         return productForList;
@@ -29,9 +29,7 @@ internal class BlProduct : BlApi.IProduct
         List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
         foreach (var product in listOfProducts)
         {
-            BO.ProductItem productItemAdd = new BO.ProductItem { ID = Config.ProductItemId, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category, available = product._inStock > 0 ? true : false, AmountInCart = 0 };
-            //לבנתיים אין קונה לכן הכמות במלאי שווה ל0
-            //productItemAdd.AmountInCart = 0;
+            BO.ProductItem productItemAdd = new BO.ProductItem { ID = 0, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category, available = product._inStock > 0 ? true : false, AmountInCart = 0 };
             productItem.Add(productItemAdd);
         }
         return productItem;
@@ -111,9 +109,3 @@ internal class BlProduct : BlApi.IProduct
 
     }
 }
-//public IEnumerable<ProductForList> GetAll();
-//public IEnumerable<ProductItem> GetCatalog();
-//public Product Get(int id);
-//public void Add(Product p);
-//public void Delete(int id);
-//public void Update(Product p);
