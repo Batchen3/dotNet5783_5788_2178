@@ -28,7 +28,7 @@ internal class BlOrder : BlApi.IOrder
         }
         return orders;
     }
-    public BO.EStatus calculateStatus(DO.Order order)//calculate status for order
+    private BO.EStatus calculateStatus(DO.Order order)//calculate status for order
     {
         DateTime today = DateTime.Now;
         if (order._delivery.CompareTo(today) < 0)//if the delivery date already was

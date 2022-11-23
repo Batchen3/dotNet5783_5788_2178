@@ -19,7 +19,7 @@ public class ObjectNotFoundException : Exception
 public class DalException : Exception
 {
     public DalException(Exception ex) : base("exception in dal", ex) { }
-    public override string Message => "exception in dal";
+    //public override string Message => "exception in dal";
 }
 
 
