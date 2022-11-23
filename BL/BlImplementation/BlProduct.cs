@@ -58,7 +58,7 @@ internal class BlProduct : BlApi.IProduct
     }
     public void Add(BO.Product p)//to add product
     {
-        if (p.ID <= 0 || p.Name == "" || p.InStock < 0 || p.Price <= 0)//check if the parameters are valid
+        if (p.ID <= 0 || p.Name == "" || p.InStock < 0 || p.Price <= 0||(p.Parve!=0 && p.Parve!=1))//check if the parameters are valid
             throw new BO.NotValidException();
         try
         {
@@ -94,9 +94,9 @@ internal class BlProduct : BlApi.IProduct
         }
         
     }
-    public void Update(BO.Product p)
+    public void Update(BO.Product p)//update a product
     {
-        if (p.ID <= 0 || p.Name == "" || p.InStock < 0 || p.Price <= 0)//check if the parameters are valid
+        if (p.ID <= 0 || p.Name == "" || p.InStock < 0 || p.Price <= 0|| (p.Parve != 0 && p.Parve != 1))//check if the parameters are valid
             throw new BO.NotValidException();
         DO.Product newProduct = new DO.Product { _id = p.ID, _name = p.Name, _price = p.Price, _category = (DO.ECategory)p.Category, _inStock = p.InStock, _parve = p.Parve };//create the product in order to update
         try
