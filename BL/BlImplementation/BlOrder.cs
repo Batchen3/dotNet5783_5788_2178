@@ -10,10 +10,10 @@ using DalApi;
 namespace BlImplementation;
 
 internal class BlOrder : BlApi.IOrder
-{//לבדוק תקינות של תאריכים
+{
     private IDal dalList = new Dal.DalList();
 
-    public IEnumerable<BO.OrderForList> GetOrders()
+    public IEnumerable<BO.OrderForList> GetOrders()//get all orders
     {
         double sum = 0;
         IEnumerable<DO.Order> allOrders = dalList.Order.GetAll();//from dal
@@ -31,9 +31,9 @@ internal class BlOrder : BlApi.IOrder
     private BO.EStatus calculateStatus(DO.Order order)//calculate status for order
     {
         DateTime today = DateTime.Now;
-        if (order._delivery.CompareTo(today) < 0)//if the delivery date already was
+        if (order._delivery.CompareTo(today) < 0 && order._delivery.CompareTo(DateTime.MinValue)!=0)//if the delivery date already was
             return BO.EStatus.arrived;
-        if (order._shipDate.CompareTo(today) < 0)//if the ship date already was
+        if (order._shipDate.CompareTo(today) < 0 && order._shipDate.CompareTo(DateTime.MinValue) != 0)//if the ship date already was
             return BO.EStatus.sent;
         return BO.EStatus.confirmed;
     }
@@ -76,6 +76,7 @@ internal class BlOrder : BlApi.IOrder
             {
                 order._shipDate = DateTime.Now;//update ship date
                 dalList.Order.Update(order);//update order
+                //לשנות את הסטטוסססססססססססססססססססססססססססססססססססססס
                 BO.Order updatedOrder = GetDetailsOfOrder(id);//get the update order from the dal
                 return updatedOrder;
             }

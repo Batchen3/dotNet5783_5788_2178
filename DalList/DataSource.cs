@@ -99,7 +99,7 @@ static internal class DataSource
             p._name = tInfoOfProduct[index].Item1;
             p._price = ((double)rand.NextDouble() + 0.05) * 100;
             p._category = tInfoOfProduct[index].Item2;
-            p._inStock = (int)rand.Next(10, 100);
+            p._inStock = (int)rand.Next(0, 100);
             p._parve = (int)rand.Next(2);
             addProduct(p);
         }

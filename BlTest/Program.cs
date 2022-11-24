@@ -56,13 +56,13 @@ namespace BlTest
                         Console.WriteLine("enter product's price");
                         product.Price = double.Parse(Console.ReadLine());
                         Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                        int categor = int.Parse(Console.ReadLine());
-                        while (categor < 0 || categor > 2)
+                        int category = int.Parse(Console.ReadLine());
+                        while (category < 0 || category > 2)
                         {
                             Console.WriteLine("the category is incorrect, please enter category again");
-                            categor = int.Parse(Console.ReadLine());
+                            category = int.Parse(Console.ReadLine());
                         }
-                        product.Category = (BO.ECategory)categor;
+                        product.Category = (BO.ECategory)category;
                         Console.WriteLine("enter product's instock");
                         product.InStock = int.Parse(Console.ReadLine());
                         Console.WriteLine("enter product's parve(0/1)");
@@ -80,7 +80,7 @@ namespace BlTest
                             Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
                         }
                         break;
-                    case 'e'://update a product
+                    case 'e'://delete a product
                         Console.WriteLine("enter id of product");
                         id = int.Parse(Console.ReadLine());
                         try
@@ -96,8 +96,129 @@ namespace BlTest
                             Console.WriteLine(ex.Message);
                         }
                         break;
-                    case 'f':
+                    case 'f'://update a product
+                        BO.Product productForUpdate = new BO.Product();
+                        Console.WriteLine("enter product's id to update");
+                        productForUpdate.ID = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter product's name");
+                        productForUpdate.Name = Console.ReadLine();
+                        while (Regex.IsMatch(productForUpdate.Name, @"^\d+$"))
+                        {
+                            Console.WriteLine("the name is incorrect, please enter name again");
+                            productForUpdate.Name = Console.ReadLine();
+                        }
+                        Console.WriteLine("enter product's price");
+                        productForUpdate.Price = double.Parse(Console.ReadLine());
+                        Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
+                        int categoryUpdate = int.Parse(Console.ReadLine());
+                        while (categoryUpdate < 0 || categoryUpdate > 2)
+                        {
+                            Console.WriteLine("the category is incorrect, please enter category again");
+                            categoryUpdate = int.Parse(Console.ReadLine());
+                        }
+                        productForUpdate.Category = (BO.ECategory)categoryUpdate;
+                        Console.WriteLine("enter product's instock");
+                        productForUpdate.InStock = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter product's parve(0/1)");
+                        productForUpdate.Parve = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Bl.Product.Update(productForUpdate);
+                        }
+                        catch (BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch (BO.NotValidException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        private static void Order(char x)
+        {
+            if (x != 'e')
+            {
+                int id;
+                switch (x)
+                {
+                    case 'a'://get all orders 
+                        IEnumerable<BO.OrderForList> listaOfOrders = Bl.Order.GetOrders();
+                        foreach (var item in listaOfOrders)
+                            Console.WriteLine(item);
+                        break;
+                    case 'b'://Get Details Of Order
+                        Console.WriteLine("enter order's id");
+                        id = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Console.WriteLine(Bl.Order.GetDetailsOfOrder(id));
+                        }
+                        catch (BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch (BO.NotValidException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
 
+                        break;
+                    case 'c'://update sent of order
+                        Console.WriteLine("enter id for update sent of order");
+                        id = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Console.WriteLine(Bl.Order.UpdateSentOrder(id));
+                        }
+                        catch (BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch (BO.DateWasException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    case 'd'://update arrived of order
+                        Console.WriteLine("enter id for update arrived of order");
+                        id = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Console.WriteLine(Bl.Order.UpdateArrivedOrder(id));
+                        }
+                        catch (BO.DateWasException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        catch (BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        private static void Cart(char x)
+        {
+            if (x != 'd')
+            {
+                int id;
+                switch (x)
+                {
+                    case 'a'://for add cart
+                        break;
+                    case 'b'://for update cart
+                       
+                        break;
+                    case 'c'://for save cart
+                       
                         break;
                     default:
                         break;
@@ -129,15 +250,32 @@ namespace BlTest
                         Product(x);//doing this function 
                         break;
                     case 2:
+                        Console.WriteLine("for watching all orders (manager) press a");
+                        Console.WriteLine("for get a certain order press b");
+                        Console.WriteLine("for update sent order press c");
+                        Console.WriteLine("for update arrived order press d");
+                        Console.WriteLine("for exit press e");
+                        x = char.Parse(Console.ReadLine());
+                        Order(x);//doing this function 
                         break;
                     case 3:
+                        Console.WriteLine("for add cart press a");
+                        Console.WriteLine("for update cart press b");
+                        Console.WriteLine("for save cart press c");
+                        Console.WriteLine("for exit press d");
+                        x = char.Parse(Console.ReadLine());
+                        Cart(x);//doing this function 
                         break;
                     default:
                         break;
                 }
-                Console.WriteLine("enter a number");
+                Console.WriteLine("for product press 1");
+                Console.WriteLine("for order press 2");
+                Console.WriteLine("for cart press 3");
+                Console.WriteLine("for exit press 0");
                 select = int.Parse(Console.ReadLine());
             }
+
 
 
         }
