@@ -20,20 +20,23 @@ internal class BlOrder : BlApi.IOrder
         List<BO.OrderForList> orders = new List<BO.OrderForList>();
         foreach (var item in allOrders)
         {
-            //try&catch from "readByOrder"
-            IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.readByOrder(item._id);//bring all orderitems according to orderId
+            IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.readByOrder(item.Id);//bring all orderitems according to orderId
             foreach (var orderItem in orderItemsById)
-                sum += orderItem._price * orderItem._amount;//calculate the price 
-            orders.Add(new BO.OrderForList { ID = 0, CustomerName = item._customerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
+                sum += orderItem.Price * orderItem.Amount;//calculate the price 
+            orders.Add(new BO.OrderForList { ID = 0, CustomerName = item.CustomerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
         }
         return orders;
     }
+
+    /// <summary>
+    /// help function that calculate status
+    /// </summary>
     private BO.EStatus calculateStatus(DO.Order order)//calculate status for order
     {
         DateTime today = DateTime.Now;
-        if (order._delivery.CompareTo(today) < 0 && order._delivery.CompareTo(DateTime.MinValue)!=0)//if the delivery date already was
+        if (order.Delivery.CompareTo(today) < 0 && order.Delivery.CompareTo(DateTime.MinValue)!=0)//if the delivery date already was
             return BO.EStatus.arrived;
-        if (order._shipDate.CompareTo(today) < 0 && order._shipDate.CompareTo(DateTime.MinValue) != 0)//if the ship date already was
+        if (order.ShipDate.CompareTo(today) < 0 && order.ShipDate.CompareTo(DateTime.MinValue) != 0)//if the ship date already was
             return BO.EStatus.sent;
         return BO.EStatus.confirmed;
     }
@@ -46,16 +49,16 @@ internal class BlOrder : BlApi.IOrder
                 double sum = 0;
                 DO.Order orderFromDal = dalList.Order.Get(id);//get order by id
 
-                IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.readByOrder(orderFromDal._id);//bring all orderitems according to orderId
+                IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.readByOrder(orderFromDal.Id);//bring all orderitems according to orderId
                 List<BO.OrderItem> orderItemsList = new List<BO.OrderItem>();
                 foreach (var orderItem in orderItemsById)//create for all DO.Orderitem BO.OrderItem and insert it to a list
                 {
-                    sum += orderItem._price * orderItem._amount;//calculate the price 
-                    DO.Product product = dalList.Product.Get(orderItem._productID);//get a product by id-product
-                    orderItemsList.Add(new BO.OrderItem { ID = 0, ProductID = orderItem._productID, ProductPrice = orderItem._price, ProductName = product._name, AmountsItems = orderItem._amount, TotalPriceOfItems = orderItem._amount * orderItem._price });//create BO.orderItem
+                    sum += orderItem.Price * orderItem.Amount;//calculate the price 
+                    DO.Product product = dalList.Product.Get(orderItem.ProductID);//get a product by id-product
+                    orderItemsList.Add(new BO.OrderItem { ID = 0, ProductID = orderItem.ProductID, ProductPrice = orderItem.Price, ProductName = product.Name, AmountsItems = orderItem.Amount, TotalPriceOfItems = orderItem.Amount * orderItem.Price });//create BO.orderItem
 
                 }
-                BO.Order order = new BO.Order { ID = orderFromDal._id, CustomerName = orderFromDal._customerName, CustomerEmail = orderFromDal._customerEmail, CustomerAddress = orderFromDal._customerAddress, Delivery = orderFromDal._delivery, ShipDate = orderFromDal._shipDate, OrderDate = orderFromDal._orderDate, OrderStatus = calculateStatus(orderFromDal), TotalPrice = sum, Items = orderItemsList };//create BO.Order
+                BO.Order order = new BO.Order { ID = orderFromDal.Id, CustomerName = orderFromDal.CustomerName, CustomerEmail = orderFromDal.CustomerEmail, CustomerAddress = orderFromDal.CustomerAddress, Delivery = orderFromDal.Delivery, ShipDate = orderFromDal.ShipDate, OrderDate = orderFromDal.OrderDate, OrderStatus = calculateStatus(orderFromDal), TotalPrice = sum, Items = orderItemsList };//create BO.Order
                 return order;
             }
             catch (NoSuchObjectException ex)
@@ -72,11 +75,10 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             DO.Order order = dalList.Order.Get(id);//get order by id
-            if (order._shipDate == DateTime.MinValue || order._shipDate.CompareTo(DateTime.Now) > 0)//check that the date of ship didn't past
+            if (order.ShipDate == DateTime.MinValue || order.ShipDate.CompareTo(DateTime.Now) > 0)//check that the date of ship didn't past
             {
-                order._shipDate = DateTime.Now;//update ship date
+                order.ShipDate = DateTime.Now;//update ship date
                 dalList.Order.Update(order);//update order
-                //לשנות את הסטטוסססססססססססססססססססססססססססססססססססססס
                 BO.Order updatedOrder = GetDetailsOfOrder(id);//get the update order from the dal
                 return updatedOrder;
             }
@@ -95,9 +97,9 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             DO.Order order = dalList.Order.Get(id);//get order by id
-            if (order._delivery == DateTime.MinValue || order._delivery.CompareTo(DateTime.Now) > 0)//check that the date of delivery didn't past
+            if (order.Delivery == DateTime.MinValue || order.Delivery.CompareTo(DateTime.Now) > 0)//check that the date of delivery didn't past
             {
-                order._delivery = DateTime.Now;//update delivery date
+                order.Delivery = DateTime.Now;//update delivery date
                 dalList.Order.Update(order);//update order
                 BO.Order updatedOrder = GetDetailsOfOrder(id);//get the update order from the dal
                 return updatedOrder;
@@ -110,8 +112,28 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.DalException(ex);
         }
     }
-    //public BO.Order UpdateOrder(int id)
-    //{
 
+
+//bonuus
+    //public BO.Order UpdateOrder(int idOrder, int idProduct, int amount)
+    //{
+    //    try
+    //    {
+    //        if(amount>0)
+    //        {
+    //            DO.OrderItem orderItem = dalList.OrderItem.readByOrderAndProduct(idOrder, idProduct);
+    //            if(dalList.Product.Get(idProduct).InStock>=amount)
+    //            {
+                    
+    //            }
+    //        }
+
+    //    }
+    //    catch (Exception)
+    //    {
+
+    //        throw;
+    //    }
+    //    return 0;
     //}
 }

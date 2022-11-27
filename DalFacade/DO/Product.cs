@@ -8,21 +8,40 @@ namespace DO;
 
 public struct Product
 {
-
-    public int _id { get; set; }
-    public string _name { get; set; }
-    public double _price { get; set; }
-    public ECategory _category { get; set; }//enum category
-    public int _inStock { get; set; }
-    public int _parve { get; set; }
-
+    /// <summary>
+    /// property Id for Product
+    /// </summary>
+    public int Id { get; set; }
+    /// <summary>
+    /// property Name for Product
+    /// </summary>
+    public string Name { get; set; }
+    /// <summary>
+            /// property Price for Product
+            /// </summary>
+    public double Price { get; set; }
+    /// <summary>
+    /// property Category for Product
+    /// </summary>
+    public ECategory Category { get; set; }//enum category
+    /// <summary>
+    /// property InStock for Product
+    /// </summary>
+    public int InStock { get; set; }
+    /// <summary>
+    /// property Parve for Product
+    /// </summary>
+    public int Parve { get; set; }
+    /// <summary>
+    /// function toString for print product
+    /// </summary>
     public override string ToString() => $@"
-            Product ID: {_id}, 
-            Name: {_name}, 
-            category: {_category},
-    	    Price: {_price},
-    	    Amount in stock: {_inStock},
-            Parve:{_parve}
+            Product ID: {Id}, 
+            Name: {Name}, 
+            category: {Category},
+    	    Price: {Price},
+    	    Amount in stock: {InStock},
+            Parve:{Parve}
             ";
 
 }

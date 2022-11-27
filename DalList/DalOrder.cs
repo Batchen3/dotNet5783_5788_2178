@@ -16,18 +16,18 @@ internal class DalOrder:IOrder
 {
     public int Add(Order value)
     {
-        value._id = Config.IdOrder++;
+        value.Id = Config.IdOrder++;
         if (s_listOrder.Count == NUMORDERS)
             throw new FullListException();
         else
             s_listOrder.Add(value);
-        return value._id;
+        return value.Id;
     }//create an order
     public Order Get(int id)
     {
         for (int i = 0; i < s_listOrder.Count; i++)
         {
-            if (s_listOrder[i]._id == id)
+            if (s_listOrder[i].Id == id)
                 return s_listOrder[i];
         }
         throw new NoSuchObjectException();
@@ -47,7 +47,7 @@ internal class DalOrder:IOrder
         bool isExist = false;
         for (j = 0; j < s_listOrder.Count && !isExist; j++)
         {
-            if (s_listOrder[j]._id == value._id)
+            if (s_listOrder[j].Id == value.Id)
             {
                 isExist = true;
                 s_listOrder[j] = value;
@@ -62,7 +62,7 @@ internal class DalOrder:IOrder
         bool isExist = false;
         for (j = 0; j < s_listOrder.Count && !isExist; j++)
         {
-            if (s_listOrder[j]._id == id)
+            if (s_listOrder[j].Id == id)
             {
                 isExist = true;
                 s_listOrder.Remove(s_listOrder[j]);

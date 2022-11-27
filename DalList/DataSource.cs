@@ -35,10 +35,7 @@ static internal class DataSource
         }
     }
 
-    //public static void mm()
-    //{
-    //    int x=6;
-    //}
+  
     static readonly Random rand = new Random();
     internal const int NUMPRODUCTS = 50;
     internal const int NUMORDERS = 100;
@@ -47,7 +44,7 @@ static internal class DataSource
     static internal List<Order> s_listOrder = new List<Order> { };
     static internal List<OrderItem> s_listOrderItem=new List<OrderItem> { };
     private static void addProduct(Product p)
-    {//לא צריך לעשות שאלה פה גי בטוח יש מתחת ל50 מוצרים
+    {
             s_listProduct.Add(p);     
     }
     private static void addOrder(Order o)
@@ -84,7 +81,7 @@ static internal class DataSource
             {
                 for (int j = 0; j < s_listProduct.Count && flag2; j++)
                 {
-                    if (s_listProduct[j]._id == id)
+                    if (s_listProduct[j].Id == id)
                         flag2 = false;
                 }
                 if (!flag2)
@@ -95,12 +92,12 @@ static internal class DataSource
                 }
             }
             Product p = new Product();
-            p._id = id;
-            p._name = tInfoOfProduct[index].Item1;
-            p._price = ((double)rand.NextDouble() + 0.05) * 100;
-            p._category = tInfoOfProduct[index].Item2;
-            p._inStock = (int)rand.Next(0, 100);
-            p._parve = (int)rand.Next(2);
+            p.Id = id;
+            p.Name = tInfoOfProduct[index].Item1;
+            p.Price = ((double)rand.NextDouble() + 0.05) * 100;
+            p.Category = tInfoOfProduct[index].Item2;
+            p.InStock = (int)rand.Next(0, 100);
+            p.Parve = (int)rand.Next(2);
             addProduct(p);
         }
 
@@ -131,27 +128,27 @@ static internal class DataSource
             index = (int)rand.Next(20);
             daysShip = (int)rand.Next(1, 3);
             daysDelivery = (int)rand.Next(3, 7);
-            o._id = Config.IdOrder++;
-            o._customerName = tInfoOfOrder[index].Item1;
-            o._customerEmail = tInfoOfOrder[index].Item2;
-            o._customerAddress = tInfoOfOrder[index].Item3;
-            o._orderDate = DateTime.Now;
+            o.Id = Config.IdOrder++;
+            o.CustomerName = tInfoOfOrder[index].Item1;
+            o.CustomerEmail = tInfoOfOrder[index].Item2;
+            o.CustomerAddress = tInfoOfOrder[index].Item3;
+            o.OrderDate = DateTime.Now;
             if (i < tInfoOfOrder.Length * 0.2)//20% with just order date
             {
-                o._shipDate = DateTime.MinValue;
-                o._delivery = DateTime.MinValue;
+                o.ShipDate = DateTime.MinValue;
+                o.Delivery = DateTime.MinValue;
             }
             else
             {
                 TimeSpan tDaysShip = new TimeSpan(daysShip, 0, 0, 0);
-                o._shipDate = o._orderDate.Add(tDaysShip);
+                o.ShipDate = o.OrderDate.Add(tDaysShip);
                 if (i < tInfoOfOrder.Length * 0.2 + (tInfoOfOrder.Length * 0.8 * 0.6))//60% of 80% with order, ship and delivery dates.
                 {
                     TimeSpan tDaysDelivery = new TimeSpan(daysDelivery, 0, 0, 0);
-                    o._delivery = o._orderDate.Add(tDaysDelivery);
+                    o.Delivery = o.OrderDate.Add(tDaysDelivery);
                 }
                 else
-                    o._delivery = DateTime.MinValue;//the other with just order and ship dates.
+                    o.Delivery = DateTime.MinValue;//the other with just order and ship dates.
             }
             addOrder(o);
         }
@@ -160,11 +157,11 @@ static internal class DataSource
         {
             OrderItem oi = new OrderItem();
             index = (int)rand.Next(10);
-            oi._id = Config.IdOrderItem++;
-            oi._productID = s_listProduct[index]._id;
-            oi._orderID = s_listOrder[i]._id;
-            oi._price = s_listProduct[index]._price;
-            oi._amount = (int)rand.Next(30);
+            oi.Id = Config.IdOrderItem++;
+            oi.ProductID = s_listProduct[index].Id;
+            oi.OrderID = s_listOrder[i].Id;
+            oi.Price = s_listProduct[index].Price;
+            oi.Amount = (int)rand.Next(30);
             addOrderItem(oi);
         }
         int counter = 0;
@@ -174,12 +171,12 @@ static internal class DataSource
             index = (int)rand.Next(1, 4);
             for (int j = 0; j < index; j++)
             {
-                oi2._orderID = s_listOrder[counter]._id;
+                oi2.OrderID = s_listOrder[counter].Id;
                 int iProduct = (int)rand.Next(10);
-                oi2._id = Config.IdOrderItem++;
-                oi2._productID = s_listProduct[iProduct]._id;
-                oi2._price = s_listProduct[iProduct]._price;
-                oi2._amount = (int)rand.Next(30);
+                oi2.Id = Config.IdOrderItem++;
+                oi2.ProductID = s_listProduct[iProduct].Id;
+                oi2.Price = s_listProduct[iProduct].Price;
+                oi2.Amount = (int)rand.Next(30);
                 addOrderItem(oi2);
             }
             i += index;

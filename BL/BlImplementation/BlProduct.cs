@@ -19,7 +19,7 @@ internal class BlProduct : BlApi.IProduct
         List<BO.ProductForList> productForList = new List<BO.ProductForList> { };
         foreach (var product in listOfProducts)//change on product to product-for-list
         {
-            BO.ProductForList productForListAdd = new BO.ProductForList { ID = 0, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category };
+            BO.ProductForList productForListAdd = new BO.ProductForList { ID = 0, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category };
             productForList.Add(productForListAdd);
         }
         return productForList;
@@ -30,7 +30,7 @@ internal class BlProduct : BlApi.IProduct
         List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
         foreach (var product in listOfProducts)//change on product to product-item
         {
-            BO.ProductItem productItemAdd = new BO.ProductItem { ID = 0, ProductPrice = product._price, ProductName = product._name, Category = (BO.ECategory)product._category, available = product._inStock > 0 ? true : false, AmountInCart = 0 };
+            BO.ProductItem productItemAdd = new BO.ProductItem { ID = 0, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 };
             productItem.Add(productItemAdd);
         }
         return productItem;
@@ -42,7 +42,7 @@ internal class BlProduct : BlApi.IProduct
             try
             {
                 DO.Product product = dalList.Product.Get(id);//get the product from dal
-                BO.Product newProduct = new BO.Product { ID = product._id, Name = product._name, Price = product._price, Category = (BO.ECategory)product._category, InStock = product._inStock, Parve = product._parve };//create BO.Product from info of DO.Product
+                BO.Product newProduct = new BO.Product { ID = product.Id, Name = product.Name, Price = product.Price, Category = (BO.ECategory)product.Category, InStock = product.InStock, Parve = product.Parve };//create BO.Product from info of DO.Product
                 return newProduct;
             }
             catch (NoSuchObjectException e)
@@ -62,7 +62,7 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.NotValidException();
         try
         {
-            dalList.Product.Add(new DO.Product { _id = p.ID, _name = p.Name, _inStock = p.InStock, _category = (DO.ECategory)p.Category, _parve = p.Parve, _price = p.Price});
+            dalList.Product.Add(new DO.Product { Id = p.ID, Name = p.Name, InStock = p.InStock, Category = (DO.ECategory)p.Category, Parve = p.Parve, Price = p.Price});
         }
         catch (ExistException ex)
         {
@@ -79,7 +79,7 @@ internal class BlProduct : BlApi.IProduct
         IEnumerable<DO.OrderItem> AllOrderItems = dalList.OrderItem.GetAll();
         foreach (var orderItem in AllOrderItems)//check if it is possible to delete order
         {
-            if (id == orderItem._productID) 
+            if (id == orderItem.ProductID) 
             {
                 throw new BO.ProductInOrderException();
             }
@@ -98,7 +98,7 @@ internal class BlProduct : BlApi.IProduct
     {
         if (p.ID <= 0 || p.Name == "" || p.InStock < 0 || p.Price <= 0|| (p.Parve != 0 && p.Parve != 1))//check if the parameters are valid
             throw new BO.NotValidException();
-        DO.Product newProduct = new DO.Product { _id = p.ID, _name = p.Name, _price = p.Price, _category = (DO.ECategory)p.Category, _inStock = p.InStock, _parve = p.Parve };//create the product in order to update
+        DO.Product newProduct = new DO.Product { Id = p.ID, Name = p.Name, Price = p.Price, Category = (DO.ECategory)p.Category, InStock = p.InStock, Parve = p.Parve };//create the product in order to update
         try
         {
             dalList.Product.Update(newProduct);

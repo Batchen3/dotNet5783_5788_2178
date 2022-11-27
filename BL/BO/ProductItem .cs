@@ -10,12 +10,33 @@ namespace BO;
 
 public class ProductItem
 {
+    /// <summary>
+    ///property id for ProductItem
+    /// </summary>
     public int ID { get; set; }
+    /// <summary>
+    ///property ProductName for ProductItem
+    /// </summary>
     public string ProductName { get; set; }
+    /// <summary>
+    ///property ProductPrice for ProductItem
+    /// </summary>
     public double ProductPrice { get; set; }
+    /// <summary>
+    ///property Category for ProductItem
+    /// </summary>
     public ECategory Category { get; set; }
+    /// <summary>
+    ///property available for ProductItem
+    /// </summary>
     public bool available { get; set; }
+    /// <summary>
+    ///property AmountInCart for ProductItem
+    /// </summary>
     public int AmountInCart { get; set; }
+    /// <summary>
+    /// function "to string" for  print the ProductItem
+    /// </summary>
     public override string ToString() => $@"
             ProductItem ID: {ID}, 
             Product Name: {ProductName}, 

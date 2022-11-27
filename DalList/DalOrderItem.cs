@@ -16,18 +16,18 @@ internal class DalOrderItem:IOrderItem
 {
     public int Add(OrderItem value)
     {
-        value._id = Config.IdOrderItem++;
+        value.Id = Config.IdOrderItem++;
         if (s_listOrderItem.Count == NUMORDERITEM)
             throw new FullListException();
         else
             s_listOrderItem.Add(value);
-        return value._id;
+        return value.Id;
     }//create order item
     public OrderItem Get(int id)
     {
         for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            if (s_listOrderItem[i]._id == id)
+            if (s_listOrderItem[i].Id == id)
                 return s_listOrderItem[i];
         }
         throw new NoSuchObjectException();
@@ -36,7 +36,7 @@ internal class DalOrderItem:IOrderItem
     {
         for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            if (s_listOrderItem[i]._orderID == idOrder && s_listOrderItem[i]._productID == idProduct)
+            if (s_listOrderItem[i].OrderID == idOrder && s_listOrderItem[i].ProductID == idProduct)
                 return s_listOrderItem[i];
         }
         throw new NoSuchObjectException();
@@ -46,7 +46,7 @@ internal class DalOrderItem:IOrderItem
         List<OrderItem> list = new List<OrderItem>();
         for (int i = 0; i < s_listOrderItem.Count; i++)
         {
-            if (s_listOrderItem[i]._orderID == idOrder)
+            if (s_listOrderItem[i].OrderID == idOrder)
             {
                 list.Add(s_listOrderItem[i]);
             }
@@ -68,7 +68,7 @@ internal class DalOrderItem:IOrderItem
         bool isExist = false;
         for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
         {
-            if (s_listOrderItem[j]._id == value._id)
+            if (s_listOrderItem[j].Id == value.Id)
             {
                 isExist = true;
                 s_listOrderItem[j] = value;
@@ -83,7 +83,7 @@ internal class DalOrderItem:IOrderItem
         bool isExist = false;
         for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
         {
-            if (s_listOrderItem[j]._id == id)
+            if (s_listOrderItem[j].Id == id)
             {
                 isExist = true;
                 s_listOrderItem.Remove(s_listOrderItem[j]);

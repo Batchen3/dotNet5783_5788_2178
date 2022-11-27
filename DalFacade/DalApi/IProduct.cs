@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
+    /// <summary>
+    /// interface IProduct that DalProduct do it
+    /// </summary>
     public interface IProduct: ICrud<Product>
     {
     }

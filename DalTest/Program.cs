@@ -19,17 +19,17 @@ class Program
 
                 Product p = new Product();
                 Console.WriteLine("enter product's id to add");
-                p._id = int.Parse(Console.ReadLine());
+                p.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's name");
-                p._name = Console.ReadLine();
+                p.Name = Console.ReadLine();
                 Console.WriteLine("enter product's price");
-                p._price = double.Parse(Console.ReadLine());
+                p.Price = double.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                p._category = (ECategory)int.Parse(Console.ReadLine());
+                p.Category = (ECategory)int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's instock");
-                p._inStock = int.Parse(Console.ReadLine());
+                p.InStock = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's parve(0/1)");
-                p._parve = int.Parse(Console.ReadLine());
+                p.Parve = int.Parse(Console.ReadLine());
                 try
                 {
                     int result= dalList.Product.Add(p);
@@ -69,17 +69,17 @@ class Program
                 {
                     Console.WriteLine(dalList.Product.Get(idUpdate));
                     Product pUpdate = new Product();
-                    pUpdate._id = idUpdate;
+                    pUpdate.Id = idUpdate;
                     Console.WriteLine("enter product's name");
-                    pUpdate._name = Console.ReadLine();
+                    pUpdate.Name = Console.ReadLine();
                     Console.WriteLine("enter product's price");
-                    pUpdate._price = double.Parse(Console.ReadLine());
+                    pUpdate.Price = double.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's category(0-for cups,1-for cakes,2-for cookies)");
-                    pUpdate._category = (ECategory)int.Parse(Console.ReadLine());
+                    pUpdate.Category = (ECategory)int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's instock");
-                    pUpdate._inStock = int.Parse(Console.ReadLine());
+                    pUpdate.InStock = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter product's parve(0/1)");
-                    pUpdate._parve = int.Parse(Console.ReadLine());
+                    pUpdate.Parve = int.Parse(Console.ReadLine());
                     dalList.Product.Update(pUpdate);
 
                 }
@@ -111,17 +111,17 @@ class Program
             case 'a'://add
                 Order o = new Order();
                 Console.WriteLine("enter order's customer name");
-                o._customerName = Console.ReadLine();
+                o.CustomerName = Console.ReadLine();
                 Console.WriteLine("enter order's customer email");
-                o._customerEmail = Console.ReadLine();
+                o.CustomerEmail = Console.ReadLine();
                 Console.WriteLine("enter order's customer address");
-                o._customerAddress = Console.ReadLine();
+                o.CustomerAddress = Console.ReadLine();
                 Console.WriteLine("enter order's date");
-                o._orderDate = Convert.ToDateTime(Console.ReadLine());
+                o.OrderDate = Convert.ToDateTime(Console.ReadLine());
                 Console.WriteLine("enter order's date of ship");
-                o._shipDate = Convert.ToDateTime(Console.ReadLine());
+                o.ShipDate = Convert.ToDateTime(Console.ReadLine());
                 Console.WriteLine("enter order's date of delivery");
-                o._delivery = Convert.ToDateTime(Console.ReadLine());
+                o.Delivery = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
                     dalList.Order.Add(o);
@@ -156,19 +156,19 @@ class Program
                 {
                     Console.WriteLine(dalList.Order.Get(idUpdate));
                     Order oUpdate = new Order();
-                    oUpdate._id = idUpdate;
+                    oUpdate.Id = idUpdate;
                     Console.WriteLine("enter order's customer name");
-                    oUpdate._customerName = Console.ReadLine();
+                    oUpdate.CustomerName = Console.ReadLine();
                     Console.WriteLine("enter order's customer email");
-                    oUpdate._customerEmail = Console.ReadLine();
+                    oUpdate.CustomerEmail = Console.ReadLine();
                     Console.WriteLine("enter order's customer address");
-                    oUpdate._customerAddress = Console.ReadLine();
+                    oUpdate.CustomerAddress = Console.ReadLine();
                     Console.WriteLine("enter order's date");
-                    oUpdate._orderDate = Convert.ToDateTime(Console.ReadLine());
+                    oUpdate.OrderDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of ship");
-                    oUpdate._shipDate = Convert.ToDateTime(Console.ReadLine());
+                    oUpdate.ShipDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of delivery");
-                    oUpdate._delivery = Convert.ToDateTime(Console.ReadLine());
+                    oUpdate.Delivery = Convert.ToDateTime(Console.ReadLine());
                     dalList.Order.Update(oUpdate);
                 }
                 catch (NoSuchObjectException ex)
@@ -199,13 +199,13 @@ class Program
             case 'a'://add
                 OrderItem oi = new OrderItem();
                 Console.WriteLine("enter id product of order item");
-                oi._productID = int.Parse(Console.ReadLine());
+                oi.ProductID = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter id order of order item");
-                oi._orderID = int.Parse(Console.ReadLine());
+                oi.OrderID = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter price of order item");
-                oi._price = double.Parse(Console.ReadLine());
+                oi.Price = double.Parse(Console.ReadLine());
                 Console.WriteLine("enter amount of order item");
-                oi._amount = int.Parse(Console.ReadLine());
+                oi.Amount = int.Parse(Console.ReadLine());
                 try
                 {
                     dalList.OrderItem.Add(oi);
@@ -240,15 +240,15 @@ class Program
                 {
                     Console.WriteLine(dalList.OrderItem.Get(idUpdate));
                     OrderItem oiUpdate = new OrderItem();
-                    oiUpdate._id = idUpdate;
+                    oiUpdate.Id = idUpdate;
                     Console.WriteLine("enter id product of order item");
-                    oiUpdate._productID = int.Parse(Console.ReadLine());
+                    oiUpdate.ProductID = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter id order of order item");
-                    oiUpdate._orderID = int.Parse(Console.ReadLine());
+                    oiUpdate.OrderID = int.Parse(Console.ReadLine());
                     Console.WriteLine("enter price of order item");
-                    oiUpdate._price = double.Parse(Console.ReadLine());
+                    oiUpdate.Price = double.Parse(Console.ReadLine());
                     Console.WriteLine("enter amount of order item");
-                    oiUpdate._amount = int.Parse(Console.ReadLine());
+                    oiUpdate.Amount = int.Parse(Console.ReadLine());
                     dalList.OrderItem.Update(oiUpdate);
                 }
                 catch (NoSuchObjectException ex)
@@ -287,7 +287,7 @@ class Program
                 IEnumerable<OrderItem> allItemsInOrders = dalList.OrderItem.readByOrder(idOfOrder);
                 foreach (var item in allItemsInOrders)
                 {
-                    if (item._orderID == idOfOrder)
+                    if (item.OrderID == idOfOrder)
                         Console.WriteLine(item);
                 }
                 break;

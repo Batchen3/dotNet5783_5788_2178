@@ -1,4 +1,4 @@
-﻿using BlApi;
+﻿ using BlApi;
 using BlImplementation;
 using System.Text.RegularExpressions;
 
@@ -166,7 +166,6 @@ namespace BlTest
                         {
                             Console.WriteLine(ex.Message);
                         }
-
                         break;
                     case 'c'://update sent of order
                         Console.WriteLine("enter id for update sent of order");
@@ -205,25 +204,77 @@ namespace BlTest
                 }
             }
         }
-        private static void Cart(char x)
+        private static BO.Cart Cart(char x,BO.Cart cart)
         {
             if (x != 'd')
             {
-                int id;
+                int id,amount;
                 switch (x)
                 {
                     case 'a'://for add cart
+                        Console.WriteLine("enter product's id to add");
+                        id = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Console.WriteLine(Bl.Cart.Add(cart, id));
+                        }
+                        catch (BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch(BO.OutOfStockException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                         break;
                     case 'b'://for update cart
-                       
+                        Console.WriteLine("enter product's id to add");
+                        id = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter new amount");
+                        amount =int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Console.WriteLine(Bl.Cart.Update(cart, id, amount));
+                        }
+                        catch (BO.ObjectNotFoundException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        catch(BO.OutOfStockException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                         break;
                     case 'c'://for save cart
-                       
+                        Console.WriteLine("enter your name");
+                        cart.CustomerName = Console.ReadLine();
+                        Console.WriteLine("enter your address");
+                        cart.CustomerAddress = Console.ReadLine();
+                        Console.WriteLine("enter your email");
+                        cart.CustomerEmail = Console.ReadLine();
+                        try
+                        {
+                            Bl.Cart.SaveCart(cart);
+                            Console.WriteLine(cart);
+                        }
+                        catch(BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch(BO.NotValidException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        catch(BO.OutOfStockException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                         break;
                     default:
                         break;
-                }
+                }           
             }
+            return cart;
         }
 
         static void Main(string[] args)
@@ -234,6 +285,8 @@ namespace BlTest
             Console.WriteLine("for exit press 0");
             int select = int.Parse(Console.ReadLine());
             char x;
+            BO.Cart cart=new BO.Cart();
+            cart.Items = new List<BO.OrderItem>();
             while (select != 0)
             {
                 switch (select)
@@ -264,7 +317,7 @@ namespace BlTest
                         Console.WriteLine("for save cart press c");
                         Console.WriteLine("for exit press d");
                         x = char.Parse(Console.ReadLine());
-                        Cart(x);//doing this function 
+                        cart=Cart(x,cart);//doing this function 
                         break;
                     default:
                         break;

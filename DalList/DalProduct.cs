@@ -28,19 +28,19 @@ internal class DalProduct:IProduct
         {
             for (int j = 0; j < s_listProduct.Count; j++)
             {
-                if (s_listProduct[j]._id == value._id) 
+                if (s_listProduct[j].Id == value.Id) 
                     throw new ExistException();
             }
             s_listProduct.Add(value);
         }
-        return value._id;
+        return value.Id;
     }//add product to arr
 
     public Product Get(int id)
     {
         for (int i = 0; i < s_listProduct.Count; i++)
         {
-            if (s_listProduct[i]._id == id)
+            if (s_listProduct[i].Id == id)
                 return s_listProduct[i];
         }
         throw new NoSuchObjectException();
@@ -61,7 +61,7 @@ internal class DalProduct:IProduct
         bool isExist = false;
         for (j = 0; j < s_listProduct.Count && !isExist; j++)
         {
-            if (s_listProduct[j]._id == value._id)
+            if (s_listProduct[j].Id == value.Id)
             {
                 isExist = true;
                 s_listProduct[j] = value;
@@ -76,7 +76,7 @@ internal class DalProduct:IProduct
         bool isExist = false;
         for (j = 0; j < s_listProduct.Count && !isExist; j++)
         {
-            if (s_listProduct[j]._id == id)
+            if (s_listProduct[j].Id == id)
             {
                 isExist = true;
                 s_listProduct.Remove(s_listProduct[j]);

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DalApi;
 
-public class NoSuchObjectException : Exception
+public class NoSuchObjectException : Exception//No Such Object Exception
 {
     public override string Message => "no such object";
 }
-public class ExistException : Exception
+public class ExistException : Exception//Exist Exception
 {
     public override string Message => "the object alredy exist";
 }
