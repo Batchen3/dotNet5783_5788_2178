@@ -32,5 +32,6 @@ public interface IOrder
     /// return order with new delivery date and update it
     /// </summary>
     public BO.Order UpdateArrivedOrder(int id);
-    //public BO.Order UpdateOrder(int idOrder,int idProduct,int amount);
+    //bonus
+    public void UpdateOrder(int idOrder,int idProduct,int amount);
 }

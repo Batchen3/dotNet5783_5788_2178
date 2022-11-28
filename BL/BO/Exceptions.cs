@@ -33,3 +33,7 @@ public class DateWasException : Exception//Date Was Exception
 {
     public override string Message => "the date was already";
 }
+public class DatesNotInCorrectOrderException : Exception//Date Was Exception
+{
+    public override string Message => "dates not in correct order";
+}

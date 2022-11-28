@@ -141,7 +141,7 @@ namespace BlTest
         }
         private static void Order(char x)
         {
-            if (x != 'e')
+            if (x != 'f')
             {
                 int id;
                 switch (x)
@@ -197,6 +197,38 @@ namespace BlTest
                         catch (BO.DalException ex)
                         {
                             Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch (BO.DatesNotInCorrectOrderException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        break;
+                    case 'e'://update amount for order item / manager-bonus
+                        Console.WriteLine("enter id of order");
+                        int orderId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter id of product");
+                        int productId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("enter amount");
+                        int amount = int.Parse(Console.ReadLine());
+                        try
+                        {
+                            Bl.Order.UpdateOrder(orderId, productId,amount);
+                        }
+                        catch (BO.DalException ex)
+                        {
+                            Console.WriteLine(ex.Message + " " + ex.InnerException.Message);
+                        }
+                        catch (BO.OutOfStockException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        catch (BO.DateWasException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                        catch (BO.NotValidException ex)
+                        {
+                            Console.WriteLine(ex.Message);
                         }
                         break;
                     default:
@@ -307,7 +339,8 @@ namespace BlTest
                         Console.WriteLine("for get a certain order press b");
                         Console.WriteLine("for update sent order press c");
                         Console.WriteLine("for update arrived order press d");
-                        Console.WriteLine("for exit press e");
+                        Console.WriteLine("for update amount of order item (manager) press e");
+                        Console.WriteLine("for exit press f");
                         x = char.Parse(Console.ReadLine());
                         Order(x);//doing this function 
                         break;

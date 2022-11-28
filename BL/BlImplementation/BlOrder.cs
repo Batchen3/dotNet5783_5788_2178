@@ -34,7 +34,7 @@ internal class BlOrder : BlApi.IOrder
     private BO.EStatus calculateStatus(DO.Order order)//calculate status for order
     {
         DateTime today = DateTime.Now;
-        if (order.Delivery.CompareTo(today) < 0 && order.Delivery.CompareTo(DateTime.MinValue)!=0)//if the delivery date already was
+        if (order.Delivery.CompareTo(today) < 0 && order.Delivery.CompareTo(DateTime.MinValue) != 0)//if the delivery date already was
             return BO.EStatus.arrived;
         if (order.ShipDate.CompareTo(today) < 0 && order.ShipDate.CompareTo(DateTime.MinValue) != 0)//if the ship date already was
             return BO.EStatus.sent;
@@ -75,7 +75,7 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             DO.Order order = dalList.Order.Get(id);//get order by id
-            if (order.ShipDate == DateTime.MinValue || order.ShipDate.CompareTo(DateTime.Now) > 0)//check that the date of ship didn't past
+            if (order.ShipDate.CompareTo(DateTime.MinValue) == 0 || order.ShipDate.CompareTo(DateTime.Now) > 0)//check that the date of ship didn't past
             {
                 order.ShipDate = DateTime.Now;//update ship date
                 dalList.Order.Update(order);//update order
@@ -97,7 +97,9 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             DO.Order order = dalList.Order.Get(id);//get order by id
-            if (order.Delivery == DateTime.MinValue || order.Delivery.CompareTo(DateTime.Now) > 0)//check that the date of delivery didn't past
+            if (order.ShipDate.CompareTo(DateTime.MinValue) == 0 || order.ShipDate.CompareTo(DateTime.Now) > 0)
+                throw new BO.DatesNotInCorrectOrderException();
+            if (order.Delivery.CompareTo(DateTime.MinValue) == 0 || order.Delivery.CompareTo(DateTime.Now) > 0)//check that the date of delivery didn't past
             {
                 order.Delivery = DateTime.Now;//update delivery date
                 dalList.Order.Update(order);//update order
@@ -112,28 +114,54 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.DalException(ex);
         }
     }
+    //bonuus
+    public void UpdateOrder(int idOrder, int idProduct, int amount)
+    {
+        try
+        {
+            DO.OrderItem orderItem = dalList.OrderItem.readByOrderAndProduct(idOrder, idProduct);
+            DO.Order order = dalList.Order.Get(idOrder);
+            if (amount < 0)
+            {
+                throw new BO.NotValidException();
+            }
+            if (!(order.ShipDate.CompareTo(DateTime.Now) > 0 || order.ShipDate.CompareTo(DateTime.MinValue) == 0))
+            {
+                throw new BO.DateWasException();
+            }
+            DO.Product product = dalList.Product.Get(idProduct);
+            if (orderItem.Amount > amount && amount != 0)
+            {
+                orderItem.Amount = amount;
+                product.InStock -= orderItem.Amount - amount;
+                dalList.OrderItem.Update(orderItem);
+                dalList.Product.Update(product);
+            }
+            else if (orderItem.Amount < amount)
+            {
+                if (product.InStock >= amount - orderItem.Amount)
+                {
+                    orderItem.Amount = amount;
+                    product.InStock += amount - orderItem.Amount;
+                    dalList.OrderItem.Update(orderItem);
+                    dalList.Product.Update(product);
+                }
+                else
+                {
+                    throw new BO.OutOfStockException();
+                }
+            }
+            else if (amount == 0)
+            {
+                product.InStock += orderItem.Amount;
+                dalList.Product.Update(product);
+                dalList.OrderItem.Delete(orderItem.Id);
+            }
+        }
+        catch (NoSuchObjectException ex)
+        {
+            throw new BO.DalException(ex);
+        }
 
-
-//bonuus
-    //public BO.Order UpdateOrder(int idOrder, int idProduct, int amount)
-    //{
-    //    try
-    //    {
-    //        if(amount>0)
-    //        {
-    //            DO.OrderItem orderItem = dalList.OrderItem.readByOrderAndProduct(idOrder, idProduct);
-    //            if(dalList.Product.Get(idProduct).InStock>=amount)
-    //            {
-                    
-    //            }
-    //        }
-
-    //    }
-    //    catch (Exception)
-    //    {
-
-    //        throw;
-    //    }
-    //    return 0;
-    //}
+    }
 }
