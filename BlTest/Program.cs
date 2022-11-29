@@ -9,7 +9,7 @@ namespace BlTest
     {
         private static IBl Bl = new Bl();
 
-        private static void Product(char x)
+        private static void _product(char x)
         {
             if (x != 'g')
             {
@@ -139,7 +139,7 @@ namespace BlTest
                 }
             }
         }
-        private static void Order(char x)
+        private static void _order(char x)
         {
             if (x != 'f')
             {
@@ -236,7 +236,7 @@ namespace BlTest
                 }
             }
         }
-        private static BO.Cart Cart(char x,BO.Cart cart)
+        private static BO.Cart _cart(char x,BO.Cart cart)
         {
             if (x != 'd')
             {
@@ -332,7 +332,7 @@ namespace BlTest
                         Console.WriteLine("for update a product press f");
                         Console.WriteLine("for exit press g");
                         x = char.Parse(Console.ReadLine());
-                        Product(x);//doing this function 
+                        _product(x);//doing this function 
                         break;
                     case 2:
                         Console.WriteLine("for watching all orders (manager) press a");
@@ -342,7 +342,7 @@ namespace BlTest
                         Console.WriteLine("for update amount of order item (manager) press e");
                         Console.WriteLine("for exit press f");
                         x = char.Parse(Console.ReadLine());
-                        Order(x);//doing this function 
+                        _order(x);//doing this function 
                         break;
                     case 3:
                         Console.WriteLine("for add cart press a");
@@ -350,7 +350,7 @@ namespace BlTest
                         Console.WriteLine("for save cart press c");
                         Console.WriteLine("for exit press d");
                         x = char.Parse(Console.ReadLine());
-                        cart=Cart(x,cart);//doing this function 
+                        cart=_cart(x,cart);//doing this function 
                         break;
                     default:
                         break;
