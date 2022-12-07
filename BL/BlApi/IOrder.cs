@@ -13,7 +13,7 @@ public interface IOrder
     /// function get orders
     /// return all orders in orderforlist from dal
     /// </summary>
-    public IEnumerable<BO.OrderForList> GetOrders();
+    public IEnumerable<BO.OrderForList> GetOrders(Func<DO.Order, bool>? func = null);
     /// <summary>
     /// function Get Details Of Order
     /// recive id of order 

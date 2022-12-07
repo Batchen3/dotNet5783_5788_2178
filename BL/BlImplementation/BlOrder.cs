@@ -13,10 +13,10 @@ internal class BlOrder : BlApi.IOrder
 {
     private IDal dalList = new Dal.DalList();
 
-    public IEnumerable<BO.OrderForList> GetOrders()//get all orders
+    public IEnumerable<BO.OrderForList> GetOrders(Func<DO.Order, bool>? func = null)//get all orders
     {
         double sum = 0;
-        IEnumerable<DO.Order> allOrders = dalList.Order.GetAll();//from dal
+        IEnumerable<DO.Order> allOrders = dalList.Order.GetAll(func);//from dal
         List<BO.OrderForList> orders = new List<BO.OrderForList>();
         foreach (var item in allOrders)
         {

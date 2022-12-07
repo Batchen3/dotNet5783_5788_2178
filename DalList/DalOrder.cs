@@ -8,6 +8,7 @@ using DalApi;
 using DO;
 using System;
 using System.Diagnostics.Metrics;
+using System.Linq;
 using static Dal.DataSource;
 
 namespace Dal;
@@ -32,15 +33,19 @@ internal class DalOrder:IOrder
         }
         throw new NoSuchObjectException();
     }//read order according id 
-    public IEnumerable<Order> GetAll()
+    //public IEnumerable<Order> GetAll()
+    //{
+    //    List<Order> tmpOrders = new List<Order>();
+    //    for (int i = 0; i < s_listOrder.Count; i++)
+    //    {
+    //        tmpOrders.Add(s_listOrder[i]);
+    //    }
+    //    return tmpOrders;
+    //}//read all the orders
+    public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
     {
-        List<Order> tmpOrders = new List<Order>();
-        for (int i = 0; i < s_listOrder.Count; i++)
-        {
-            tmpOrders.Add(s_listOrder[i]);
-        }
-        return tmpOrders;
-    }//read all the orders
+        return (func == null) ? s_listOrder : s_listOrder.Where(func);
+    }
     public void Update(Order value)
     {
         int j;

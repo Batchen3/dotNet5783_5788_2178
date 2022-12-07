@@ -74,7 +74,7 @@ static internal class DataSource
         {
 
             index = (int)rand.Next(10);
-            id = (int)rand.Next(100000, 999999999);
+            id = (int)rand.Next(100000, 999999);
             bool flag = false;//checks if there are two equal ids
             bool flag2 = true;
             while (!flag)
@@ -85,7 +85,7 @@ static internal class DataSource
                         flag2 = false;
                 }
                 if (!flag2)
-                    id = (int)rand.Next(100000, 999999999);
+                    id = (int)rand.Next(100000, 999999);
                 else
                 {
                     flag = true;

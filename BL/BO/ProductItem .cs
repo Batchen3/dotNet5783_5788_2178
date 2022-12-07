@@ -27,6 +27,10 @@ public class ProductItem
     /// </summary>
     public ECategory Category { get; set; }
     /// <summary>
+    ///property parve for ProductItem
+    /// </summary>
+    public bool Parve { get; set; }
+    /// <summary>
     ///property available for ProductItem
     /// </summary>
     public bool available { get; set; }
@@ -43,6 +47,7 @@ public class ProductItem
             Product Price: {ProductPrice},
     	    Category: {Category},
     	    available: {available},
-            Amount In Cart: {AmountInCart}
+            Amount In Cart: {AmountInCart},
+            Parve: {Parve}
             ";
 }

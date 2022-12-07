@@ -53,15 +53,19 @@ internal class DalOrderItem:IOrderItem
         }
         return list;
     }//read by order id
-    public IEnumerable<OrderItem> GetAll()
+    //public IEnumerable<OrderItem> GetAll()
+    //{
+    //    List<OrderItem> tmpOrderItem = new List<OrderItem>();
+    //    for (int i = 0; i < s_listOrderItem.Count; i++)
+    //    {
+    //        tmpOrderItem.Add(s_listOrderItem[i]);
+    //    }
+    //    return tmpOrderItem;
+    //}//read all order item
+    public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? func = null)
     {
-        List<OrderItem> tmpOrderItem = new List<OrderItem>();
-        for (int i = 0; i < s_listOrderItem.Count; i++)
-        {
-            tmpOrderItem.Add(s_listOrderItem[i]);
-        }
-        return tmpOrderItem;
-    }//read all order item
+        return (func == null) ? s_listOrderItem : s_listOrderItem.Where(func);
+    }
     public void Update(OrderItem value)
     {
         int j;

@@ -46,15 +46,20 @@ internal class DalProduct:IProduct
         throw new NoSuchObjectException();
     }//read the product according id
 
-    public IEnumerable<Product> GetAll()
+    //public IEnumerable<Product> GetAll()
+    //{
+    //    List<Product> tmpProducts = new List<Product> { };
+    //    for (int i = 0; i < s_listProduct.Count; i++)
+    //    {
+    //        tmpProducts.Add(s_listProduct[i]);
+    //    }
+    //    return tmpProducts;
+    //}//read all products
+    public IEnumerable<Product> GetAll(Func<Product, bool>? func = null)
     {
-        List<Product> tmpProducts = new List<Product> { };
-        for (int i = 0; i < s_listProduct.Count; i++)
-        {
-            tmpProducts.Add(s_listProduct[i]);
-        }
-        return tmpProducts;
-    }//read all products
+        return (func == null) ? s_listProduct : s_listProduct.Where(func);
+    }
+
     public void Update(Product value)
     {
         int j;

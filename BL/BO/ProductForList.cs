@@ -25,12 +25,17 @@ public class ProductForList
     /// </summary>
     public ECategory Category { get; set; }
     /// <summary>
+    ///property Parve for ProductForList
+    /// </summary>
+    public bool Parve { get; set; }
+    /// <summary>
     /// function "to string" for  print the ProductForList
     /// </summary>
     public override string ToString() => $@"
             ProductItem ID: {ID}, 
             Product Name: {ProductName}, 
             Product Price: {ProductPrice},
-    	    Category: {Category}
+    	    Category: {Category},
+            Parve: {Parve}
             ";
 }
