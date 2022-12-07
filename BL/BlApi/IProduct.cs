@@ -20,13 +20,22 @@ public interface IProduct
     /// function Get Catalog for customer
     /// return all product for catalog in IEnumerable<BO.ProductItem>
     /// </summary>
-    public IEnumerable<BO.ProductItem> GetCatalog();
+   // public IEnumerable<BO.ProductItem> GetCatalog();
     /// <summary>
     /// function Get
     /// recive id
     /// return product from dal
     /// </summary>
     public BO.Product Get(int id);
+
+
+    /// <summary>
+    /// function Get
+    /// recive id
+    /// return product-item from dal
+    /// </summary>
+    public BO.ProductItem Get(int id, BO.Cart cart);
+
     /// <summary>
     /// function add 
     /// recive product and add it to all products
@@ -43,11 +52,4 @@ public interface IProduct
     /// recive product with their change  and update the product
     /// </summary>
     public void Update(BO.Product p);
-    /// <summary>
-    /// filter the product by category
-    /// </summary>
-    /// <param name="category"></param>
-    /// <returns>IEnumerable of list BO.ProductForList </returns>
-    public IEnumerable<BO.ProductForList> GetByCategory(BO.ECategory category);
-
 }

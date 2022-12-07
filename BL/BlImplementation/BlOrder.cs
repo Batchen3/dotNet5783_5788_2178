@@ -20,7 +20,7 @@ internal class BlOrder : BlApi.IOrder
         List<BO.OrderForList> orders = new List<BO.OrderForList>();
         foreach (var item in allOrders)
         {
-            IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.readByOrder(item.Id);//bring all orderitems according to orderId
+            IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.Id == item.Id);//bring all orderitems according to orderId
             foreach (var orderItem in orderItemsById)
                 sum += orderItem.Price * orderItem.Amount;//calculate the price 
             orders.Add(new BO.OrderForList { ID = 0, CustomerName = item.CustomerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
@@ -49,7 +49,7 @@ internal class BlOrder : BlApi.IOrder
                 double sum = 0;
                 DO.Order orderFromDal = dalList.Order.Get(id);//get order by id
 
-                IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.readByOrder(orderFromDal.Id);//bring all orderitems according to orderId
+                IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.Id == orderFromDal.Id);//bring all orderitems according to orderId
                 List<BO.OrderItem> orderItemsList = new List<BO.OrderItem>();
                 foreach (var orderItem in orderItemsById)//create for all DO.Orderitem BO.OrderItem and insert it to a list
                 {
@@ -119,7 +119,7 @@ internal class BlOrder : BlApi.IOrder
     {
         try
         {
-            DO.OrderItem orderItem = dalList.OrderItem.readByOrderAndProduct(idOrder, idProduct);
+            DO.OrderItem orderItem = dalList.OrderItem.Get(element => ((element.OrderID == idOrder) && (element.ProductID == idProduct)));
             DO.Order order = dalList.Order.Get(idOrder);
             if (amount < 0)
             {
@@ -164,4 +164,28 @@ internal class BlOrder : BlApi.IOrder
         }
 
     }
+    public BO.OrderTracking OrderTracking(int orderId)
+    {
+        try
+        {
+            DO.Order order = dalList.Order.Get(orderId);
+            BO.EStatus status = calculateStatus(order);
+            List<(DateTime, string)> newDateAndDescriptionOrder = new List<(DateTime, string)> { };
+            if (status == BO.EStatus.arrived)
+                newDateAndDescriptionOrder.Add((order.Delivery, "the order arrived"));
+            if (status == BO.EStatus.sent)
+                newDateAndDescriptionOrder.Add((order.ShipDate, "the order is on the way"));
+            if (status == BO.EStatus.confirmed)
+                newDateAndDescriptionOrder.Add((order.ShipDate, "the order has been confirmed"));
+            BO.OrderTracking orderTracking = new BO.OrderTracking { ID = orderId, OrderStatus = status, DateAndDescriptionOrder = newDateAndDescriptionOrder };
+            return orderTracking;
+        }
+        catch (NoSuchObjectException ex)
+        {
+            throw new BO.DalException(ex);
+        }
+
+    }
 }
+//  int ID ,Etatus OrderStatus  List<(DateTime, EStatus)> DateAndStatusOrder 
+

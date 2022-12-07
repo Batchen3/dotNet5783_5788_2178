@@ -17,15 +17,15 @@ public class OrderTracking
     /// </summary>
     public EStatus OrderStatus { get; set; }
     /// <summary>
-    ///property DateAndStatusOrder for OrderTracking
+    ///property DateAndDescriptionOrder for OrderTracking
     /// </summary>
-    public List<(DateTime,EStatus)> DateAndStatusOrder { get; set; }
+    public List<(DateTime,string)> DateAndDescriptionOrder { get; set; }
     /// <summary>
     /// function "to string" for  print the OrderTracking
     /// </summary>
     public override string ToString() => $@"
             ProductItem ID: {ID}, 
             Order Status: {OrderStatus}, 
-            Date And Status Order: {DateAndStatusOrder}
+            Date And Status Order: {DateAndDescriptionOrder}
             ";
 }

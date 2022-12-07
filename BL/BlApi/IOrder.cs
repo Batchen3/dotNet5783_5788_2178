@@ -26,6 +26,8 @@ public interface IOrder
     /// return order with new ship date and update it
     /// </summary>
     public BO.Order UpdateSentOrder(int id);
+    public BO.OrderTracking OrderTracking(int orderId);
+
     /// <summary>
     /// function Update Arrived Order
     /// recive order id
@@ -34,4 +36,5 @@ public interface IOrder
     public BO.Order UpdateArrivedOrder(int id);
     //bonus
     public void UpdateOrder(int idOrder,int idProduct,int amount);
+
 }

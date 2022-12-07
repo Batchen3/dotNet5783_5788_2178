@@ -24,17 +24,17 @@ internal class BlProduct : BlApi.IProduct
         }
         return productForList;
     }
-    public IEnumerable<BO.ProductItem> GetCatalog()//customer:get all products as product-item
-    {
-        IEnumerable<DO.Product> listOfProducts = dalList.Product.GetAll();
-        List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
-        foreach (var product in listOfProducts)//change on product to product-item
-        {
-            BO.ProductItem productItemAdd = new BO.ProductItem { ID = product.Id, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 };
-            productItem.Add(productItemAdd);
-        }
-        return productItem;
-    }
+    //public IEnumerable<BO.ProductItem> GetCatalog()//customer:get all products as product-item
+    //{
+    //    IEnumerable<DO.Product> listOfProducts = dalList.Product.GetAll();
+    //    List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
+    //    foreach (var product in listOfProducts)//change on product to product-item
+    //    {
+    //        BO.ProductItem productItemAdd = new BO.ProductItem { ID = product.Id, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 };
+    //        productItem.Add(productItemAdd);
+    //    }
+    //    return productItem;
+    //}
     public BO.Product Get(int id)//to get product by id
     {
         if (id > 0)//check if id valid
@@ -56,6 +56,47 @@ internal class BlProduct : BlApi.IProduct
         }
 
     }
+
+
+    public BO.ProductItem Get(int id, BO.Cart cart)
+    {
+        if (id > 0)
+        {
+            try
+            {
+                DO.Product product = dalList.Product.Get(id);//get the product from dal
+                BO.ProductItem newProductItem = new BO.ProductItem { ID = product.Id, AmountInCart = cart.Items.Count(), ProductName = product.Name, available = product.InStock > 0 ? true : false, Category = (BO.ECategory)product.Category, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price };
+                return newProductItem;
+            }
+            catch (NoSuchObjectException e)
+            {
+                throw new BO.DalException(e);
+            }
+
+        }
+        else
+        {
+            throw new BO.NotValidException();
+        }
+    }
+
+
+    //public int ID { get; set; }
+   
+    //public string ProductName { get; set; }
+ 
+    //public double ProductPrice { get; set; }
+ 
+    //public ECategory Category { get; set; }
+  
+    //public bool Parve { get; set; }
+    
+    //public bool available { get; set; }
+   
+    //public int AmountInCart { get; set; }
+    
+
+
     public void Add(BO.Product p)//to add product
     {
         if (p.ID <= 0 || p.Name == "" || p.InStock < 0 || p.Price <= 0 || (p.Parve != 0 && p.Parve != 1))//check if the parameters are valid
@@ -108,18 +149,6 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.DalException(ex);
         }
 
-    }
-
-    public IEnumerable<BO.ProductForList> GetByCategory(BO.ECategory category)//update a product
-    {
-        IEnumerable<BO.ProductForList> productList = GetAll();
-        List<BO.ProductForList> productListByCategory=new List<BO.ProductForList>();
-        foreach (var item in productList)
-        {
-            if(item.Category == category)
-                productListByCategory.Add(item);
-        }
-        return productListByCategory;
     }
 
 }

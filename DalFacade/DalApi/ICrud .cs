@@ -27,17 +27,16 @@ public interface ICrud<T>
     /// function that recive id and get the value from the collection
     /// </summary>
     public T Get(int id);
-    //public T Get(Func<T,bool>? func = null);
-
-
     /// <summary>
     /// function that return all the collection
     /// </summary>
     /// 
-    public IEnumerable<T> GetAll(Func<T, bool>? func = null);
-  
-
-
-    //public IEnumerable<T> GetAll();
+    public IEnumerable<T> GetAll(Func<T,bool>? func = null);
+    /// <summary>
+    /// function that filter by condition and return the value
+    /// </summary>
+    /// <param name="Get"></param>
+    /// <returns>T</returns>
+    public T Get(Predicate<T> func);
 }
 

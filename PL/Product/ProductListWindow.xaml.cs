@@ -73,10 +73,7 @@ namespace PL.Product
 
         private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            
-            ProductsListview.ItemsSource = bl.Product.Get((item => item.Category == (BO.ECategory)CategorySelector.SelectedItem));
-
-            //ProductsListview.ItemsSource = bl.Product.GetByCategory((BO.ECategory)CategorySelector.SelectedItem);
+            ProductsListview.ItemsSource = bl.Product.GetAll((item => item.Category==(DO.ECategory)CategorySelector.SelectedItem));
         }
     }
 }

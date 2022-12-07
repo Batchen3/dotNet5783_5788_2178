@@ -21,11 +21,11 @@ namespace BlTest
                         foreach (var item in listaOfProduct)
                             Console.WriteLine(item);
                         break;
-                    case 'b'://get all products as product-item
-                        IEnumerable<BO.ProductItem> listOfProductItem = Bl.Product.GetCatalog();
-                        foreach (var item in listOfProductItem)
-                            Console.WriteLine(item);
-                        break;
+                    //case 'b'://get all products as product-item
+                    //    IEnumerable<BO.ProductItem> listOfProductItem = Bl.Product.GetCatalog();
+                    //    foreach (var item in listOfProductItem)
+                    //        Console.WriteLine(item);
+                    //    break;
                     case 'c'://get a product
                         Console.WriteLine("enter id of product");
                         id = int.Parse(Console.ReadLine());

@@ -274,7 +274,7 @@ class Program
                 int idProduct = int.Parse(Console.ReadLine());
                 try
                 {
-                    Console.WriteLine(dalList.OrderItem.readByOrderAndProduct(idOrder, idProduct));
+                    Console.WriteLine(dalList.OrderItem.Get(element=>element.OrderID==idOrder&&element.ProductID==idProduct));
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -284,7 +284,7 @@ class Program
             case 'g'://read all items of specific order
                 Console.WriteLine("enter id order");
                 int idOfOrder = int.Parse(Console.ReadLine());
-                IEnumerable<OrderItem> allItemsInOrders = dalList.OrderItem.readByOrder(idOfOrder);
+                IEnumerable<OrderItem> allItemsInOrders = dalList.OrderItem.GetAll(element=>element.Id==idOfOrder);
                 foreach (var item in allItemsInOrders)
                 {
                     if (item.OrderID == idOfOrder)

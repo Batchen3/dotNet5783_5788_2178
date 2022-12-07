@@ -17,12 +17,12 @@ namespace DalApi
         /// recive ids of product and order
         /// return the sutiable orderItem
         /// </summary>
-        public OrderItem readByOrderAndProduct(int idOrder, int idProduct);
+       // public OrderItem readByOrderAndProduct(int idOrder, int idProduct);
         /// <summary>
         /// function read By Order
         /// recive id of order
         /// return the sutiable orderItems
         /// </summary>
-        public IEnumerable<OrderItem> readByOrder(int idOrder);
+       // public IEnumerable<OrderItem> readByOrder(int idOrder);
     }
 }

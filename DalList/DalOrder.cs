@@ -33,19 +33,15 @@ internal class DalOrder:IOrder
         }
         throw new NoSuchObjectException();
     }//read order according id 
-    //public IEnumerable<Order> GetAll()
-    //{
-    //    List<Order> tmpOrders = new List<Order>();
-    //    for (int i = 0; i < s_listOrder.Count; i++)
-    //    {
-    //        tmpOrders.Add(s_listOrder[i]);
-    //    }
-    //    return tmpOrders;
-    //}//read all the orders
     public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
     {
         return (func == null) ? s_listOrder : s_listOrder.Where(func);
-    }
+    }//read all the orders by condition or not
+
+    public Order Get(Predicate<Order> func)
+    {
+        return s_listOrder.Find(func);
+    }//get by condition
     public void Update(Order value)
     {
         int j;

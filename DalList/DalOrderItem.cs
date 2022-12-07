@@ -32,36 +32,32 @@ internal class DalOrderItem:IOrderItem
         }
         throw new NoSuchObjectException();
     }//read order item
-    public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
-    {
-        for (int i = 0; i < s_listOrderItem.Count; i++)
-        {
-            if (s_listOrderItem[i].OrderID == idOrder && s_listOrderItem[i].ProductID == idProduct)
-                return s_listOrderItem[i];
-        }
-        throw new NoSuchObjectException();
-    }//read order item by order id and product id
-    public IEnumerable<OrderItem> readByOrder(int idOrder)
-    {
-        List<OrderItem> list = new List<OrderItem>();
-        for (int i = 0; i < s_listOrderItem.Count; i++)
-        {
-            if (s_listOrderItem[i].OrderID == idOrder)
-            {
-                list.Add(s_listOrderItem[i]);
-            }
-        }
-        return list;
-    }//read by order id
-    //public IEnumerable<OrderItem> GetAll()
+    //public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
     //{
-    //    List<OrderItem> tmpOrderItem = new List<OrderItem>();
     //    for (int i = 0; i < s_listOrderItem.Count; i++)
     //    {
-    //        tmpOrderItem.Add(s_listOrderItem[i]);
+    //        if (s_listOrderItem[i].OrderID == idOrder && s_listOrderItem[i].ProductID == idProduct)
+    //            return s_listOrderItem[i];
     //    }
-    //    return tmpOrderItem;
-    //}//read all order item
+    //    throw new NoSuchObjectException();
+    //}
+    //read order item by order id and product id
+    //public IEnumerable<OrderItem> readByOrder(int idOrder)
+    //{
+    //    List<OrderItem> list = new List<OrderItem>();
+    //    for (int i = 0; i < s_listOrderItem.Count; i++)
+    //    {
+    //        if (s_listOrderItem[i].OrderID == idOrder)
+    //        {
+    //            list.Add(s_listOrderItem[i]);
+    //        }
+    //    }
+    //    return list;
+    //}//read by order id
+    public OrderItem Get(Predicate<OrderItem> func)
+    {
+        return s_listOrderItem.Find(func);
+    }//get by condition
     public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? func = null)
     {
         return (func == null) ? s_listOrderItem : s_listOrderItem.Where(func);
