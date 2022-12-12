@@ -15,7 +15,7 @@ public interface IProduct
     /// function Get All for manager
     /// return all product from dal in IEnumerable<BO.ProductForList>
     /// </summary>
-    public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func=null);
+    public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null);
     /// <summary>
     /// function Get Catalog for customer
     /// return all product for catalog in IEnumerable<BO.ProductItem>
@@ -52,4 +52,6 @@ public interface IProduct
     /// recive product with their change  and update the product
     /// </summary>
     public void Update(BO.Product p);
+
+    public IEnumerable<BO.ProductForList> GetByCategory(BO.ECategory category);
 }

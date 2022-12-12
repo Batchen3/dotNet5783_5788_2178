@@ -362,8 +362,6 @@ namespace BlTest
                 select = int.Parse(Console.ReadLine());
             }
 
-
-
         }
     }
 }

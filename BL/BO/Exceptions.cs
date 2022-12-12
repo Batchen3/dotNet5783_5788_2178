@@ -37,3 +37,7 @@ public class DatesNotInCorrectOrderException : Exception//Date Was Exception
 {
     public override string Message => "dates not in correct order";
 }
+public class ObjectNotInCartException : Exception//Object Not In Cart Exception
+{
+    public override string Message => "product not in cart";
+}

@@ -20,12 +20,14 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        BlApi.IBl bl = new BlImplementation.Bl();
+        BlApi.IBl bl = BlApi.Factory.Get();
+        int debily = 0;
         public ProductListWindow()
         {
             InitializeComponent();
             ProductsListview.ItemsSource = bl.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
+            debily = ProductsListview.Items.Count;
         }
 
         //private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -36,8 +38,9 @@ namespace PL.Product
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ProductWindow product = new ProductWindow(bl);
-            product.Show();
-            Close();
+            product.ShowDialog();
+            ProductsListview.ItemsSource = bl.Product.GetAll();
+            debily = ProductsListview.Items.Count;
         }
 
         private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,8 +55,8 @@ namespace PL.Product
             {
                 BO.Product selectedItem=bl.Product.Get(product.ID);
                 ProductWindow productWindow = new ProductWindow(bl, selectedItem);
-                productWindow.Show();
-                Close();
+                productWindow.ShowDialog();
+                ProductsListview.ItemsSource = bl.Product.GetAll();
             }
             catch (BO.DalException ex)
             {
@@ -73,7 +76,7 @@ namespace PL.Product
 
         private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            ProductsListview.ItemsSource = bl.Product.GetAll((item => item.Category==(DO.ECategory)CategorySelector.SelectedItem));
+            ProductsListview.ItemsSource = bl.Product.GetByCategory((BO.ECategory)CategorySelector.SelectedItem);
         }
     }
 }

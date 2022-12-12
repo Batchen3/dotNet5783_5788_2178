@@ -11,7 +11,7 @@ namespace BlImplementation;
 
 internal class BlOrder : BlApi.IOrder
 {
-    private IDal dalList = new Dal.DalList();
+    private IDal dalList = DalApi.Factory.Get();
 
     public IEnumerable<BO.OrderForList> GetOrders(Func<DO.Order, bool>? func = null)//get all orders
     {
@@ -187,5 +187,4 @@ internal class BlOrder : BlApi.IOrder
 
     }
 }
-//  int ID ,Etatus OrderStatus  List<(DateTime, EStatus)> DateAndStatusOrder 
 

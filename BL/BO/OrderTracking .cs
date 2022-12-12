@@ -23,9 +23,16 @@ public class OrderTracking
     /// <summary>
     /// function "to string" for  print the OrderTracking
     /// </summary>
-    public override string ToString() => $@"
-            ProductItem ID: {ID}, 
-            Order Status: {OrderStatus}, 
-            Date And Status Order: {DateAndDescriptionOrder}
-            ";
+    /// 
+
+    public override string ToString()
+    {
+        string details = "ProductItem ID: " + ID +
+                "\nOrder Status: " + OrderStatus + "\n";
+        for (int i = 0; i < DateAndDescriptionOrder.Count; i++)
+        {
+            details += "Date:  " + (i + 1) + ": " + DateAndDescriptionOrder[i].Item1 + "\n"+ "Description:  " + (i + 1) + ": " + DateAndDescriptionOrder[i].Item2;
+        }
+        return details;
+    }
 }

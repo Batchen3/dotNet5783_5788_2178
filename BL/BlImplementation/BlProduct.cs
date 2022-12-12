@@ -11,7 +11,7 @@ namespace BlImplementation;
 
 internal class BlProduct : BlApi.IProduct
 {
-    private IDal dalList = new Dal.DalList();
+    private IDal dalList = DalApi.Factory.Get();
 
     public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)//manager:get all products as product-for-list
     {
@@ -56,8 +56,6 @@ internal class BlProduct : BlApi.IProduct
         }
 
     }
-
-
     public BO.ProductItem Get(int id, BO.Cart cart)
     {
         if (id > 0)
@@ -65,7 +63,13 @@ internal class BlProduct : BlApi.IProduct
             try
             {
                 DO.Product product = dalList.Product.Get(id);//get the product from dal
-                BO.ProductItem newProductItem = new BO.ProductItem { ID = product.Id, AmountInCart = cart.Items.Count(), ProductName = product.Name, available = product.InStock > 0 ? true : false, Category = (BO.ECategory)product.Category, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price };
+                int amount = 0;
+                foreach (var item in cart.Items)
+                    if (item.ProductID == id)
+                        amount = item.AmountsItems;
+                if (amount == 0)
+                    throw new BO.ObjectNotInCartException();
+                BO.ProductItem newProductItem = new BO.ProductItem { ID = product.Id, AmountInCart = amount, ProductName = product.Name, available = product.InStock > 0 ? true : false, Category = (BO.ECategory)product.Category, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price };
                 return newProductItem;
             }
             catch (NoSuchObjectException e)
@@ -79,23 +83,6 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.NotValidException();
         }
     }
-
-
-    //public int ID { get; set; }
-   
-    //public string ProductName { get; set; }
- 
-    //public double ProductPrice { get; set; }
- 
-    //public ECategory Category { get; set; }
-  
-    //public bool Parve { get; set; }
-    
-    //public bool available { get; set; }
-   
-    //public int AmountInCart { get; set; }
-    
-
 
     public void Add(BO.Product p)//to add product
     {
@@ -149,6 +136,11 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.DalException(ex);
         }
 
+    }
+
+    public IEnumerable<BO.ProductForList> GetByCategory(BO.ECategory category)
+    {
+        return GetAll(item=>item.Category==(DO.ECategory)category);
     }
 
 }

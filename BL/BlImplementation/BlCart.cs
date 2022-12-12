@@ -8,14 +8,13 @@ using BlApi;
 using DalApi;
 using DalFacade;
 using System.Collections;
-using Dal;
 
 
 namespace BlImplementation;
 
 internal class BlCart : ICart
 {
-    private IDal dalList = new Dal.DalList();
+    private IDal dalList = DalApi.Factory.Get();
     public BO.Cart Add(BO.Cart c, int id)//add item to cart
     {
         try

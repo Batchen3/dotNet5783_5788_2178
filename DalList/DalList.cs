@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Dal;
 
-sealed public class DalList : IDal
+internal sealed class DalList : IDal
 /// <summary>
 /// doing interface IDal
 /// </summary>
 {
+    public static IDal Instance { get; } = new DalList();
     /// <summary>
     /// initialize Product to do the functions in DalProduct
     /// </summary>
@@ -25,4 +26,8 @@ sealed public class DalList : IDal
     /// initialize OrderItem to do the functions in DalOrderItem
     /// </summary>
     public IOrderItem OrderItem => new DalOrderItem();
+    private DalList()
+    {
+
+    }
 }

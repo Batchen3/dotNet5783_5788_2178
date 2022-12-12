@@ -83,6 +83,7 @@ namespace PL.Product
                 if (status == "add")
                 {
                     blp.Product.Add(product);
+                  
                 }
                 else
                 {
