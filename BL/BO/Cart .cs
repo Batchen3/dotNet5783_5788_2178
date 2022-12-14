@@ -11,19 +11,19 @@ public class Cart
     /// <summary>
     ///property  customer name for cart
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     ///property  Customer Email for cart
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
     /// <summary>
     ///property  Customer Address for cart
     /// </summary>
-    public string CustomerAddress { get; set; }
+    public string? CustomerAddress { get; set; }
     /// <summary>
     ///property  Items for cart
     /// </summary>
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem?> Items { get; set; }
     /// <summary>
     ///property  TotalPrice for cart
     /// </summary>

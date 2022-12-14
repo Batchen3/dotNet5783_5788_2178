@@ -15,7 +15,7 @@ public class ProductForList
     /// <summary>
     ///property ProductName for ProductForList
     /// </summary>
-    public string ProductName { get; set; }
+    public string? ProductName { get; set; }
     /// <summary>
     ///property ProductPrice for ProductForList
     /// </summary>

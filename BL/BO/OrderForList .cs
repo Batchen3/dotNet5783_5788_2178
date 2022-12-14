@@ -16,7 +16,7 @@ public class OrderForList
     /// <summary>
     ///property  customer name for OrderForList
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     ///property  order status for OrderForList
     /// </summary>

@@ -15,15 +15,15 @@ public struct Order
     /// <summary>
     /// property Customer name for Order
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     /// property Customer Email for Order
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
     /// <summary>
     /// property Customer address for Order
     /// </summary>
-    public string CustomerAddress { get; set; }
+    public string? CustomerAddress { get; set; }
     /// <summary>
     /// property order date for Order
     /// </summary>

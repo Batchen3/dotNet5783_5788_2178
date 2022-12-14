@@ -170,7 +170,7 @@ internal class BlOrder : BlApi.IOrder
         {
             DO.Order order = dalList.Order.Get(orderId);
             BO.EStatus status = calculateStatus(order);
-            List<(DateTime, string)> newDateAndDescriptionOrder = new List<(DateTime, string)> { };
+            List<(DateTime, string)?> newDateAndDescriptionOrder = new List<(DateTime, string)?> { };
             if (status == BO.EStatus.arrived)
                 newDateAndDescriptionOrder.Add((order.Delivery, "the order arrived"));
             if (status == BO.EStatus.sent)

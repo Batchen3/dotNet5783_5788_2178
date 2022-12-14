@@ -15,10 +15,10 @@ public struct Product
     /// <summary>
     /// property Name for Product
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
     /// <summary>
-            /// property Price for Product
-            /// </summary>
+    /// property Price for Product
+    /// </summary>
     public double Price { get; set; }
     /// <summary>
     /// property Category for Product

@@ -16,15 +16,15 @@ public class Order
     /// <summary>
     ///property  customer name for order
     /// </summary>
-    public string CustomerName { get; set; }
+    public string? CustomerName { get; set; }
     /// <summary>
     ///property  customer email for order
     /// </summary>
-    public string CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; }
     /// <summary>
     ///property  customer address for order
     /// </summary>
-    public string CustomerAddress { get; set; }
+    public string? CustomerAddress { get; set; }
     /// <summary>
     ///property  order status for order 
     /// </summary>
@@ -44,7 +44,7 @@ public class Order
     /// <summary>
     ///property  items for order
     /// </summary>
-    public List<OrderItem> Items { get; set; }
+    public List<OrderItem?> Items { get; set; }
     /// <summary>
     ///property  total price for order
     /// </summary>
