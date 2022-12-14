@@ -1,0 +1,24 @@
+﻿<Window x:Class="PL.Order.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Order"
+        mc:Ignorable="d"
+        Title="OrderWindow" Height="450" Width="800">
+    <Grid>
+        <Label x:Name="lblId" Content="Id" HorizontalAlignment="Left" Margin="52,53,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="175,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.712,0.935"/>
+        <Label x:Name="lblCustomerName" Content="Customer name" HorizontalAlignment="Left" Margin="52,88,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="175,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblCustomerEmail" Content="Customer email" HorizontalAlignment="Left" Margin="52,126,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="175,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblCustomerAddress" Content="Customer address" HorizontalAlignment="Left" Margin="52,165,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtCustomerAddress" HorizontalAlignment="Left" Margin="175,169,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblOrderStatus" Content="Status" HorizontalAlignment="Left" Margin="61,199,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtOrderStatus" HorizontalAlignment="Left" Margin="175,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblOrderDate" Content="Order date" HorizontalAlignment="Left" Margin="61,230,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtOrderDate" HorizontalAlignment="Left" Margin="175,234,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+
+    </Grid>
+</Window>

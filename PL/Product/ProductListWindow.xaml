@@ -30,7 +30,7 @@
                 </Button.RenderTransform>
             </Button>
         </Grid>
-        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,38,483,66" SelectionChanged="ProductsListview_SelectionChanged" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.Row="1">
+        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" SelectionChanged="ProductsListview_SelectionChanged" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

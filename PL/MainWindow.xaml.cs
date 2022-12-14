@@ -1,4 +1,5 @@
 ﻿using PL.Product;
+using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +27,29 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+            btnListProduct.Visibility = Visibility.Hidden;
+            btnListOrder.Visibility = Visibility.Hidden;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ProductListWindow product = new ProductListWindow();
             product.Show();
+        }
+
+        private void btnAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            btnListProduct.Visibility = Visibility.Visible;
+            btnListOrder.Visibility = Visibility.Visible;
+            btnAdmin.Visibility = Visibility.Hidden;
+            btnNewOrder.Visibility=Visibility.Hidden;
+            btnOrderTracking.Visibility=Visibility.Hidden;
+        }
+
+        private void btnListOrder_Click(object sender, RoutedEventArgs e)
+        {
+            OrderListWindow order = new OrderListWindow();
+            order.Show();
         }
     }
 }

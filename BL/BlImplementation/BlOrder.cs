@@ -23,7 +23,7 @@ internal class BlOrder : BlApi.IOrder
             IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.Id == item.Id);//bring all orderitems according to orderId
             foreach (var orderItem in orderItemsById)
                 sum += orderItem.Price * orderItem.Amount;//calculate the price 
-            orders.Add(new BO.OrderForList { ID = 0, CustomerName = item.CustomerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
+            orders.Add(new BO.OrderForList { ID = item.Id, CustomerName = item.CustomerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
         }
         return orders;
     }
