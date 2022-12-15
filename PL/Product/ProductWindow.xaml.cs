@@ -21,19 +21,17 @@ namespace PL.Product
     public partial class ProductWindow : Window
     {
         BO.Product product = new BO.Product();
-        BlApi.IBl blp;
+        BlApi.IBl bl = BlApi.Factory.Get();
         string status;
-        public ProductWindow(BlApi.IBl bl)
+        public ProductWindow()
         {
             InitializeComponent();
-            blp = bl;
             status = "add";
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
         }
-        public ProductWindow(BlApi.IBl bl, BO.Product selectedProduct)
+        public ProductWindow(BO.Product selectedProduct)
         {
             InitializeComponent();
-            blp = bl;
             status = "update";
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
             txtId.Text = selectedProduct.ID.ToString();
@@ -82,12 +80,12 @@ namespace PL.Product
             {
                 if (status == "add")
                 {
-                    blp.Product.Add(product);
+                    bl.Product.Add(product);
                   
                 }
                 else
                 {
-                    blp.Product.Update(product);
+                    bl.Product.Update(product);
                 }
                 Close();
             }

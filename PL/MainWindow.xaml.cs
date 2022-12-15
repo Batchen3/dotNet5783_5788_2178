@@ -33,7 +33,7 @@ namespace PL
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ProductListWindow product = new ProductListWindow();
+            ProductListWindow product = new ProductListWindow("admin");
             product.Show();
         }
 
@@ -50,6 +50,12 @@ namespace PL
         {
             OrderListWindow order = new OrderListWindow();
             order.Show();
+        }
+
+        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            ProductListWindow product = new ProductListWindow("newOrder");
+            product.Show();
         }
     }
 }

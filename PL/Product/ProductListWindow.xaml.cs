@@ -22,14 +22,21 @@ namespace PL.Product
     {
         BlApi.IBl bl = BlApi.Factory.Get();
         int debily = 0;
-        public ProductListWindow()
+        public ProductListWindow(string state)
         {
             InitializeComponent();
-            ProductsListview.ItemsSource = bl.Product.GetAll();
+            if(state=="admin")
+               ProductsListview.ItemsSource = bl.Product.GetAll();
+            if (state == "newOrder")
+            {
+                ProductsListview.ItemsSource = bl.Product.GetCatalog();
+                btnAddProduct.Visibility = Visibility.Hidden;
+            }
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
             debily = ProductsListview.Items.Count;
+            
         }
-
+       
         //private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    ProductsListview.ItemsSource = bl.Product.GetByCategory((BO.ECategory)CategorySelector.SelectedItem);
@@ -37,7 +44,7 @@ namespace PL.Product
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ProductWindow product = new ProductWindow(bl);
+            ProductWindow product = new ProductWindow();
             product.ShowDialog();
             ProductsListview.ItemsSource = bl.Product.GetAll();
             debily = ProductsListview.Items.Count;
@@ -54,7 +61,7 @@ namespace PL.Product
             try
             {
                 BO.Product selectedItem=bl.Product.Get(product.ID);
-                ProductWindow productWindow = new ProductWindow(bl, selectedItem);
+                ProductWindow productWindow = new ProductWindow(selectedItem);
                 productWindow.ShowDialog();
                 ProductsListview.ItemsSource = bl.Product.GetAll();
             }

@@ -24,17 +24,17 @@ internal class BlProduct : BlApi.IProduct
         }
         return productForList;
     }
-    //public IEnumerable<BO.ProductItem> GetCatalog()//customer:get all products as product-item
-    //{
-    //    IEnumerable<DO.Product> listOfProducts = dalList.Product.GetAll();
-    //    List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
-    //    foreach (var product in listOfProducts)//change on product to product-item
-    //    {
-    //        BO.ProductItem productItemAdd = new BO.ProductItem { ID = product.Id, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 };
-    //        productItem.Add(productItemAdd);
-    //    }
-    //    return productItem;
-    //}
+    public IEnumerable<BO.ProductItem> GetCatalog()//customer:get all products as product-item
+    {
+        IEnumerable<DO.Product> listOfProducts = dalList.Product.GetAll();
+        List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
+        foreach (var product in listOfProducts)//change on product to product-item
+        {
+            BO.ProductItem productItemAdd = new BO.ProductItem { ID = product.Id, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 };
+            productItem.Add(productItemAdd);
+        }
+        return productItem;
+    }
     public BO.Product Get(int id)//to get product by id
     {
         if (id > 0)//check if id valid

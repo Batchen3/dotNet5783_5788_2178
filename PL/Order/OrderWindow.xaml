@@ -12,13 +12,29 @@
         <Label x:Name="lblCustomerName" Content="Customer name" HorizontalAlignment="Left" Margin="52,88,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="175,88,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="lblCustomerEmail" Content="Customer email" HorizontalAlignment="Left" Margin="52,126,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="175,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="175,130,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="218"/>
         <Label x:Name="lblCustomerAddress" Content="Customer address" HorizontalAlignment="Left" Margin="52,165,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtCustomerAddress" HorizontalAlignment="Left" Margin="175,169,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblOrderStatus" Content="Status" HorizontalAlignment="Left" Margin="61,199,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblOrderStatus" Content="Status" HorizontalAlignment="Left" Margin="52,199,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtOrderStatus" HorizontalAlignment="Left" Margin="175,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblOrderDate" Content="Order date" HorizontalAlignment="Left" Margin="61,230,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblOrderDate" Content="Order date" HorizontalAlignment="Left" Margin="52,230,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtOrderDate" HorizontalAlignment="Left" Margin="175,234,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblShipDate" Content="Ship date" HorizontalAlignment="Left" Margin="52,260,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtShipDate" HorizontalAlignment="Left" Margin="175,264,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblDelivery" Content="Delivery" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDelivery" HorizontalAlignment="Left" Margin="461,57,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblItems" Content="Items" HorizontalAlignment="Left" Margin="374,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.487,0.53"/>
+        <ListView x:Name="ItemsListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="461,93,10,178">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label x:Name="lblTotalPrice" Content="Total price" HorizontalAlignment="Left" Margin="361,260,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtTotalPrice" HorizontalAlignment="Left" Margin="461,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnShipDate" Content="update ship date" HorizontalAlignment="Left" Margin="145,352,0,0" VerticalAlignment="Top" Width="164" Click="btnShipDate_Click"/>
+        <Button x:Name="btnDeliveryDate" Content="update delivery date" HorizontalAlignment="Left" Margin="452,352,0,0" VerticalAlignment="Top" Width="174" Click="btnDeliveryDate_Click"/>
 
     </Grid>
 </Window>

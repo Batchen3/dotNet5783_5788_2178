@@ -1,4 +1,5 @@
 ﻿using BlImplementation;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,22 @@ namespace PL.Order
 
         private void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var order = (BO.OrderForList)(sender as ListView).SelectedItem;
+            try
+            {
+                BO.Order selectedItem = bl.Order.GetDetailsOfOrder(order.ID);
+                OrderWindow orderWindow = new OrderWindow(selectedItem);
+                orderWindow.ShowDialog();
+                OrdersListview.ItemsSource = bl.Order.GetOrders();
+            }
+            catch (BO.DalException ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 

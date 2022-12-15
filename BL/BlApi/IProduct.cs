@@ -20,7 +20,7 @@ public interface IProduct
     /// function Get Catalog for customer
     /// return all product for catalog in IEnumerable<BO.ProductItem>
     /// </summary>
-   // public IEnumerable<BO.ProductItem> GetCatalog();
+    public IEnumerable<BO.ProductItem> GetCatalog();
     /// <summary>
     /// function Get
     /// recive id

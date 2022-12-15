@@ -20,7 +20,7 @@ internal class BlOrder : BlApi.IOrder
         List<BO.OrderForList> orders = new List<BO.OrderForList>();
         foreach (var item in allOrders)
         {
-            IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.Id == item.Id);//bring all orderitems according to orderId
+            IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.OrderID == item.Id);//bring all orderitems according to orderId
             foreach (var orderItem in orderItemsById)
                 sum += orderItem.Price * orderItem.Amount;//calculate the price 
             orders.Add(new BO.OrderForList { ID = item.Id, CustomerName = item.CustomerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
@@ -49,14 +49,13 @@ internal class BlOrder : BlApi.IOrder
                 double sum = 0;
                 DO.Order orderFromDal = dalList.Order.Get(id);//get order by id
 
-                IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.Id == orderFromDal.Id);//bring all orderitems according to orderId
+                IEnumerable<DO.OrderItem> orderItemsById = dalList.OrderItem.GetAll(element => element.OrderID == orderFromDal.Id);//bring all orderitems according to orderId
                 List<BO.OrderItem> orderItemsList = new List<BO.OrderItem>();
                 foreach (var orderItem in orderItemsById)//create for all DO.Orderitem BO.OrderItem and insert it to a list
                 {
                     sum += orderItem.Price * orderItem.Amount;//calculate the price 
                     DO.Product product = dalList.Product.Get(orderItem.ProductID);//get a product by id-product
-                    orderItemsList.Add(new BO.OrderItem { ID = 0, ProductID = orderItem.ProductID, ProductPrice = orderItem.Price, ProductName = product.Name, AmountsItems = orderItem.Amount, TotalPriceOfItems = orderItem.Amount * orderItem.Price });//create BO.orderItem
-
+                    orderItemsList.Add(new BO.OrderItem { ID = orderItem.Id, ProductID = orderItem.ProductID, ProductPrice = orderItem.Price, ProductName = product.Name, AmountsItems = orderItem.Amount, TotalPriceOfItems = orderItem.Amount * orderItem.Price });//create BO.orderItem
                 }
                 BO.Order order = new BO.Order { ID = orderFromDal.Id, CustomerName = orderFromDal.CustomerName, CustomerEmail = orderFromDal.CustomerEmail, CustomerAddress = orderFromDal.CustomerAddress, Delivery = orderFromDal.Delivery, ShipDate = orderFromDal.ShipDate, OrderDate = orderFromDal.OrderDate, OrderStatus = calculateStatus(orderFromDal), TotalPrice = sum, Items = orderItemsList };//create BO.Order
                 return order;
