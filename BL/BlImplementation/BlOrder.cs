@@ -171,9 +171,16 @@ internal class BlOrder : BlApi.IOrder
             BO.EStatus status = calculateStatus(order);
             List<(DateTime, string)?> newDateAndDescriptionOrder = new List<(DateTime, string)?> { };
             if (status == BO.EStatus.arrived)
-                newDateAndDescriptionOrder.Add((order.Delivery, "the order arrived"));
-            if (status == BO.EStatus.sent)
+            {
+                newDateAndDescriptionOrder.Add((order.ShipDate, "the order has been confirmed"));
                 newDateAndDescriptionOrder.Add((order.ShipDate, "the order is on the way"));
+                newDateAndDescriptionOrder.Add((order.Delivery, "the order arrived"));
+            }
+            if (status == BO.EStatus.sent)
+            {
+                newDateAndDescriptionOrder.Add((order.ShipDate, "the order has been confirmed"));
+                newDateAndDescriptionOrder.Add((order.ShipDate, "the order is on the way"));
+            }
             if (status == BO.EStatus.confirmed)
                 newDateAndDescriptionOrder.Add((order.ShipDate, "the order has been confirmed"));
             BO.OrderTracking orderTracking = new BO.OrderTracking { ID = orderId, OrderStatus = status, DateAndDescriptionOrder = newDateAndDescriptionOrder };

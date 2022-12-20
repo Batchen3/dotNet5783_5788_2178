@@ -41,9 +41,9 @@ namespace PL
         {
             btnListProduct.Visibility = Visibility.Visible;
             btnListOrder.Visibility = Visibility.Visible;
-            btnAdmin.Visibility = Visibility.Hidden;
-            btnNewOrder.Visibility=Visibility.Hidden;
-            btnOrderTracking.Visibility=Visibility.Hidden;
+            //btnAdmin.Visibility = Visibility.Hidden;
+            //btnNewOrder.Visibility=Visibility.Hidden;
+            //btnOrderTracking.Visibility=Visibility.Hidden;
         }
 
         private void btnListOrder_Click(object sender, RoutedEventArgs e)
@@ -56,6 +56,12 @@ namespace PL
         {
             ProductListWindow product = new ProductListWindow("newOrder");
             product.Show();
+        }
+
+        private void btnOrderTracking_Click(object sender, RoutedEventArgs e)
+        {
+            OrderListWindow order = new OrderListWindow("orderTracking");
+            order.Show();
         }
     }
 }

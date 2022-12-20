@@ -1,4 +1,5 @@
 ﻿using BlImplementation;
+using BO;
 using PL.Product;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,22 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get();
-        public OrderListWindow()
+        public OrderListWindow(string ?state=null)
         {
             InitializeComponent();
+            if(state == null)   
             OrdersListview.ItemsSource = bl.Order.GetOrders();
+            if(state=="orderTracking")
+            {
+                IEnumerable<BO.OrderForList> allOrders= bl.Order.GetOrders();
+                List<BO.OrderTracking> orderTrackings = new List<BO.OrderTracking>();
+                foreach (BO.OrderForList order in allOrders)
+                {
+                    orderTrackings.Add(bl.Order.OrderTracking(order.ID));
+                }
+                OrdersListview.ItemsSource = orderTrackings;
+
+            }
         }
 
         private void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)

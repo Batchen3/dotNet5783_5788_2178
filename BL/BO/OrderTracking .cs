@@ -31,7 +31,7 @@ public class OrderTracking
                 "\nOrder Status: " + OrderStatus + "\n";
         for (int i = 0; i < DateAndDescriptionOrder.Count; i++)
         {
-            details += "Date:  " + (i + 1) + ": " + DateAndDescriptionOrder[i]?.Item1 + "\n"+ "Description:  " + (i + 1) + ": " + DateAndDescriptionOrder[i]?.Item2;
+            details += "Date:" + (i + 1) + ": " + DateAndDescriptionOrder[i]?.Item1 + " Description" + (i + 1) + ": " + DateAndDescriptionOrder[i]?.Item2 + "\n";
         }
         return details;
     }
