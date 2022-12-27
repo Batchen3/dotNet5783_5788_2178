@@ -19,6 +19,13 @@ static internal class DataSource
     }
     static internal class Config
     {
+        private static int idProduct = rand.Next(100000, 999999);
+        static public int IdProduct
+        {
+            get { return rand.Next(100000, 999999); }
+            set { idProduct = value; }
+        }
+
 
         private static int idOrder = 88417;
         static public int IdOrder
@@ -74,7 +81,7 @@ static internal class DataSource
         {
 
             index = (int)rand.Next(10);
-            id = (int)rand.Next(100000, 999999);
+            id = Config.IdProduct;
             bool flag = false;//checks if there are two equal ids
             bool flag2 = true;
             while (!flag)
@@ -85,7 +92,7 @@ static internal class DataSource
                         flag2 = false;
                 }
                 if (!flag2)
-                    id = (int)rand.Next(100000, 999999);
+                    id = Config.IdProduct;
                 else
                 {
                     flag = true;

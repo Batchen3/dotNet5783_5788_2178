@@ -20,7 +20,7 @@ public interface IProduct
     /// function Get Catalog for customer
     /// return all product for catalog in IEnumerable<BO.ProductItem>
     /// </summary>
-    public IEnumerable<BO.ProductItem> GetCatalog();
+    public IEnumerable<BO.ProductItem> GetCatalog(Func<DO.Product, bool>? func = null);
     /// <summary>
     /// function Get
     /// recive id
@@ -53,5 +53,6 @@ public interface IProduct
     /// </summary>
     public void Update(BO.Product p);
 
-    public IEnumerable<BO.ProductForList> GetByCategory(BO.ECategory category);
+    public IEnumerable<BO.ProductForList> GetByCategoryAdmin(BO.ECategory category);
+    public IEnumerable<BO.ProductItem> GetByCategoryForOrder(BO.ECategory category);
 }

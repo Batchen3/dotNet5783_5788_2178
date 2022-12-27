@@ -23,7 +23,7 @@ namespace PL.Order
     {
         BlApi.IBl bl = BlApi.Factory.Get();
 
-        public OrderWindow(BO.Order selectedOrder)
+        public OrderWindow(BO.Order selectedOrder, string? status = null)
         {
             InitializeComponent();
             txtId.Text = selectedOrder.ID.ToString();
@@ -57,6 +57,12 @@ namespace PL.Order
             ItemsListView.ItemsSource = selectedOrder.Items;
             txtTotalPrice.Text=selectedOrder.TotalPrice.ToString();
             txtTotalPrice.IsEnabled = false; 
+            if(status=="orderTracking")
+            {
+                btnDeliveryDate.Visibility = Visibility.Hidden;
+                btnShipDate.Visibility = Visibility.Hidden;
+            }
+            
         }
         private void btnShipDate_Click(object sender, RoutedEventArgs e)
         {
@@ -90,6 +96,11 @@ namespace PL.Order
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void ItemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -16,21 +16,36 @@ using DalApi;
 
 internal class DalProduct:IProduct
 {
-    //public void d()
-    //{
-    //    mm();
-    //}
+   
     public int Add(Product value)
     {
         if (s_listProduct.Count == NUMPRODUCTS)
             throw new FullListException();
         else
         {
-            for (int j = 0; j < s_listProduct.Count; j++)
+            int id = Config.IdProduct;
+            bool flag = false;//checks if there are two equal ids
+            bool flag2 = true;
+            while (!flag)
             {
-                if (s_listProduct[j].Id == value.Id) 
-                    throw new ExistException();
+                for (int j = 0; j < s_listProduct.Count && flag2; j++)
+                {
+                    if (s_listProduct[j].Id == id)
+                        flag2 = false;
+                }
+                if (!flag2)
+                    id = Config.IdProduct;
+                else
+                {
+                    flag = true;
+                }
             }
+            value.Id = id;
+            //for (int j = 0; j < s_listProduct.Count; j++)
+            //{
+            //    if (s_listProduct[j].Id == value.Id) 
+            //        throw new ExistException();
+            //}
             s_listProduct.Add(value);
         }
         return value.Id;

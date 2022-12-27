@@ -23,20 +23,29 @@ internal class BlCart : ICart
             if (product.InStock <= 0)//Checking if in stock
                 throw new BO.OutOfStockException();
             bool exist = false;
-            foreach (var orderItem in c.Items)//if it exist in cart
-                if (orderItem.ProductID == id)
-                {
-                    exist = true;
-                    orderItem.AmountsItems++;
-                    orderItem.TotalPriceOfItems += product.Price;
-                    c.TotalPrice += product.Price;
-                }
-            if (!exist)//if not exist in cart
+            if(c.Items==null)
             {
                 BO.OrderItem newOrderItem = new BO.OrderItem { ID = 0, ProductID = product.Id, ProductName = product.Name, ProductPrice = product.Price, AmountsItems = 1, TotalPriceOfItems = product.Price };
                 c.TotalPrice += product.Price;
                 c.Items.Add(newOrderItem);
             }
+            else
+            {
+                foreach (var orderItem in c.Items)//if it exist in cart
+                    if (orderItem.ProductID == id)
+                    {
+                        exist = true;
+                        orderItem.AmountsItems++;
+                        orderItem.TotalPriceOfItems += product.Price;
+                        c.TotalPrice += product.Price;
+                    }
+                if (!exist)//if not exist in cart
+                {
+                    BO.OrderItem newOrderItem = new BO.OrderItem { ID = 0, ProductID = product.Id, ProductName = product.Name, ProductPrice = product.Price, AmountsItems = 1, TotalPriceOfItems = product.Price };
+                    c.TotalPrice += product.Price;
+                    c.Items.Add(newOrderItem);
+                }
+            }       
             return c;
         }
         catch (NoSuchObjectException e)

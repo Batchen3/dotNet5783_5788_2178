@@ -1,5 +1,6 @@
 ﻿using BlImplementation;
 using BO;
+using DO;
 using PL.Product;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,16 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get();
-        public OrderListWindow(string ?state=null)
+        string? state = null;
+        public OrderListWindow(string? from = null)
         {
             InitializeComponent();
-            if(state == null)   
-            OrdersListview.ItemsSource = bl.Order.GetOrders();
-            if(state=="orderTracking")
+            state = from;
+            if (state == null)
+                OrdersListview.ItemsSource = bl.Order.GetOrders();
+            if (state == "orderTracking")
             {
-                IEnumerable<BO.OrderForList> allOrders= bl.Order.GetOrders();
+                IEnumerable<BO.OrderForList> allOrders = bl.Order.GetOrders();
                 List<BO.OrderTracking> orderTrackings = new List<BO.OrderTracking>();
                 foreach (BO.OrderForList order in allOrders)
                 {
@@ -43,13 +46,29 @@ namespace PL.Order
 
         private void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var order = (BO.OrderForList)(sender as ListView).SelectedItem;
+            BO.OrderTracking? orderTracking = null;
+            BO.OrderForList? orderForList = null;
+            BO.Order? selectedItem=null;
+            
             try
             {
-                BO.Order selectedItem = bl.Order.GetDetailsOfOrder(order.ID);
-                OrderWindow orderWindow = new OrderWindow(selectedItem);
-                orderWindow.ShowDialog();
-                OrdersListview.ItemsSource = bl.Order.GetOrders();
+                if (state == "orderTracking")
+                {
+                    orderTracking = (BO.OrderTracking)(sender as ListView).SelectedItem;
+                    selectedItem = bl.Order.GetDetailsOfOrder(orderTracking.ID);
+                    OrderWindow orderWindow = new OrderWindow(selectedItem,"orderTracking");
+                    orderWindow.Show();
+                }
+                if (state == null)
+                {
+                    orderForList = (BO.OrderForList)(sender as ListView).SelectedItem;
+                    selectedItem = bl.Order.GetDetailsOfOrder(orderForList.ID);
+                    OrderWindow orderWindow = new OrderWindow(selectedItem);
+                    orderWindow.Show();
+
+                }
+               
+
             }
             catch (BO.DalException ex)
             {
@@ -66,5 +85,7 @@ namespace PL.Order
         {
 
         }
+
+       
     }
 }

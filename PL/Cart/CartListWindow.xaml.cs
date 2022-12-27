@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlApi;
+using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,31 @@ namespace PL.Cart
     /// </summary>
     public partial class CartListWindow : Window
     {
-        public CartListWindow()
+        BO.Cart cart;
+        BlApi.IBl bl = BlApi.Factory.Get();
+        public CartListWindow(BO.Cart cart2)
         {
             InitializeComponent();
+            CartListview.ItemsSource = cart2.Items;
+            cart = cart2;
+        }
+
+        private void CartListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.OrderItem orderItem = (BO.OrderItem)(sender as ListView).SelectedItem;
+            CartWindow cartWindow =new CartWindow(orderItem, cart); 
+            cartWindow.ShowDialog();
+            CartListview.ItemsSource = cart.Items;
+        }
+
+        private void CartListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btnSaveCart_Click(object sender, RoutedEventArgs e)
+        {
+            bl.Cart.SaveCart(cart);
         }
     }
 }

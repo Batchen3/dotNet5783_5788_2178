@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BlImplementation;
+using BO;
+using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +22,39 @@ namespace PL.Cart
     /// </summary>
     public partial class CartWindow : Window
     {
-        public CartWindow()
+        BlApi.IBl bl = BlApi.Factory.Get();
+        BO.Cart cart;
+
+        public CartWindow(BO.OrderItem orderItem, BO.Cart cart2)
         {
             InitializeComponent();
+            cart = cart2;
+            txtId.Text = orderItem.ID.ToString();
+            txtIdProduct.Text = orderItem.ProductID.ToString();
+            txtName.Text = orderItem.ProductName;
+            txtPrice.Text = orderItem.ProductPrice.ToString();
+            txtTotalPriceOfItems.Text = orderItem.TotalPriceOfItems.ToString();
+            txtAmountItems.Text = orderItem.AmountsItems.ToString();
+
+
+        }
+
+        private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
+        {
+            string? id = txtIdProduct.Text;
+            int.TryParse(id, out int productId);
+            string? newAmount = txtAmountItems.Text;
+            int.TryParse(newAmount, out int amount);
+            cart = bl.Cart.Update(cart, productId, amount);
+            Close();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            string? id = txtIdProduct.Text;
+            int.TryParse(id, out int productId);
+            cart = bl.Cart.Update(cart, productId, 0);
+            Close();
         }
     }
 }

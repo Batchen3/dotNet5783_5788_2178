@@ -22,21 +22,29 @@ namespace PL.Product
     {
         BlApi.IBl bl = BlApi.Factory.Get();
         int debily = 0;
-        public ProductListWindow(string state)
+        string? state = null;
+        static BO.Cart cart = new BO.Cart {CustomerName="aaa",CustomerEmail="aaa@gmail.com",CustomerAddress="aaa", Items = new List<BO.OrderItem?>() };
+
+        public ProductListWindow(string? from = null)
         {
+            state = from;
             InitializeComponent();
-            if(state=="admin")
-               ProductsListview.ItemsSource = bl.Product.GetAll();
-            if (state == "newOrder")
+            if (from == "admin")
+            {
+                ProductsListview.ItemsSource = bl.Product.GetAll();
+                btnGoToCart.Visibility = Visibility.Hidden;
+            }
+
+            if (from == "newOrder")
             {
                 ProductsListview.ItemsSource = bl.Product.GetCatalog();
                 btnAddProduct.Visibility = Visibility.Hidden;
             }
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
             debily = ProductsListview.Items.Count;
-            
+
         }
-       
+
         //private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    ProductsListview.ItemsSource = bl.Product.GetByCategory((BO.ECategory)CategorySelector.SelectedItem);
@@ -57,13 +65,28 @@ namespace PL.Product
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var product = (BO.ProductForList)(sender as ListView).SelectedItem;
+            BO.ProductForList? productForList = null;
+            BO.ProductItem? productItem = null;
+            BO.Product? selectedItem = null;
             try
             {
-                BO.Product selectedItem=bl.Product.Get(product.ID);
-                ProductWindow productWindow = new ProductWindow(selectedItem);
-                productWindow.ShowDialog();
-                ProductsListview.ItemsSource = bl.Product.GetAll();
+                if (state == "admin")
+                {
+                    productForList = (BO.ProductForList)(sender as ListView).SelectedItem;
+                    selectedItem = bl.Product.Get(productForList.ID);
+                    ProductWindow productWindow = new ProductWindow(selectedItem, "update");
+                    productWindow.ShowDialog();
+                    ProductsListview.ItemsSource = bl.Product.GetAll();
+                }
+                if (state == "newOrder")
+                {
+                    productItem = (BO.ProductItem)(sender as ListView).SelectedItem;
+                    selectedItem = bl.Product.Get(productItem.ID);
+                    ProductWindow productWindow = new ProductWindow(selectedItem, "display", cart);
+                    productWindow.ShowDialog();
+
+                    ProductsListview.ItemsSource = bl.Product.GetCatalog();
+                }
             }
             catch (BO.DalException ex)
             {
@@ -73,7 +96,7 @@ namespace PL.Product
             {
                 MessageBox.Show(ex.Message);
             }
-           
+
         }
 
         private void btnShowAll_Click(object sender, RoutedEventArgs e)
@@ -83,7 +106,17 @@ namespace PL.Product
 
         private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            ProductsListview.ItemsSource = bl.Product.GetByCategory((BO.ECategory)CategorySelector.SelectedItem);
+            if (state == "admin")
+                ProductsListview.ItemsSource = bl.Product.GetByCategoryAdmin((BO.ECategory)CategorySelector.SelectedItem);
+            if (state == "newOrder")
+                ProductsListview.ItemsSource = bl.Product.GetByCategoryForOrder((BO.ECategory)CategorySelector.SelectedItem);
+        }
+
+        private void btnGoToCart_Click(object sender, RoutedEventArgs e)
+        {
+            Cart.CartListWindow cartListWindow = new Cart.CartListWindow(cart);
+            cartListWindow.ShowDialog();
+            ProductsListview.ItemsSource = bl.Product.GetCatalog();
         }
     }
 }

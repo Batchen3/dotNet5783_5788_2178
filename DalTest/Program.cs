@@ -18,8 +18,8 @@ class Program
             case 'a'://add
 
                 Product p = new Product();
-                Console.WriteLine("enter product's id to add");
-                p.Id = int.Parse(Console.ReadLine());
+                //Console.WriteLine("enter product's id to add");
+                //p.Id = int.Parse(Console.ReadLine());
                 Console.WriteLine("enter product's name");
                 p.Name = Console.ReadLine();
                 Console.WriteLine("enter product's price");

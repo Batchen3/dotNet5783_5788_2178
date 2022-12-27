@@ -20,6 +20,7 @@
         <RadioButton x:Name="cbParve" Content="Parve" HorizontalAlignment="Left" Margin="95,282,0,0" VerticalAlignment="Top" Checked="cbParve_Checked"/>
         <RadioButton x:Name="cbDairy" Content="Dairy" HorizontalAlignment="Left" Margin="213,282,0,0" VerticalAlignment="Top" Checked="cbDairy_Checked"/>
         <Button x:Name="btnSaveAdding" Content="save" HorizontalAlignment="Left" Margin="136,320,0,0" VerticalAlignment="Top" Height="30" Width="87" Click="btnSaveAdding_Click"/>
+        <Button x:Name="btnAddToCart" Content="add to cart " HorizontalAlignment="Left" Margin="546,320,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="btnAddToCart_Click"/>
 
     </Grid>
 </Window>

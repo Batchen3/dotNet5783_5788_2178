@@ -23,16 +23,18 @@ namespace PL.Product
         BO.Product product = new BO.Product();
         BlApi.IBl bl = BlApi.Factory.Get();
         string status;
+        BO.Cart cartAdding;
         public ProductWindow()
         {
             InitializeComponent();
             status = "add";
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
+
         }
-        public ProductWindow(BO.Product selectedProduct)
+        public ProductWindow(BO.Product selectedProduct, string state, BO.Cart ?cart=null)
         {
             InitializeComponent();
-            status = "update";
+            status = state;
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
             txtId.Text = selectedProduct.ID.ToString();
             txtId.IsEnabled = false;
@@ -40,6 +42,7 @@ namespace PL.Product
             txtPrice.Text = selectedProduct.Price.ToString();
             txtInstock.Text = selectedProduct.InStock.ToString();
             cbCategory.Text = selectedProduct.Category.ToString();
+            btnAddToCart.Visibility = Visibility.Hidden;
             if (selectedProduct.Parve == 0)
             {
                 cbParve.IsChecked = true;
@@ -51,6 +54,18 @@ namespace PL.Product
                 cbDairy.IsChecked = true;
             }
             product = selectedProduct;
+            if (status == "display")
+            {
+                cartAdding = cart;
+                btnSaveAdding.Visibility = Visibility.Hidden;
+                txtName.IsEnabled = false;
+                txtPrice.IsEnabled = false;
+                txtInstock.IsEnabled = false;
+                cbCategory.IsEnabled = false;
+                cbParve.IsEnabled = false;
+                cbDairy.IsEnabled = false;
+                btnAddToCart.Visibility = Visibility.Visible;
+            }
         }
 
         private void TxtPrice_TextChanged(object sender, TextChangedEventArgs e)
@@ -81,7 +96,7 @@ namespace PL.Product
                 if (status == "add")
                 {
                     bl.Product.Add(product);
-                  
+
                 }
                 else
                 {
@@ -140,6 +155,14 @@ namespace PL.Product
         private void cbDairy_Checked(object sender, RoutedEventArgs e)
         {
             product.Parve = 0;
+        }
+
+        private void btnAddToCart_Click(object sender, RoutedEventArgs e)
+        {
+            string? id = txtId.Text;
+            int.TryParse(id, out int idIntProduct);
+            cartAdding = bl.Cart.Add(cartAdding, idIntProduct);
+            Close();
         }
     }
 }

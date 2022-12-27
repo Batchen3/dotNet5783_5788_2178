@@ -24,9 +24,9 @@ internal class BlProduct : BlApi.IProduct
         }
         return productForList;
     }
-    public IEnumerable<BO.ProductItem> GetCatalog()//customer:get all products as product-item
+    public IEnumerable<BO.ProductItem> GetCatalog(Func<DO.Product, bool>? func = null)//customer:get all products as product-item
     {
-        IEnumerable<DO.Product> listOfProducts = dalList.Product.GetAll();
+        IEnumerable<DO.Product> listOfProducts = dalList.Product.GetAll(func);
         List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
         foreach (var product in listOfProducts)//change on product to product-item
         {
@@ -138,9 +138,13 @@ internal class BlProduct : BlApi.IProduct
 
     }
 
-    public IEnumerable<BO.ProductForList> GetByCategory(BO.ECategory category)
+    public IEnumerable<BO.ProductForList> GetByCategoryAdmin(BO.ECategory category)
     {
         return GetAll(item=>item.Category==(DO.ECategory)category);
     }
 
+    public IEnumerable<BO.ProductItem> GetByCategoryForOrder(BO.ECategory category)
+    {
+        return GetCatalog(item => item.Category == (DO.ECategory)category);
+    }
 }
