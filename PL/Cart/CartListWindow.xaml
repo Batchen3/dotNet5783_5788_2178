@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-        Title="CartListWindow" Height="450" Width="800">
+        Title="CartListWindow" Height="483" Width="800">
     <Grid>
         <Grid Name="MainGrid">
             <Grid.RowDefinitions>
@@ -13,14 +13,14 @@
                 <RowDefinition Height="400*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="CartListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" Grid.RowSpan="2" MouseDoubleClick="CartListview_MouseDoubleClick" SelectionChanged="CartListview_SelectionChanged">
+            <ListView x:Name="CartListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,48,0,27" Grid.RowSpan="2" MouseDoubleClick="CartListview_MouseDoubleClick" SelectionChanged="CartListview_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="btnSaveCart" Content="save cart" Grid.Row="1" HorizontalAlignment="Left" Margin="732,358,0,0" Padding="5" Click="btnSaveCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />
+            <Button x:Name="btnSaveCart" Content="save cart" Grid.Row="2" HorizontalAlignment="Left" Margin="732,0,0,0" Padding="5" Click="btnSaveCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </Window>

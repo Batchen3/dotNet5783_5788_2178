@@ -14,9 +14,9 @@ using DalApi;
 
 
 
-internal class DalProduct:IProduct
+internal class DalProduct : IProduct
 {
-   
+
     public int Add(Product value)
     {
         if (s_listProduct.Count == NUMPRODUCTS)
@@ -28,6 +28,9 @@ internal class DalProduct:IProduct
             bool flag2 = true;
             while (!flag)
             {
+                //Product? product = s_listProduct.Find(item => item.Id == id);
+                //if (product != null)
+                //    flag2 = false;
                 for (int j = 0; j < s_listProduct.Count && flag2; j++)
                 {
                     if (s_listProduct[j].Id == id)
@@ -53,19 +56,22 @@ internal class DalProduct:IProduct
 
     public Product Get(int id)
     {
-        for (int i = 0; i < s_listProduct.Count; i++)
-        {
-            if (s_listProduct[i].Id == id)
-                return s_listProduct[i];
-        }
-        throw new NoSuchObjectException();
+        //for (int i = 0; i < s_listProduct.Count; i++)
+        //{
+        //    if (s_listProduct[i].Id == id)
+        //        return s_listProduct[i];
+        //}
+
+        return s_listProduct?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
+
+
     }//read the product according id
 
     public IEnumerable<Product> GetAll(Func<Product, bool>? func = null)
     {
         return (func == null) ? s_listProduct : s_listProduct.Where(func);
     }//read all the products by condition or not
-    
+
     public Product Get(Predicate<Product> func)
     {
         return s_listProduct.Find(func);
@@ -87,18 +93,20 @@ internal class DalProduct:IProduct
     }//update a product 
     public void Delete(int id)
     {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < s_listProduct.Count && !isExist; j++)
-        {
-            if (s_listProduct[j].Id == id)
-            {
-                isExist = true;
-                s_listProduct.Remove(s_listProduct[j]);
-            }
-        }
-        if (!isExist)
-            throw new NoSuchObjectException();
+        Product product = Get(id);
+        s_listProduct.Remove(product);
+        //int j;
+        //bool isExist = false;
+        //for (j = 0; j < s_listProduct.Count && !isExist; j++)
+        //{
+        //    if (s_listProduct[j].Id == id)
+        //    {
+        //        isExist = true;
+        //        s_listProduct.Remove(s_listProduct[j]);
+        //    }
+        //}
+        //if (!isExist)
+        //    throw new NoSuchObjectException();
     }//delete a product according id
 
 }

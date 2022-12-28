@@ -23,15 +23,15 @@ namespace PL.Product
         BO.Product product = new BO.Product();
         BlApi.IBl bl = BlApi.Factory.Get();
         string status;
-        BO.Cart cartAdding;
+       
         public ProductWindow()
         {
             InitializeComponent();
             status = "add";
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
-
+            btnAddToCart.Visibility = Visibility.Hidden;
         }
-        public ProductWindow(BO.Product selectedProduct, string state, BO.Cart ?cart=null)
+        public ProductWindow(BO.Product selectedProduct, string state)
         {
             InitializeComponent();
             status = state;
@@ -45,18 +45,17 @@ namespace PL.Product
             btnAddToCart.Visibility = Visibility.Hidden;
             if (selectedProduct.Parve == 0)
             {
-                cbParve.IsChecked = true;
-                cbDairy.IsChecked = false;
+                cbParve.IsChecked = false;
+                cbDairy.IsChecked = true;
             }
             else
             {
-                cbParve.IsChecked = false;
-                cbDairy.IsChecked = true;
+                cbParve.IsChecked = true;
+                cbDairy.IsChecked = false;
             }
             product = selectedProduct;
             if (status == "display")
             {
-                cartAdding = cart;
                 btnSaveAdding.Visibility = Visibility.Hidden;
                 txtName.IsEnabled = false;
                 txtPrice.IsEnabled = false;
@@ -161,7 +160,19 @@ namespace PL.Product
         {
             string? id = txtId.Text;
             int.TryParse(id, out int idIntProduct);
-            cartAdding = bl.Cart.Add(cartAdding, idIntProduct);
+            try
+            {
+                ProductListWindow.cart = bl.Cart.Add(ProductListWindow.cart, idIntProduct);
+            }
+            catch (BO.DalException ex)
+            {
+                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
             Close();
         }
     }

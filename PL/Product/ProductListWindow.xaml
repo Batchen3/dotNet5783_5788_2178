@@ -38,7 +38,7 @@
             </ListView.View>
         </ListView>
         <Button x:Name="btnAddProduct" Content="add product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"  Click="Button_Click"/>
-        <Button x:Name="btnGoToCart" Content="go to cart" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" />
+        <Button x:Name="btnGoToCart" Content="go to cart" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />
     </Grid>
 
 </Window>

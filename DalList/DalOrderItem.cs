@@ -25,12 +25,12 @@ internal class DalOrderItem:IOrderItem
     }//create order item
     public OrderItem Get(int id)
     {
-        for (int i = 0; i < s_listOrderItem.Count; i++)
-        {
-            if (s_listOrderItem[i].Id == id)
-                return s_listOrderItem[i];
-        }
-        throw new NoSuchObjectException();
+        //for (int i = 0; i < s_listOrderItem.Count; i++)
+        //{
+        //    if (s_listOrderItem[i].Id == id)
+        //        return s_listOrderItem[i];
+        //}
+        return s_listOrderItem?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
     }//read order item
     //public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
     //{
@@ -79,17 +79,19 @@ internal class DalOrderItem:IOrderItem
     }//update the order item
     public void Delete(int id)
     {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
-        {
-            if (s_listOrderItem[j].Id == id)
-            {
-                isExist = true;
-                s_listOrderItem.Remove(s_listOrderItem[j]);
-            }
-        }
-        if (!isExist)
-            throw new NoSuchObjectException();
+        OrderItem orderItem = Get(id);
+        s_listOrderItem.Remove(orderItem);
+        //int j;
+        //bool isExist = false;
+        //for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
+        //{
+        //    if (s_listOrderItem[j].Id == id)
+        //    {
+        //        isExist = true;
+        //        s_listOrderItem.Remove(s_listOrderItem[j]);
+        //    }
+        //}
+        //if (!isExist)
+        //    throw new NoSuchObjectException();
     }//delete order item by id
 }

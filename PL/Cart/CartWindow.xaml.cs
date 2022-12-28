@@ -1,6 +1,7 @@
 ﻿using BlImplementation;
 using BO;
 using DO;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,10 @@ namespace PL.Cart
     public partial class CartWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get();
-        BO.Cart cart;
 
-        public CartWindow(BO.OrderItem orderItem, BO.Cart cart2)
+        public CartWindow(BO.OrderItem orderItem)
         {
             InitializeComponent();
-            cart = cart2;
             txtId.Text = orderItem.ID.ToString();
             txtIdProduct.Text = orderItem.ProductID.ToString();
             txtName.Text = orderItem.ProductName;
@@ -45,7 +44,7 @@ namespace PL.Cart
             int.TryParse(id, out int productId);
             string? newAmount = txtAmountItems.Text;
             int.TryParse(newAmount, out int amount);
-            cart = bl.Cart.Update(cart, productId, amount);
+            ProductListWindow.cart = bl.Cart.Update(ProductListWindow.cart, productId, amount);
             Close();
         }
 
@@ -53,7 +52,7 @@ namespace PL.Cart
         {
             string? id = txtIdProduct.Text;
             int.TryParse(id, out int productId);
-            cart = bl.Cart.Update(cart, productId, 0);
+            ProductListWindow.cart = bl.Cart.Update(ProductListWindow.cart, productId, 0);
             Close();
         }
     }

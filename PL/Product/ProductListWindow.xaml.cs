@@ -23,7 +23,7 @@ namespace PL.Product
         BlApi.IBl bl = BlApi.Factory.Get();
         int debily = 0;
         string? state = null;
-        static BO.Cart cart = new BO.Cart {CustomerName="aaa",CustomerEmail="aaa@gmail.com",CustomerAddress="aaa", Items = new List<BO.OrderItem?>() };
+        public static BO.Cart cart = new BO.Cart{CustomerName="aaa",CustomerEmail="aaa@gmail.com",CustomerAddress="aaa", Items = new List<BO.OrderItem?>() };
 
         public ProductListWindow(string? from = null)
         {
@@ -82,7 +82,7 @@ namespace PL.Product
                 {
                     productItem = (BO.ProductItem)(sender as ListView).SelectedItem;
                     selectedItem = bl.Product.Get(productItem.ID);
-                    ProductWindow productWindow = new ProductWindow(selectedItem, "display", cart);
+                    ProductWindow productWindow = new ProductWindow(selectedItem, "display");
                     productWindow.ShowDialog();
 
                     ProductsListview.ItemsSource = bl.Product.GetCatalog();
@@ -114,7 +114,7 @@ namespace PL.Product
 
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)
         {
-            Cart.CartListWindow cartListWindow = new Cart.CartListWindow(cart);
+            Cart.CartListWindow cartListWindow = new Cart.CartListWindow();
             cartListWindow.ShowDialog();
             ProductsListview.ItemsSource = bl.Product.GetCatalog();
         }

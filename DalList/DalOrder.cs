@@ -26,12 +26,15 @@ internal class DalOrder:IOrder
     }//create an order
     public Order Get(int id)
     {
-        for (int i = 0; i < s_listOrder.Count; i++)
-        {
-            if (s_listOrder[i].Id == id)
-                return s_listOrder[i];
-        }
-        throw new NoSuchObjectException();
+        //for (int i = 0; i < s_listOrder.Count; i++)
+        //{
+        //    if (s_listOrder[i].Id == id)
+        //        return s_listOrder[i];
+        //}
+        //throw new NoSuchObjectException();
+        return s_listOrder?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
+
+
     }//read order according id 
     public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
     {
@@ -59,17 +62,19 @@ internal class DalOrder:IOrder
     }//update the order
     public void Delete(int id)
     {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < s_listOrder.Count && !isExist; j++)
-        {
-            if (s_listOrder[j].Id == id)
-            {
-                isExist = true;
-                s_listOrder.Remove(s_listOrder[j]);
-            }
-        }
-        if (!isExist)
-            throw new NoSuchObjectException();
+        Order order = Get(id);
+        s_listOrder.Remove(order);
+        //int j;
+        //bool isExist = false;
+        //for (j = 0; j < s_listOrder.Count && !isExist; j++)
+        //{
+        //    if (s_listOrder[j].Id == id)
+        //    {
+        //        isExist = true;
+        //        s_listOrder.Remove(s_listOrder[j]);
+        //    }
+        //}
+        //if (!isExist)
+        //    throw new NoSuchObjectException();
     }//delete an order
 }
