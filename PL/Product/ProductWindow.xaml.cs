@@ -24,12 +24,14 @@ namespace PL.Product
         BlApi.IBl bl = BlApi.Factory.Get();
         string status;
        
+
+     
         public ProductWindow()
         {
             InitializeComponent();
-            status = "add";
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
             btnAddToCart.Visibility = Visibility.Hidden;
+            status = "add";
         }
         public ProductWindow(BO.Product selectedProduct, string state)
         {
