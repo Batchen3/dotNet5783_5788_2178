@@ -23,7 +23,7 @@ namespace PL.Product
         BO.Product product = new BO.Product();
         BlApi.IBl bl = BlApi.Factory.Get();
         string status;
-       
+       //hjhjhjh
 
      
         public ProductWindow()
