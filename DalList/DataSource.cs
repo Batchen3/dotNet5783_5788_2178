@@ -82,21 +82,14 @@ static internal class DataSource
 
             index = (int)rand.Next(10);
             id = Config.IdProduct;
-            bool flag = false;//checks if there are two equal ids
-            bool flag2 = true;
-            while (!flag)
+            bool findGoodID = false;//checks if there are two equal ids
+            while (!findGoodID)
             {
-                for (int j = 0; j < s_listProduct.Count && flag2; j++)
-                {
-                    if (s_listProduct[j].Id == id)
-                        flag2 = false;
-                }
-                if (!flag2)
+                Product product = s_listProduct.Find(item => item.Id == id);
+                if (product.Id == 0)
+                    findGoodID = true;
+                 else  
                     id = Config.IdProduct;
-                else
-                {
-                    flag = true;
-                }
             }
             Product p = new Product();
             p.Id = id;

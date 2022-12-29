@@ -24,34 +24,55 @@ internal class DalProduct : IProduct
         else
         {
             int id = Config.IdProduct;
-            bool flag = false;//checks if there are two equal ids
-            bool flag2 = true;
-            while (!flag)
+            try
             {
-                //Product? product = s_listProduct.Find(item => item.Id == id);
-                //if (product != null)
-                //    flag2 = false;
-                for (int j = 0; j < s_listProduct.Count && flag2; j++)
-                {
-                    if (s_listProduct[j].Id == id)
-                        flag2 = false;
-                }
-                if (!flag2)
-                    id = Config.IdProduct;
-                else
-                {
-                    flag = true;
-                }
+                Product product = Get(id);
+
             }
-            value.Id = id;
+            catch (NoSuchObjectException ex)
+            {
+                value.Id = id;
+                s_listProduct.Add(value);
+                return id;
+            }
+            return Add(value);//אם קיים כבר מוצר עם המזהה הנל תחזור על הפונקציה וממילא מגריל מזהה חדש
+
+
+
+            //int id = Config.IdProduct;
+            //bool foundID = false;//checks if there are two equal ids
+            //bool existID = true;
+            //while (!foundID)
+            //{
+            //    //Product? product = s_listProduct.Find(item => item.Id == id);
+            //    //if (product != null)
+            //    //    flag2 = false;
+            //    for (int j = 0; j < s_listProduct.Count && existID; j++)
+            //    {
+            //        if (s_listProduct[j].Id == id)
+            //            existID = false;
+            //    }
+            //    if (!existID)
+            //        id = Config.IdProduct;
+            //    else
+            //    {
+            //        foundID = true;
+            //    }
+            //}
+            //value.Id = id;
+
+
+
+
             //for (int j = 0; j < s_listProduct.Count; j++)
             //{
             //    if (s_listProduct[j].Id == value.Id) 
             //        throw new ExistException();
             //}
-            s_listProduct.Add(value);
+
+            // s_listProduct.Add(value);
         }
-        return value.Id;
+        //return value.Id;
     }//add product to arr
 
     public Product Get(int id)
@@ -61,9 +82,11 @@ internal class DalProduct : IProduct
         //    if (s_listProduct[i].Id == id)
         //        return s_listProduct[i];
         //}
-
-        return s_listProduct?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
-
+        //Product? product = null;
+        Product product = s_listProduct.Find(item => item.Id == id);
+        if (product.Id == 0)
+            throw new NoSuchObjectException();
+        return product;
 
     }//read the product according id
 
@@ -78,18 +101,21 @@ internal class DalProduct : IProduct
     }//get by condition
     public void Update(Product value)
     {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < s_listProduct.Count && !isExist; j++)
-        {
-            if (s_listProduct[j].Id == value.Id)
-            {
-                isExist = true;
-                s_listProduct[j] = value;
-            }
-        }
-        if (!isExist)
-            throw new NoSuchObjectException();
+        Product product = Get(value.Id);
+        var index = s_listProduct.IndexOf(product);
+        s_listProduct[index] = value;
+        //int j;
+        //bool isExist = false;
+        //for (j = 0; j < s_listProduct.Count && !isExist; j++)
+        //{
+        //    if (s_listProduct[j].Id == value.Id)
+        //    {
+        //        isExist = true;
+        //        s_listProduct[j] = value;
+        //    }
+        //}
+        //if (!isExist)
+        //    throw new NoSuchObjectException();
     }//update a product 
     public void Delete(int id)
     {

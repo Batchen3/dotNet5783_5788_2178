@@ -30,7 +30,10 @@ internal class DalOrderItem:IOrderItem
         //    if (s_listOrderItem[i].Id == id)
         //        return s_listOrderItem[i];
         //}
-        return s_listOrderItem?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
+        OrderItem orderItem = s_listOrderItem.Find(item => item.Id == id);
+        if (orderItem.Id == 0)
+            throw new NoSuchObjectException();
+        return orderItem;
     }//read order item
     //public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
     //{
@@ -64,18 +67,21 @@ internal class DalOrderItem:IOrderItem
     }
     public void Update(OrderItem value)
     {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
-        {
-            if (s_listOrderItem[j].Id == value.Id)
-            {
-                isExist = true;
-                s_listOrderItem[j] = value;
-            }
-        }
-        if (!isExist)
-            throw new NoSuchObjectException();
+        OrderItem orderItem = Get(value.Id);
+        var index = s_listOrderItem.IndexOf(orderItem);
+        s_listOrderItem[index] = value;
+        //int j;
+        //bool isExist = false;
+        //for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
+        //{
+        //    if (s_listOrderItem[j].Id == value.Id)
+        //    {
+        //        isExist = true;
+        //        s_listOrderItem[j] = value;
+        //    }
+        //}
+        //if (!isExist)
+        //    throw new NoSuchObjectException();
     }//update the order item
     public void Delete(int id)
     {

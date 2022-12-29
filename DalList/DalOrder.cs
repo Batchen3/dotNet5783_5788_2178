@@ -26,13 +26,17 @@ internal class DalOrder:IOrder
     }//create an order
     public Order Get(int id)
     {
+        Order order = s_listOrder.Find(item => item.Id == id);
+        if (order.Id == 0)
+            throw new NoSuchObjectException();
+        return order;
         //for (int i = 0; i < s_listOrder.Count; i++)
         //{
         //    if (s_listOrder[i].Id == id)
         //        return s_listOrder[i];
         //}
         //throw new NoSuchObjectException();
-        return s_listOrder?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
+        // return s_listOrder?.Find(item => item.Id == id) ?? throw new NoSuchObjectException();
 
 
     }//read order according id 
@@ -47,18 +51,21 @@ internal class DalOrder:IOrder
     }//get by condition
     public void Update(Order value)
     {
-        int j;
-        bool isExist = false;
-        for (j = 0; j < s_listOrder.Count && !isExist; j++)
-        {
-            if (s_listOrder[j].Id == value.Id)
-            {
-                isExist = true;
-                s_listOrder[j] = value;
-            }
-        }
-        if (!isExist)
-            throw new NoSuchObjectException();
+        Order order = Get(value.Id);
+        var index = s_listOrder.IndexOf(order);
+        s_listOrder[index] = value;
+        //int j;
+        //bool isExist = false;
+        //for (j = 0; j < s_listOrder.Count && !isExist; j++)
+        //{
+        //    if (s_listOrder[j].Id == value.Id)
+        //    {
+        //        isExist = true;
+        //        s_listOrder[j] = value;
+        //    }
+        //}
+        //if (!isExist)
+        //    throw new NoSuchObjectException();
     }//update the order
     public void Delete(int id)
     {

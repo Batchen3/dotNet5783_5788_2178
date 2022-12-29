@@ -39,6 +39,7 @@ internal class BlCart : ICart
                         orderItem.TotalPriceOfItems += product.Price;
                         c.TotalPrice += product.Price;
                     }
+
                 if (!exist)//if not exist in cart
                 {
                     BO.OrderItem newOrderItem = new BO.OrderItem { ID = 0, ProductID = product.Id, ProductName = product.Name, ProductPrice = product.Price, AmountsItems = 1, TotalPriceOfItems = product.Price };
