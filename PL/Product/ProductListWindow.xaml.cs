@@ -24,9 +24,10 @@ namespace PL.Product
         int debily = 0;
         string? state = null;
         public static BO.Cart cart = new BO.Cart{CustomerName="aaa",CustomerEmail="aaa@gmail.com",CustomerAddress="aaa", Items = new List<BO.OrderItem?>() };
-
+        
         public ProductListWindow(string? from = null)
         {
+            
             state = from;
             InitializeComponent();
             if (from == "admin")

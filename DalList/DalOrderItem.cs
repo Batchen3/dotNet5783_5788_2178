@@ -12,7 +12,7 @@ using static Dal.DataSource;
 
 namespace Dal;
 
-internal class DalOrderItem:IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     public int Add(OrderItem value)
     {
@@ -25,12 +25,9 @@ internal class DalOrderItem:IOrderItem
     }//create order item
     public OrderItem Get(int id)
     {
-        //for (int i = 0; i < s_listOrderItem.Count; i++)
-        //{
-        //    if (s_listOrderItem[i].Id == id)
-        //        return s_listOrderItem[i];
-        //}
-        OrderItem orderItem = s_listOrderItem.Find(item => item.Id == id);
+        var orderItem = (from item in s_listOrderItem
+                               where item.Id == id
+                               select item).FirstOrDefault();
         if (orderItem.Id == 0)
             throw new NoSuchObjectException();
         return orderItem;
@@ -67,37 +64,29 @@ internal class DalOrderItem:IOrderItem
     }
     public void Update(OrderItem value)
     {
-        OrderItem orderItem = Get(value.Id);
-        var index = s_listOrderItem.IndexOf(orderItem);
-        s_listOrderItem[index] = value;
-        //int j;
-        //bool isExist = false;
-        //for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
-        //{
-        //    if (s_listOrderItem[j].Id == value.Id)
-        //    {
-        //        isExist = true;
-        //        s_listOrderItem[j] = value;
-        //    }
-        //}
-        //if (!isExist)
-        //    throw new NoSuchObjectException();
+        try
+        {
+            OrderItem orderItem = Get(value.Id);
+            var index = s_listOrderItem.IndexOf(orderItem);
+            s_listOrderItem[index] = value;
+        }
+        catch (NoSuchObjectException ex)
+        {
+            throw ex;
+        }
+
     }//update the order item
     public void Delete(int id)
     {
-        OrderItem orderItem = Get(id);
-        s_listOrderItem.Remove(orderItem);
-        //int j;
-        //bool isExist = false;
-        //for (j = 0; j < s_listOrderItem.Count && !isExist; j++)
-        //{
-        //    if (s_listOrderItem[j].Id == id)
-        //    {
-        //        isExist = true;
-        //        s_listOrderItem.Remove(s_listOrderItem[j]);
-        //    }
-        //}
-        //if (!isExist)
-        //    throw new NoSuchObjectException();
+        try
+        {
+            OrderItem orderItem = Get(id);
+            s_listOrderItem.Remove(orderItem);
+        }
+        catch (NoSuchObjectException ex)
+        {
+            throw ex;
+        }
+
     }//delete order item by id
 }
