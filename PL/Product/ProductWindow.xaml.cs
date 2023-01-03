@@ -21,6 +21,7 @@ namespace PL.Product
     /// </summary>
     public partial class ProductWindow : Window
     {
+        //ggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
         BO.Product product = new BO.Product();
         BlApi.IBl bl = BlApi.Factory.Get();
         string status;
