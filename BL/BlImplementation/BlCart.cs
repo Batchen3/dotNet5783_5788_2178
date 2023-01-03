@@ -15,6 +15,7 @@ namespace BlImplementation;
 internal class BlCart : ICart
 {
     private IDal dalList = DalApi.Factory.Get();
+    //public static BO.Cart cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
     public BO.Cart Add(BO.Cart c, int id)//add item to cart
     {
         try
@@ -63,7 +64,7 @@ internal class BlCart : ICart
         var orderItem = (from item in c.Items
                          where item.ProductID == id
                          select item).FirstOrDefault();
-        if (orderItem.ID != 0)
+        if (orderItem.ProductID != 0)
         {
             if (amount > orderItem.AmountsItems)//add to amount
             {

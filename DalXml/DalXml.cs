@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -8,26 +9,20 @@ using System.Threading.Tasks;
 
 namespace Dal;
 
-sealed internal class DalList : IDal
-/// <summary>
-/// doing interface IDal
-/// </summary>
+sealed internal class DalXml : IDal
 {
-    public static IDal Instance { get; } = new DalList();
+    public static IDal Instance { get; } = new DalXml();
     /// <summary>
     /// initialize Product to do the functions in DalProduct
     /// </summary>
-    public IProduct Product => new DalProduct();
+    public IProduct Product { get; } = new Product();
     /// <summary>
     /// initialize Order to do the functions in DalOrder
     /// </summary>
-    public IOrder Order => new DalOrder();
+    public IOrder Order { get; } = new Order();
     /// <summary>
     /// initialize OrderItem to do the functions in DalOrderItem
     /// </summary>
-    public IOrderItem OrderItem => new DalOrderItem();
-    private DalList()
-    {
-
-    }
+    public IOrderItem OrderItem { get; } = new OrderItem();
+    private DalXml() { }
 }

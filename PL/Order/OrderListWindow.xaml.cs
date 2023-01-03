@@ -35,12 +35,12 @@ namespace PL.Order
             {
                 IEnumerable<BO.OrderForList> allOrders = bl.Order.GetOrders();
                 List<BO.OrderTracking> orderTrackings = new List<BO.OrderTracking>();
-                foreach (BO.OrderForList order in allOrders)
-                {
-                    orderTrackings.Add(bl.Order.OrderTracking(order.ID));
-                }
+                allOrders.ToList().ForEach(order => orderTrackings.Add(bl.Order.OrderTracking(order.ID)));
+                //foreach (BO.OrderForList order in allOrders)
+                //{
+                //    orderTrackings.Add(bl.Order.OrderTracking(order.ID));
+                //}
                 OrdersListview.ItemsSource = orderTrackings;
-
             }
         }
 
@@ -60,15 +60,11 @@ namespace PL.Order
                     orderWindow.Show();
                 }
                 if (state == null)
-                {
-                    orderForList = (BO.OrderForList)(sender as ListView).SelectedItem;
+                {   orderForList = (BO.OrderForList)(sender as ListView).SelectedItem;
                     selectedItem = bl.Order.GetDetailsOfOrder(orderForList.ID);
                     OrderWindow orderWindow = new OrderWindow(selectedItem);
                     orderWindow.Show();
-
                 }
-               
-
             }
             catch (BO.DalException ex)
             {
@@ -78,14 +74,9 @@ namespace PL.Order
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
-
         private void OrdersListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
-
-       
     }
 }

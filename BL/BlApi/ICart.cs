@@ -11,6 +11,7 @@ namespace BlApi;
 /// </summary>
 public interface ICart
 {
+    public static BO.Cart cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
     /// <summary>
     /// function add: to add new product to cart
     /// recive id of product and cart and add the product to the cart

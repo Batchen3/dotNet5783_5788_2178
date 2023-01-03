@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlImplementation;
 namespace PL.Product
 {
     /// <summary>
@@ -164,7 +165,7 @@ namespace PL.Product
             int.TryParse(id, out int idIntProduct);
             try
             {
-                ProductListWindow.cart = bl.Cart.Add(ProductListWindow.cart, idIntProduct);
+              ICart.cart = bl.Cart.Add(ICart.cart, idIntProduct);
             }
             catch (BO.DalException ex)
             {

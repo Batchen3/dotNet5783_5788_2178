@@ -26,7 +26,7 @@ namespace PL.Cart
         public CartListWindow()
         {
             InitializeComponent();
-            CartListview.ItemsSource = ProductListWindow.cart.Items;
+            CartListview.ItemsSource = ICart.cart.Items;
         }
 
         private void CartListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -46,10 +46,10 @@ namespace PL.Cart
         {
             try
             {
-                bl.Cart.SaveCart(ProductListWindow.cart);
+                bl.Cart.SaveCart(ICart.cart);
                 MessageBox.Show("the order was sent");
                 Close();
-                ProductListWindow.cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
+                ICart.cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
             }
             catch (BO.DalException ex)
             {

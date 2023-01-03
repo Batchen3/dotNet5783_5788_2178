@@ -1,4 +1,5 @@
-﻿using BlImplementation;
+﻿using BlApi;
+using BlImplementation;
 using BO;
 using DO;
 using PL.Product;
@@ -44,16 +45,31 @@ namespace PL.Cart
             int.TryParse(id, out int productId);
             string? newAmount = txtAmountItems.Text;
             int.TryParse(newAmount, out int amount);
-            ProductListWindow.cart = bl.Cart.Update(ProductListWindow.cart, productId, amount);
-            Close();
+            try
+            {
+                ICart.cart = bl.Cart.Update(ICart.cart, productId, amount);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             string? id = txtIdProduct.Text;
             int.TryParse(id, out int productId);
-            ProductListWindow.cart = bl.Cart.Update(ProductListWindow.cart, productId, 0);
-            Close();
+            try
+            {
+                ICart.cart = bl.Cart.Update(ICart.cart, productId, 0);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
