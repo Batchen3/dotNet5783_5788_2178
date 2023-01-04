@@ -44,21 +44,23 @@ namespace PL.Cart
 
         private void btnSaveCart_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                bl.Cart.SaveCart(ICart.cart);
-                MessageBox.Show("the order was sent");
-                Close();
-                ICart.cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
-            }
-            catch (BO.DalException ex)
-            {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            Customer.CustomerWindow customerWindow=new Customer.CustomerWindow();
+            customerWindow.Show();
+            //try
+            //{
+            //    bl.Cart.SaveCart(ICart.cart);
+            //    MessageBox.Show("the order was sent");
+            //    Close();
+            //    ICart.cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
+            //}
+            //catch (BO.DalException ex)
+            //{
+            //    MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
     }
 }
