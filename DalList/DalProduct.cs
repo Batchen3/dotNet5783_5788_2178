@@ -23,19 +23,16 @@ internal class DalProduct : IProduct
             throw new FullListException();
         else
         {
-            int id = Config.IdProduct;
             try
             {
-                Product product = Get(id);
-                int x = 5;
+                Product product = Get(value.Id);
+                throw new ExistException();
             }
             catch (NoSuchObjectException)
             {
-                value.Id = id;
                 s_listProduct.Add(value);
-                return id;
+                return value.Id;
             }
-            return Add(value);//אם קיים כבר מוצר עם המזהה הנל תחזור על הפונקציה וממילא מגריל מזהה חדש
         }
        
     }//add product to arr

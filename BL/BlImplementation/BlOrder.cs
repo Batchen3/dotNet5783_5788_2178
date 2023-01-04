@@ -134,13 +134,13 @@ internal class BlOrder : BlApi.IOrder
         {
             DO.OrderItem orderItem = dalList.OrderItem.Get(element => ((element.OrderID == idOrder) && (element.ProductID == idProduct)));
             DO.Order order = dalList.Order.Get(idOrder);
-            if (amount < 0)
-            {
-                throw new BO.NotValidException();
-            }
             if (!(order.ShipDate.CompareTo(DateTime.Now) > 0 || order.ShipDate.CompareTo(DateTime.MinValue) == 0))
             {
                 throw new BO.DateWasException();
+            }
+            if (amount < 0)
+            {
+                throw new BO.NotValidException();
             }
             DO.Product product = dalList.Product.Get(idProduct);
             if (orderItem.Amount > amount && amount != 0)
