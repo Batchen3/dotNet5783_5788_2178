@@ -97,7 +97,8 @@ static internal class DataSource
             p.Price = ((double)rand.NextDouble() + 0.05) * 100;
             p.Category = tInfoOfProduct[index].Item2;
             p.InStock = (int)rand.Next(0, 100);
-            p.Parve = (int)rand.Next(2);
+            int bin = rand.Next(2);
+            p.Parve = Convert.ToBoolean(bin);
             addProduct(p);
         }
 

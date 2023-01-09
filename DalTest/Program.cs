@@ -36,7 +36,7 @@ class Program
                 Console.WriteLine("enter product's parve(0/1)");
                 parveString = Console.ReadLine();
                 int.TryParse(parveString, out parveInt);
-                Product p = new Product { Id = idInt, Name = nameString, InStock = inStockInt, Parve = parveInt, Price = priceDouble, Category = (ECategory)categoryInt };
+                Product p = new Product { Id = idInt, Name = nameString, InStock = inStockInt, Parve =Convert.ToBoolean(parveInt), Price = priceDouble, Category = (ECategory)categoryInt };
                 try
                 {
                     int result = dalList?.Product.Add(p)??throw new NullException();
@@ -102,7 +102,7 @@ class Program
                     Console.WriteLine("enter product's parve(0/1)");
                     parveString = Console.ReadLine();
                     int.TryParse(parveString, out parveInt);
-                    Product pUpdate = new Product { Id = idUpdate, Name = nameString, InStock = inStockInt, Parve = parveInt, Price = priceDouble, Category = (ECategory)categoryInt };
+                    Product pUpdate = new Product { Id = idUpdate, Name = nameString, InStock = inStockInt, Parve = Convert.ToBoolean(parveInt), Price = priceDouble, Category = (ECategory)categoryInt };
                     dalList?.Product.Update(pUpdate);
                 }
                 catch (NoSuchObjectException ex)

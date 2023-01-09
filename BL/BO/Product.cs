@@ -31,12 +31,12 @@ public class Product
     /// <summary>
     ///property Parve for Product
     /// </summary>
-    public int Parve { get; set; }
+    public bool Parve { get; set; } 
     /// <summary>
     /// function "to string" for  print the Product
     /// </summary>
     public override string ToString() => $@"
-            Product ID: {ID}, 
+            Id: {ID}, 
             Name: {Name}, 
             category: {Category},
     	    Price: {Price},

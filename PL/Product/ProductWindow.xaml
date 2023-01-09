@@ -7,20 +7,23 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txtId" HorizontalAlignment="Left" Margin="136,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" TextChanged="txtId_TextChanged"/>
-        <Label x:Name="lblId" Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="136,108,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" TextChanged="txtName_TextChanged"/>
-        <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="77,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.148,0.258"/>
-        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="136,156,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" TextChanged="txtPrice_TextChanged_1"/>
-        <Label x:Name="lblPrice" Content="Price" HorizontalAlignment="Left" Margin="77,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="44"/>
-        <ComboBox x:Name="cbCategory" HorizontalAlignment="Left" Margin="136,195,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbCategory_SelectionChanged"/>
-        <Label x:Name="lblCategory" Content="Category" HorizontalAlignment="Left" Margin="77,191,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.775,0.901"/>
-        <TextBox x:Name="txtInstock" HorizontalAlignment="Left" Margin="136,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtInstock_TextChanged"/>
-        <Label x:Name="lblInstock" Content="Instock" HorizontalAlignment="Left" Margin="86,234,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="cbParve" Content="Parve" HorizontalAlignment="Left" Margin="95,282,0,0" VerticalAlignment="Top" Checked="cbParve_Checked"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="txtId"  Text = "{Binding Path =ID, Mode=TwoWay }"  HorizontalAlignment="Left" Margin="136,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" TextChanged="txtId_TextChanged"/>
+            <Label x:Name="lblId" Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtName" Text = "{Binding Path =Name, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,108,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" TextChanged="txtName_TextChanged"/>
+            <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="77,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.148,0.258"/>
+        <TextBox x:Name="txtPrice" Text = "{Binding Path =Price, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,156,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" TextChanged="txtPrice_TextChanged_1"/>
+            <Label x:Name="lblPrice" Content="Price" HorizontalAlignment="Left" Margin="77,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="44"/>
+        <ComboBox x:Name="cbCategory"  Text = "{Binding Path =Category, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,195,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbCategory_SelectionChanged"/>
+            <Label x:Name="lblCategory" Content="Category" HorizontalAlignment="Left" Margin="77,191,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.775,0.901"/>
+        <TextBox x:Name="txtInstock" Text = "{Binding Path =InStock, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtInstock_TextChanged"/>
+            <Label x:Name="lblInstock" Content="Instock" HorizontalAlignment="Left" Margin="86,234,0,0" VerticalAlignment="Top"/>
+        <RadioButton  x:Name="cbParve" IsChecked="{Binding Path=Parve, Mode=TwoWay }" Content="Parve" HorizontalAlignment="Left" Margin="95,282,0,0" VerticalAlignment="Top" Checked="cbParve_Checked"/>
         <RadioButton x:Name="cbDairy" Content="Dairy" HorizontalAlignment="Left" Margin="213,282,0,0" VerticalAlignment="Top" Checked="cbDairy_Checked"/>
-        <Button x:Name="btnSaveAdding" Content="save" HorizontalAlignment="Left" Margin="136,320,0,0" VerticalAlignment="Top" Height="30" Width="87" Click="btnSaveAdding_Click"/>
-        <Button x:Name="btnAddToCart" Content="add to cart " HorizontalAlignment="Left" Margin="546,320,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="btnAddToCart_Click"/>
-
+            <Button x:Name="btnSaveAdding" Content="save" HorizontalAlignment="Left" Margin="136,320,0,0" VerticalAlignment="Top" Height="30" Width="87" Click="btnSaveAdding_Click"/>
+            <Button x:Name="btnAddToCart" Content="add to cart" HorizontalAlignment="Left" Margin="146,320,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="btnAddToCart_Click" Grid.Column="1"/>
     </Grid>
 </Window>

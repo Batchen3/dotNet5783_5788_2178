@@ -31,7 +31,7 @@ public struct Product
     /// <summary>
     /// property Parve for Product
     /// </summary>
-    public int Parve { get; set; }
+    public bool Parve { get; set; }
     /// <summary>
     /// function toString for print product
     /// </summary>

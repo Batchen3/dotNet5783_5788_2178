@@ -33,30 +33,17 @@ namespace PL.Product
             cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
             btnAddToCart.Visibility = Visibility.Hidden;
             status = "add";
+            this.DataContext = product;         
         }
         public ProductWindow(BO.Product selectedProduct, string state)
         {
             InitializeComponent();
             status = state;
-            cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
-            txtId.Text = selectedProduct.ID.ToString();
-            txtId.IsEnabled = false;
-            txtName.Text = selectedProduct.Name;
-            txtPrice.Text = selectedProduct.Price.ToString();
-            txtInstock.Text = selectedProduct.InStock.ToString();
-            cbCategory.Text = selectedProduct.Category.ToString();
+            cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));         
+            txtId.IsEnabled = false; 
             btnAddToCart.Visibility = Visibility.Hidden;
-            if (selectedProduct.Parve == 0)
-            {
-                cbParve.IsChecked = false;
-                cbDairy.IsChecked = true;
-            }
-            else
-            {
-                cbParve.IsChecked = true;
-                cbDairy.IsChecked = false;
-            }
             product = selectedProduct;
+            this.DataContext = product;
             if (status == "display")
             {
                 btnSaveAdding.Visibility = Visibility.Hidden;
@@ -119,53 +106,53 @@ namespace PL.Product
 
         private void txtId_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string? id = txtId.Text;
-            int.TryParse(id, out int idInt);
-            product.ID = idInt;
+            //string? id = txtId.Text;
+            //int.TryParse(id, out int idInt);
+            //product.ID = idInt;
         }
 
         private void txtName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string? name = txtName.Text;
-            product.Name = name;
+            //string? name = txtName.Text;
+            //product.Name = name;
         }
 
         private void txtPrice_TextChanged_1(object sender, TextChangedEventArgs e)
         {
-            string? price = txtPrice.Text;
-            double.TryParse(price, out double priceInt);
-            product.Price = priceInt;
+            //string? price = txtPrice.Text;
+            //double.TryParse(price, out double priceInt);
+            //product.Price = priceInt;
         }
 
         private void txtInstock_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string? instock = txtInstock.Text;
-            int.TryParse(instock, out int instockInt);
-            product.InStock = instockInt;
+            //string? instock = txtInstock.Text;
+            //int.TryParse(instock, out int instockInt);
+            //product.InStock = instockInt;
         }
 
         private void cbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            product.Category = (BO.ECategory)cbCategory.SelectedItem;
+            //product.Category = (BO.ECategory)cbCategory.SelectedItem;
         }
 
         private void cbParve_Checked(object sender, RoutedEventArgs e)
         {
-            product.Parve = 1;
+            //product.Parve = 1;
         }
 
         private void cbDairy_Checked(object sender, RoutedEventArgs e)
         {
-            product.Parve = 0;
+            //product.Parve = 0;
         }
 
         private void btnAddToCart_Click(object sender, RoutedEventArgs e)
         {
-            string? id = txtId.Text;
-            int.TryParse(id, out int idIntProduct);
+            //string? id = txtId.Text;
+            //int.TryParse(id, out int idIntProduct);
             try
             {
-              ICart.cart = bl.Cart.Add(ICart.cart, idIntProduct);
+              ICart.cart = bl.Cart.Add(ICart.cart, product.ID);
             }
             catch (BO.DalException ex)
             {

@@ -20,7 +20,7 @@ internal class BlProduct : BlApi.IProduct
         {
             IEnumerable<DO.Product> listOfProducts = dalList?.Product.GetAll(func) ?? throw new NullException();
             List<BO.ProductForList> productForList = new List<BO.ProductForList> { };
-            listOfProducts.ToList().ForEach(product => productForList.Add(new BO.ProductForList { ID = product.Id, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category }));
+            listOfProducts.ToList().ForEach(product => productForList.Add(new BO.ProductForList { ID = product.Id, Parve = product.Parve, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category }));
             return productForList.OrderBy(product=>product.ProductName);
         }
         catch (NullException ex)
@@ -35,7 +35,7 @@ internal class BlProduct : BlApi.IProduct
         {
             IEnumerable<DO.Product> listOfProducts = dalList?.Product.GetAll(func) ?? throw new NullException();
             List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
-            listOfProducts.ToList().ForEach(product => productItem.Add(new BO.ProductItem { ID = product.Id, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 }));
+            listOfProducts.ToList().ForEach(product => productItem.Add(new BO.ProductItem { ID = product.Id, Parve = product.Parve, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 }));
             return productItem.OrderBy(product => product.ProductName);
         }
         catch (NullException ex)
@@ -87,7 +87,7 @@ internal class BlProduct : BlApi.IProduct
                 //        amount = item.AmountsItems;
                 if (amount == 0)
                     throw new BO.ObjectNotInCartException();
-                BO.ProductItem newProductItem = new BO.ProductItem { ID = product.Id, AmountInCart = amount, ProductName = product.Name, available = product.InStock > 0 ? true : false, Category = (BO.ECategory)product.Category, Parve = product.Parve == 1 ? true : false, ProductPrice = product.Price };
+                BO.ProductItem newProductItem = new BO.ProductItem { ID = product.Id, AmountInCart = amount, ProductName = product.Name, available = product.InStock > 0 ? true : false, Category = (BO.ECategory)product.Category, Parve = product.Parve, ProductPrice = product.Price };
                 return newProductItem;
             }
             catch (NoSuchObjectException e)
@@ -107,7 +107,7 @@ internal class BlProduct : BlApi.IProduct
 
     public void Add(BO.Product p)//to add product
     {
-        if (p.ID <= 0 || p.Name == null || p.InStock < 0 || p.Price <= 0 || (p.Parve != 0 && p.Parve != 1))//check if the parameters are valid
+        if (p.ID <= 0 || p.Name == null || p.InStock < 0 || p.Price <= 0)//check if the parameters are valid
             throw new BO.NotValidException();
         try
         {
@@ -151,7 +151,7 @@ internal class BlProduct : BlApi.IProduct
     }
     public void Update(BO.Product p)//update a product
     {
-        if (p.ID <= 0 || p.Name == null || p.InStock < 0 || p.Price <= 0 || (p.Parve != 0 && p.Parve != 1))//check if the parameters are valid
+        if (p.ID <= 0 || p.Name == null || p.InStock < 0 || p.Price <= 0)//check if the parameters are valid
             throw new BO.NotValidException();
         DO.Product newProduct = new DO.Product { Id = p.ID, Name = p.Name, Price = p.Price, Category = (DO.ECategory)p.Category, InStock = p.InStock, Parve = p.Parve };//create the product in order to update
         try

@@ -27,7 +27,7 @@ public class ProductForList
     /// <summary>
     ///property Parve for ProductForList
     /// </summary>
-    public bool Parve { get; set; }
+    public bool Parve { get; set; } 
     /// <summary>
     /// function "to string" for  print the ProductForList
     /// </summary>
