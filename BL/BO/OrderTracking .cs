@@ -19,7 +19,7 @@ public class OrderTracking
     /// <summary>
     ///property DateAndDescriptionOrder for OrderTracking
     /// </summary>
-    public List<(DateTime,string)?> DateAndDescriptionOrder { get; set; }
+    public List<(DateTime?,string)>? DateAndDescriptionOrder { get; set; }
     /// <summary>
     /// function "to string" for  print the OrderTracking
     /// </summary>
@@ -29,9 +29,9 @@ public class OrderTracking
     {
         string details = "ProductItem ID: " + ID +
                 "\nOrder Status: " + OrderStatus + "\n";
-        for (int i = 0; i < DateAndDescriptionOrder.Count; i++)
+        for (int i = 0; i < DateAndDescriptionOrder?.Count; i++)
         {
-            details += "Date:" + (i + 1) + ": " + DateAndDescriptionOrder[i]?.Item1 + " Description" + (i + 1) + ": " + DateAndDescriptionOrder[i]?.Item2 + "\n";
+            details += "Date:" + (i + 1) + ": " + DateAndDescriptionOrder[i].Item1 + " Description" + (i + 1) + ": " + DateAndDescriptionOrder[i].Item2 + "\n";
         }
         return details;
     }

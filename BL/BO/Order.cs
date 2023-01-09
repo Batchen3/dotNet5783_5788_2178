@@ -32,19 +32,19 @@ public class Order
     /// <summary>
     ///property  order date for order
     /// </summary>
-    public System.DateTime OrderDate { get; set; }
+    public System.DateTime? OrderDate { get; set; }
     /// <summary>
     ///property  ship date  for order
     /// </summary>
-    public System.DateTime ShipDate { get; set; }//arrive to the delivery
+    public System.DateTime? ShipDate { get; set; }//arrive to the delivery
     /// <summary>
     ///property  delivery date for order
     /// </summary>
-    public System.DateTime Delivery { get; set; } //arrive to the customer
+    public System.DateTime? Delivery { get; set; } //arrive to the customer
     /// <summary>
     ///property  items for order
     /// </summary>
-    public List<OrderItem?> Items { get; set; }
+    public List<OrderItem>? Items { get; set; }
     /// <summary>
     ///property  total price for order
     /// </summary>
@@ -62,7 +62,7 @@ public class Order
                  "\nOrder Date: " + OrderDate +
                  "\nShip Date: " + ShipDate +
                  "\nDelivery: " + Delivery+"\n";
-        for (int i = 0; i < Items.Count; i++)
+        for (int i = 0; i < Items?.Count; i++)
         {
             details += "item " + (i + 1) + ": " + Items[i] + "\n";
         }

@@ -135,20 +135,20 @@ static internal class DataSource
             o.OrderDate = DateTime.Now;
             if (i < tInfoOfOrder.Length * 0.2)//20% with just order date
             {
-                o.ShipDate = DateTime.MinValue;
-                o.Delivery = DateTime.MinValue;
+                o.ShipDate = null;
+                o.Delivery = null;
             }
             else
             {
                 TimeSpan tDaysShip = new TimeSpan(daysShip, 0, 0, 0);
-                o.ShipDate = o.OrderDate.Add(tDaysShip);
+                o.ShipDate = o.OrderDate?.Add(tDaysShip);
                 if (i < tInfoOfOrder.Length * 0.2 + (tInfoOfOrder.Length * 0.8 * 0.6))//60% of 80% with order, ship and delivery dates.
                 {
                     TimeSpan tDaysDelivery = new TimeSpan(daysDelivery, 0, 0, 0);
-                    o.Delivery = o.OrderDate.Add(tDaysDelivery);
+                    o.Delivery = o.OrderDate?.Add(tDaysDelivery);
                 }
                 else
-                    o.Delivery = DateTime.MinValue;//the other with just order and ship dates.
+                    o.Delivery = null;//the other with just order and ship dates.
             }
             addOrder(o);
         }

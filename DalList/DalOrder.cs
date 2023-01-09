@@ -28,7 +28,7 @@ internal class DalOrder : IOrder
     {
         var order = (from item in s_listOrder
                        where item.Id == id
-                       select item).FirstOrDefault();
+                       select new Order{Id=item.Id, CustomerName=item.CustomerName, CustomerEmail=item.CustomerEmail, CustomerAddress =item.CustomerAddress, OrderDate =item.OrderDate, ShipDate=item.ShipDate,Delivery=item.Delivery }).FirstOrDefault();
         if (order.Id == 0)
             throw new NoSuchObjectException();
         return order;

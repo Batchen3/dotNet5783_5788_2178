@@ -21,7 +21,6 @@ namespace PL.Product
     /// </summary>
     public partial class ProductWindow : Window
     {
-        //ggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
         BO.Product product = new BO.Product();
         BlApi.IBl bl = BlApi.Factory.Get();
         string status;
@@ -110,7 +109,7 @@ namespace PL.Product
 
             catch (DalException ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.InnerException?.Message);
             }
             catch (Exception ex)
             {
@@ -170,7 +169,7 @@ namespace PL.Product
             }
             catch (BO.DalException ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.InnerException?.Message);
             }
             catch (Exception ex)
             {

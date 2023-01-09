@@ -23,7 +23,6 @@ public partial class ProductListWindow : Window
     BlApi.IBl bl = BlApi.Factory.Get();
     string? state = null;
    
-    //hhhhhhhhhhhh
     public ProductListWindow(string? from = null)
     {
         
@@ -70,7 +69,7 @@ public partial class ProductListWindow : Window
         {
             if (state == "admin")
             {
-                productForList = (BO.ProductForList)(sender as ListView).SelectedItem;
+                productForList = (BO.ProductForList)ProductsListview.SelectedItem;
                 selectedItem = bl.Product.Get(productForList.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "update");
                 productWindow.ShowDialog();
@@ -78,7 +77,7 @@ public partial class ProductListWindow : Window
             }
             if (state == "newOrder")
             {
-                productItem = (BO.ProductItem)(sender as ListView).SelectedItem;
+                productItem = (BO.ProductItem)ProductsListview.SelectedItem;
                 selectedItem = bl.Product.Get(productItem.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "display");
                 productWindow.ShowDialog();
@@ -88,7 +87,7 @@ public partial class ProductListWindow : Window
         }
         catch (BO.DalException ex)
         {
-            MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+            MessageBox.Show(ex.InnerException?.Message);
         }
         catch (Exception ex)
         {

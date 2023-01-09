@@ -38,7 +38,7 @@ namespace PL.Order
             txtOrderStatus.IsEnabled = false;
             txtOrderDate.Text=selectedOrder.OrderDate.ToString();
             txtOrderDate.IsEnabled = false;
-            if (selectedOrder.ShipDate == DateTime.MinValue)
+            if (selectedOrder.ShipDate == null)
                 txtShipDate.Text = "there is not date";
             else
             {
@@ -46,7 +46,7 @@ namespace PL.Order
                 btnShipDate.Visibility = Visibility.Hidden;
             }
             txtShipDate.IsEnabled = false;
-            if (selectedOrder.Delivery == DateTime.MinValue)
+            if (selectedOrder.Delivery == null)
                 txtDelivery.Text = "there is not date";
             else
             {
@@ -73,7 +73,7 @@ namespace PL.Order
             }
             catch (BO.DalException ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.InnerException?.Message);
             }
             catch (Exception ex)
             {
@@ -90,7 +90,7 @@ namespace PL.Order
             }
             catch (BO.DalException ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.InnerException?.Message);
             }
             catch (Exception ex)
             {

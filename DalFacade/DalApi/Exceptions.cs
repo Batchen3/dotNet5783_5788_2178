@@ -10,6 +10,10 @@ public class NoSuchObjectException : Exception//No Such Object Exception
 {
     public override string Message => "no such object";
 }
+public class NullException : Exception//value with null Exception
+{
+    public override string Message => "there is a value with null";
+}
 public class ExistException : Exception//Exist Exception
 {
     public override string Message => "the object alredy exist";

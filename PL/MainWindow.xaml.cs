@@ -59,8 +59,10 @@ namespace PL
 
         private void btnOrderTracking_Click(object sender, RoutedEventArgs e)
         {
-            OrderListWindow order = new OrderListWindow("orderTracking");
-            order.Show();
+            Customer.OrderTrackingWindow orderTracking = new Customer.OrderTrackingWindow();
+            orderTracking.Show();
         }
+
+      
     }
 }

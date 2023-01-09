@@ -31,10 +31,10 @@ namespace PL.Cart
 
         private void CartListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Close();
-            BO.OrderItem orderItem = (BO.OrderItem)(sender as ListView).SelectedItem;
-            CartWindow cartWindow =new CartWindow(orderItem); 
-            cartWindow.Show();
+            BO.OrderItem orderItem = (BO.OrderItem)CartListview.SelectedItem;
+            CartWindow cartWindow =new CartWindow(orderItem);
+            cartWindow.ShowDialog();
+            CartListview.Items.Refresh();
         }
 
         private void CartListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -46,6 +46,7 @@ namespace PL.Cart
         {
             Customer.CustomerWindow customerWindow=new Customer.CustomerWindow();
             customerWindow.Show();
+            Close();
             //try
             //{
             //    bl.Cart.SaveCart(ICart.cart);

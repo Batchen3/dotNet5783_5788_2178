@@ -27,15 +27,15 @@ public struct Order
     /// <summary>
     /// property order date for Order
     /// </summary>
-    public System.DateTime OrderDate { get; set; }
+    public System.DateTime? OrderDate { get; set; }
     /// <summary>
     /// property ship date for Order
     /// </summary>
-    public System.DateTime ShipDate { get; set; }//arrive to the delivery
+    public System.DateTime? ShipDate { get; set; }//arrive to the delivery
     /// <summary>
     /// property delivery date for Order
     /// </summary>
-    public System.DateTime Delivery { get; set; } //arrive to the customer
+    public System.DateTime? Delivery { get; set; } //arrive to the customer
     /// <summary>
     /// function toString to print Order
     /// </summary>

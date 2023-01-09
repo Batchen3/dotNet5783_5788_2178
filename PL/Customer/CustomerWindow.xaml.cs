@@ -57,7 +57,7 @@ namespace PL.Customer
             }
             catch (BO.DalException ex)
             {
-                MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
+                MessageBox.Show(ex.InnerException?.Message);
             }
             catch (Exception ex)
             {
