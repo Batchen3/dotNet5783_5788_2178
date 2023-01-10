@@ -1,29 +1,36 @@
 ﻿<Window x:Class="PL.Product.ProductWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
-        mc:Ignorable="d"
+    mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:RadioButtonParveConverter x:Key="radioButtonParveConverter" />
+        <local:StatusForbtnAddToCartConverter x:Key="statusForbtnAddToCartConverter" />
+        <local:StatusForBtnSaveAddingConverter x:Key="statusForBtnSaveAddingConverter" />
+        <local:StatusForTextBox x:Key="statusForTextBox" />
+        <local:StatusForTxtId x:Key="statusForTxtId" />
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="txtId"  Text = "{Binding Path =ID, Mode=TwoWay }"  HorizontalAlignment="Left" Margin="136,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" TextChanged="txtId_TextChanged"/>
-            <Label x:Name="lblId" Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtName" Text = "{Binding Path =Name, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,108,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" TextChanged="txtName_TextChanged"/>
+        <TextBox x:Name="txtId" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTxtId}}" Text = "{Binding Path =product.ID, Mode=TwoWay }"  HorizontalAlignment="Left" Margin="136,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26"/>
+            <Label x:Name="lblId"  Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtName" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTextBox}}" Text = "{Binding Path =product.Name, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,108,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" />
             <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="77,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.148,0.258"/>
-        <TextBox x:Name="txtPrice" Text = "{Binding Path =Price, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,156,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" TextChanged="txtPrice_TextChanged_1"/>
+        <TextBox x:Name="txtPrice" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTextBox}}" Text = "{Binding Path =product.Price, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,156,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
             <Label x:Name="lblPrice" Content="Price" HorizontalAlignment="Left" Margin="77,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="44"/>
-        <ComboBox x:Name="cbCategory"  Text = "{Binding Path =Category, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,195,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbCategory_SelectionChanged"/>
+        <ComboBox x:Name="cbCategory" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTextBox}}" ItemsSource="{Binding AllCategories}" Text = "{Binding Path =product.Category, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,195,0,0" VerticalAlignment="Top" Width="120" />
             <Label x:Name="lblCategory" Content="Category" HorizontalAlignment="Left" Margin="77,191,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.775,0.901"/>
-        <TextBox x:Name="txtInstock" Text = "{Binding Path =InStock, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtInstock_TextChanged"/>
+        <TextBox x:Name="txtInstock" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTextBox}}" Text = "{Binding Path =product.InStock, Mode=TwoWay }" HorizontalAlignment="Left" Margin="136,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
             <Label x:Name="lblInstock" Content="Instock" HorizontalAlignment="Left" Margin="86,234,0,0" VerticalAlignment="Top"/>
-        <RadioButton  x:Name="cbParve" IsChecked="{Binding Path=Parve, Mode=TwoWay }" Content="Parve" HorizontalAlignment="Left" Margin="95,282,0,0" VerticalAlignment="Top" Checked="cbParve_Checked"/>
-        <RadioButton x:Name="cbDairy" Content="Dairy" HorizontalAlignment="Left" Margin="213,282,0,0" VerticalAlignment="Top" Checked="cbDairy_Checked"/>
-            <Button x:Name="btnSaveAdding" Content="save" HorizontalAlignment="Left" Margin="136,320,0,0" VerticalAlignment="Top" Height="30" Width="87" Click="btnSaveAdding_Click"/>
-            <Button x:Name="btnAddToCart" Content="add to cart" HorizontalAlignment="Left" Margin="146,320,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="btnAddToCart_Click" Grid.Column="1"/>
+        <RadioButton  x:Name="cbParve" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTextBox}}"  IsChecked="{Binding Path=product.Parve, Mode=TwoWay }" Content="Parve" HorizontalAlignment="Left" Margin="95,282,0,0" VerticalAlignment="Top" />
+        <RadioButton x:Name="cbDairy" IsEnabled="{Binding Path=Status,Converter={StaticResource statusForTextBox}}"  IsChecked="{Binding Path=product.Parve,Mode=TwoWay,Converter={StaticResource radioButtonParveConverter} }" Content="Dairy" HorizontalAlignment="Left" Margin="213,282,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnSaveAdding" Content="save" Visibility="{Binding Path=Status,Converter={StaticResource statusForBtnSaveAddingConverter}}" HorizontalAlignment="Left" Margin="136,320,0,0" VerticalAlignment="Top" Height="30" Width="87" Click="btnSaveAdding_Click"/>
+        <Button x:Name="btnAddToCart" Content="add to cart" Visibility="{Binding Path=Status ,Converter={StaticResource statusForbtnAddToCartConverter}}" HorizontalAlignment="Left" Margin="146,320,0,0" VerticalAlignment="Top" Height="30" Width="100" Click="btnAddToCart_Click" Grid.Column="1"/>
     </Grid>
 </Window>

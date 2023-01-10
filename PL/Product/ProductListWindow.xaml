@@ -6,6 +6,12 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
+    <Window.Resources>
+        <local:ChooseListViewConverter x:Key="chooseListViewConverter" />
+        <local:BtnCart_Available_Amount_Converter x:Key="btnCart_Available_Amount_Converter" />
+        <local:BtnAddProductConverter x:Key="btnAddProductConverter" />
+
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -17,7 +23,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged_1"/>
+            <ComboBox Name="CategorySelector" ItemsSource="{Binding AllCategories}" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged_1"/>
             <Label Content="category:" HorizontalAlignment="Left" Margin="209,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.316,-2.387" Height="54" Width="148" FontSize="24" FontWeight="Bold"/>
             <Button x:Name="btnShowAll" Content="show all" HorizontalAlignment="Left" Margin="324,-14,0,0" VerticalAlignment="Top" Height="31" RenderTransformOrigin="-0.18,-0.122" Width="66" Click="btnShowAll_Click">
                 <Button.RenderTransform>
@@ -30,15 +36,33 @@
                 </Button.RenderTransform>
             </Button>
         </Grid>
-        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" SelectionChanged="ProductsListview_SelectionChanged" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.RowSpan="2">
+        <ListView x:Name="ProductsListview" ItemsSource="{Binding Path=State,Converter={StaticResource chooseListViewConverter}}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="ID" Width="75" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="ProductName" Width="120" DisplayMemberBinding="{Binding ProductName}" />
+                    <GridViewColumn Header="ProductPrice" Width="100" DisplayMemberBinding="{Binding ProductPrice}" />
+                    <GridViewColumn Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
+                    <GridViewColumn Header="Parve" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsEnabled="False" IsChecked ="{Binding Parve}"  />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100"  DisplayMemberBinding="{Binding available}">
+                        <GridViewColumnHeader Content="Available"
+                            Visibility="{Binding Path=State ,Converter={StaticResource btnCart_Available_Amount_Converter}}"/>
+                    </GridViewColumn>
+                    <GridViewColumn Width="160"  DisplayMemberBinding="{Binding AmountInCart}">
+                        <GridViewColumnHeader Content="AmountInCart"
+                            Visibility="{Binding Path=State ,Converter={StaticResource btnCart_Available_Amount_Converter}}"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btnAddProduct" Content="add product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"  Click="Button_Click"/>
-        <Button x:Name="btnGoToCart" Content="go to cart" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />
+        <Button x:Name="btnAddProduct" Content="add product" Visibility="{Binding Path=State,Converter={StaticResource btnAddProductConverter}}" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"  Click="Button_Click"/>
+        <Button x:Name="btnGoToCart" Content="go to cart" Visibility="{Binding Path=State,Converter={StaticResource btnCart_Available_Amount_Converter}}" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />
     </Grid>
 
 </Window>

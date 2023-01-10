@@ -2,6 +2,7 @@
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,94 +16,113 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
-namespace PL.Order
+namespace PL.Order;
+
+/// <summary>
+/// Interaction logic for OrderWindow.xaml
+/// </summary>
+public partial class OrderWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for OrderWindow.xaml
-    /// </summary>
-    public partial class OrderWindow : Window
+    BlApi.IBl bl = BlApi.Factory.Get();
+    public string State { get; set; }
+
+    public OrderWindow(BO.Order selectedOrder, string status)
     {
-        BlApi.IBl bl = BlApi.Factory.Get();
-
-        public OrderWindow(BO.Order selectedOrder, string? status = null)
+        InitializeComponent();
+        State = status;
+        this.DataContext = new { selectedOrder, State = State };
+    }
+    private void btnShipDate_Click(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            InitializeComponent();
-            this.DataContext = selectedOrder;
-            //txtId.Text = selectedOrder.ID.ToString();
-            //txtId.IsEnabled = false;
-            //txtCustomerName.Text=selectedOrder.CustomerName;
-          //  txtCustomerName.IsEnabled = false;
-          //  txtCustomerAddress.Text=selectedOrder.CustomerAddress;
-            //txtCustomerAddress.IsEnabled = false;
-           // txtCustomerEmail.Text=selectedOrder.CustomerEmail;
-           // txtCustomerEmail.IsEnabled = false;
-           // txtOrderStatus.Text = selectedOrder.OrderStatus.ToString();
-           // txtOrderStatus.IsEnabled = false;
-           // txtOrderDate.Text=selectedOrder.OrderDate.ToString();
-           // txtOrderDate.IsEnabled = false;
-            //if (selectedOrder.ShipDate == null)
-            //    txtShipDate.Text = "there is not date";
-            //else
-            //{
-            //    txtShipDate.Text = selectedOrder.ShipDate.ToString();
-            //    btnShipDate.Visibility = Visibility.Hidden;
-            //}
-           // txtShipDate.IsEnabled = false;
-            //if (selectedOrder.Delivery == null)
-            //    txtDelivery.Text = "there is not date";
-            //else
-            //{
-            //    txtDelivery.Text = selectedOrder.Delivery.ToString();
-            //    btnDeliveryDate.Visibility = Visibility.Hidden;
-            //}
-           // txtDelivery.IsEnabled = false;
-           // ItemsListView.ItemsSource = selectedOrder.Items;
-            //txtTotalPrice.Text=selectedOrder.TotalPrice.ToString();
-           // txtTotalPrice.IsEnabled = false; 
-            if(status=="orderTracking")
-            {
-                btnDeliveryDate.Visibility = Visibility.Hidden;
-                btnShipDate.Visibility = Visibility.Hidden;
-            }
-            
+            BO.Order updateOrder = bl.Order.UpdateSentOrder(Convert.ToInt32(txtId.Text));
+            this.DataContext = new { selectedOrder = updateOrder, State = State };
         }
-        private void btnShipDate_Click(object sender, RoutedEventArgs e)
+        catch (BO.DalException ex)
         {
-            try
-            {
-                BO.Order updateOrder=bl.Order.UpdateSentOrder(Convert.ToInt32(txtId.Text));
-                txtShipDate.Text=updateOrder.ShipDate.ToString();
-            }
-            catch (BO.DalException ex)
-            {
-                MessageBox.Show(ex.InnerException?.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            MessageBox.Show(ex.InnerException?.Message);
         }
-
-        private void btnDeliveryDate_Click(object sender, RoutedEventArgs e)
+        catch (Exception ex)
         {
-            try
-            {
-                BO.Order updateOrder = bl.Order.UpdateArrivedOrder(Convert.ToInt32(txtId.Text));
-                txtDelivery.Text = updateOrder.ShipDate.ToString();
-            }
-            catch (BO.DalException ex)
-            {
-                MessageBox.Show(ex.InnerException?.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void btnDeliveryDate_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            BO.Order updateOrder = bl.Order.UpdateArrivedOrder(Convert.ToInt32(txtId.Text));
+            this.DataContext = new { selectedOrder = updateOrder, State = State };
+        }
+        catch (BO.DalException ex)
+        {
+            MessageBox.Show(ex.InnerException?.Message);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+}
+public class BtndateConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string StringValue = (string)value;
+        if (StringValue == "orderTracking")
+        {
+            return Visibility.Hidden;
+        }
+        else
+        {
+            return Visibility.Visible;
+        }
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class BtnShipDateConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "confirmed")
+        {
+            return true;
+        }
+        else
+        { 
+            return false;
         }
 
-        private void ItemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class BtnDeliveryDateConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "arrived")
         {
-
+            return false;
         }
+        else
+        {
+            return true;
+        }
+
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

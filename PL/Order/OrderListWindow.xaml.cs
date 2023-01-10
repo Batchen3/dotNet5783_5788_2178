@@ -27,7 +27,7 @@ namespace PL.Order
         public OrderListWindow()
         {
             InitializeComponent();
-            OrdersListview.ItemsSource = bl.Order.GetOrders();
+            this.DataContext = bl.Order.GetOrders();
         }
 
         private void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -38,7 +38,7 @@ namespace PL.Order
             {
                 orderForList = (BO.OrderForList)OrdersListview.SelectedItem;
                 selectedItem = bl.Order.GetDetailsOfOrder(orderForList.ID);
-                OrderWindow orderWindow = new OrderWindow(selectedItem);
+                OrderWindow orderWindow = new OrderWindow(selectedItem,"admin");
                 orderWindow.Show();
             }
             catch (BO.DalException ex)
@@ -49,9 +49,6 @@ namespace PL.Order
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-        private void OrdersListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
+        }      
     }
 }

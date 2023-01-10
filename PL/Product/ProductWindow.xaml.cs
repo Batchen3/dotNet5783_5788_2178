@@ -14,156 +14,201 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlImplementation;
-namespace PL.Product
+using System.Globalization;
+
+namespace PL.Product;
+
+/// <summary>
+/// Interaction logic for ProductWindow.xaml
+/// </summary>
+public partial class ProductWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for ProductWindow.xaml
-    /// </summary>
-    public partial class ProductWindow : Window
+    BO.Product product = new BO.Product();
+    BlApi.IBl bl = BlApi.Factory.Get();
+    public string Status { get; set; }
+    public Array AllCategories { get; set; }
+    public ProductWindow()
     {
-        BO.Product product = new BO.Product();
-        BlApi.IBl bl = BlApi.Factory.Get();
-        string status;
-      
+        InitializeComponent();
+        AllCategories = Enum.GetValues(typeof(BO.ECategory));
+        Status = "add";
+        this.DataContext = new{ product,Status = Status, AllCategories = AllCategories };
+    }
+    public ProductWindow(BO.Product selectedProduct, string state)
+    {
+        InitializeComponent();
+        Status = state;
+        AllCategories = Enum.GetValues(typeof(BO.ECategory));
+        product = selectedProduct;
+        this.DataContext = new { product, Status = Status, AllCategories = AllCategories };
+    } 
+    private void btnSaveAdding_Click(object sender, RoutedEventArgs e)
+    {
 
-     
-        public ProductWindow()
+        try
         {
-            InitializeComponent();
-            cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));
-            btnAddToCart.Visibility = Visibility.Hidden;
-            status = "add";
-            this.DataContext = product;         
-        }
-        public ProductWindow(BO.Product selectedProduct, string state)
-        {
-            InitializeComponent();
-            status = state;
-            cbCategory.ItemsSource = Enum.GetValues(typeof(BO.ECategory));         
-            txtId.IsEnabled = false; 
-            btnAddToCart.Visibility = Visibility.Hidden;
-            product = selectedProduct;
-            this.DataContext = product;
-            if (status == "display")
+            if (Status == "add")
             {
-                btnSaveAdding.Visibility = Visibility.Hidden;
-                txtName.IsEnabled = false;
-                txtPrice.IsEnabled = false;
-                txtInstock.IsEnabled = false;
-                cbCategory.IsEnabled = false;
-                cbParve.IsEnabled = false;
-                cbDairy.IsEnabled = false;
-                btnAddToCart.Visibility = Visibility.Visible;
+                bl.Product.Add(product);
             }
-        }
-
-        private void TxtPrice_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnSaveAdding_Click(object sender, RoutedEventArgs e)
-        {
-
-            try
+            else
             {
-                if (status == "add")
-                {
-                    bl.Product.Add(product);
-
-                }
-                else
-                {
-                    bl.Product.Update(product);
-                }
-                Close();
+                bl.Product.Update(product);
             }
-
-            catch (DalException ex)
-            {
-                MessageBox.Show(ex.InnerException?.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void txtId_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //string? id = txtId.Text;
-            //int.TryParse(id, out int idInt);
-            //product.ID = idInt;
-        }
-
-        private void txtName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //string? name = txtName.Text;
-            //product.Name = name;
-        }
-
-        private void txtPrice_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            //string? price = txtPrice.Text;
-            //double.TryParse(price, out double priceInt);
-            //product.Price = priceInt;
-        }
-
-        private void txtInstock_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //string? instock = txtInstock.Text;
-            //int.TryParse(instock, out int instockInt);
-            //product.InStock = instockInt;
-        }
-
-        private void cbCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //product.Category = (BO.ECategory)cbCategory.SelectedItem;
-        }
-
-        private void cbParve_Checked(object sender, RoutedEventArgs e)
-        {
-            //product.Parve = 1;
-        }
-
-        private void cbDairy_Checked(object sender, RoutedEventArgs e)
-        {
-            //product.Parve = 0;
-        }
-
-        private void btnAddToCart_Click(object sender, RoutedEventArgs e)
-        {
-            //string? id = txtId.Text;
-            //int.TryParse(id, out int idIntProduct);
-            try
-            {
-              ICart.cart = bl.Cart.Add(ICart.cart, product.ID);
-            }
-            catch (BO.DalException ex)
-            {
-                MessageBox.Show(ex.InnerException?.Message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
             Close();
         }
+
+        catch (DalException ex)
+        {
+            MessageBox.Show(ex.InnerException?.Message);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+    private void btnAddToCart_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            ICart.cart = bl.Cart.Add(ICart.cart, product.ID);
+        }
+        catch (BO.DalException ex)
+        {
+            MessageBox.Show(ex.InnerException?.Message);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+
+        Close();
+    }
+}
+public class RadioButtonParveConverter : IValueConverter
+{
+    public object Convert(
+    object value,
+    Type targetType,
+    object parameter,
+    CultureInfo culture)
+    {
+        bool boolValue = (bool)value;
+        return !boolValue;
+    }
+    public object ConvertBack(
+    object value,
+    Type targetType,
+    object parameter,
+    CultureInfo culture)
+    {
+        bool boolValue = (bool)value;
+        return !boolValue;
+        //throw new NotImplementedException();
+    }
+}
+
+public class StatusForbtnAddToCartConverter : IValueConverter
+{
+    public object Convert(
+    object value,
+    Type targetType,
+    object parameter,
+    CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "display")
+        {
+            return Visibility.Visible;
+        }
+        else
+        {
+            return Visibility.Hidden;
+        }
+    }
+    public object ConvertBack(
+    object value,
+    Type targetType,
+    object parameter,
+
+    CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class StatusForBtnSaveAddingConverter : IValueConverter
+{
+    public object Convert(
+    object value,
+    Type targetType,
+    object parameter,
+    CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "display")
+        {
+            return Visibility.Hidden;
+        }
+        else
+        {
+            return Visibility.Visible;
+        }
+    }
+    public object ConvertBack(
+    object value,
+    Type targetType,
+    object parameter,
+
+    CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class StatusForTextBox : IValueConverter
+{
+    public object Convert(
+    object value,
+    Type targetType,
+    object parameter,
+    CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "display")
+            return false;
+        return true;
+    }
+    public object ConvertBack(
+    object value,
+    Type targetType,
+    object parameter,
+
+    CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class StatusForTxtId : IValueConverter
+{
+    public object Convert(
+    object value,
+    Type targetType,
+    object parameter,
+    CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "add")
+            return true;
+        return false;
+    }
+    public object ConvertBack(
+    object value,
+    Type targetType,
+    object parameter,
+
+    CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

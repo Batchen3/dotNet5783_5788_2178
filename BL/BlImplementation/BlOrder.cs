@@ -83,7 +83,7 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             DO.Order order = dalList?.Order.Get(id) ?? throw new NullException();//get order by id
-            if (order.ShipDate==null || order.ShipDate?.CompareTo(DateTime.Now) > 0)//check that the date of ship didn't past
+            if (order.ShipDate==null)//|| order.ShipDate?.CompareTo(DateTime.Now) > 0//check that the date of ship didn't past
             {
                 order.ShipDate = DateTime.Now;//update ship date
                 dalList.Order.Update(order);//update order
@@ -108,9 +108,9 @@ internal class BlOrder : BlApi.IOrder
         try
         {
             DO.Order order = dalList?.Order.Get(id) ?? throw new NullException();//get order by id
-            if (order.ShipDate==null || order.ShipDate?.CompareTo(DateTime.Now) > 0)
+            if (order.ShipDate==null)//|| order.ShipDate?.CompareTo(DateTime.Now) > 0
                 throw new BO.DatesNotInCorrectOrderException();
-            if (order.Delivery==null || order.Delivery?.CompareTo(DateTime.Now) > 0)//check that the date of delivery didn't past
+            if (order.Delivery==null)//|| order.Delivery?.CompareTo(DateTime.Now) > 0   //check that the date of delivery didn't past
             {
                 order.Delivery = DateTime.Now;//update delivery date
                 dalList.Order.Update(order);//update order

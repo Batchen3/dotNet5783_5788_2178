@@ -13,10 +13,14 @@
                 <RowDefinition Height="400*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="OrdersListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" SelectionChanged="OrdersListview_SelectionChanged" MouseDoubleClick="OrdersListview_MouseDoubleClick" Grid.RowSpan="2">
+            <ListView x:Name="OrdersListview" ItemsSource="{Binding}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" MouseDoubleClick="OrdersListview_MouseDoubleClick" Grid.RowSpan="2">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn/>
+                        <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding ID}" />
+                        <GridViewColumn Header="CustomerName" Width="120" DisplayMemberBinding="{Binding CustomerName}" />
+                        <GridViewColumn Header="OrderStatus" Width="120" DisplayMemberBinding="{Binding OrderStatus}" />
+                        <GridViewColumn Header="AmountOfItems" Width="120" DisplayMemberBinding="{Binding AmountOfItems}" />
+                        <GridViewColumn Header="TotalPrice" Width="120" DisplayMemberBinding="{Binding TotalPrice}" />
                     </GridView>
                 </ListView.View>
             </ListView>
