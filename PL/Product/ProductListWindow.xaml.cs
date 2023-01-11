@@ -23,23 +23,35 @@ namespace PL.Product;
 /// </summary>
 public partial class ProductListWindow : Window
 {
+
     BlApi.IBl bl = BlApi.Factory.Get();
     public string State { get; set; }
     public Array AllCategories { get; set; }
+    private ObservableCollection<BO.ProductForList> _productsListForAdmin =new ObservableCollection<BO.ProductForList>();
+    private ObservableCollection<BO.ProductItem> _productListForNewOrder =new ObservableCollection<BO.ProductItem>();
 
     public ProductListWindow(string from)
     {
-        InitializeComponent();
+        InitializeComponent();                   
         State = from;
-        AllCategories = Enum.GetValues(typeof(BO.ECategory));
-        this.DataContext = new { State = State , AllCategories = AllCategories };
+        AllCategories = Enum.GetValues(typeof(BO.ECategory)); 
+        if (State == "admin")
+        {
+            _productsListForAdmin = new ObservableCollection<BO.ProductForList>(bl.Product.GetAll());
+           DataContext = new { State = State, ItemSource = _productsListForAdmin, AllCategories = AllCategories };
+        }
+        else
+        {
+            _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
+            DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
+        }
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         ProductWindow product = new ProductWindow();
         product.ShowDialog();
-        ProductsListview.ItemsSource = bl.Product.GetAll();
+        DataContext = new { State = State, ItemSource = bl.Product.GetAll(), AllCategories = AllCategories };
     }
 
     private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -55,7 +67,7 @@ public partial class ProductListWindow : Window
                 selectedItem = bl.Product.Get(productForList.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "update");
                 productWindow.ShowDialog();
-               ProductsListview.ItemsSource = bl.Product.GetAll();
+                DataContext = new { State = State, ItemSource = bl.Product.GetAll(), AllCategories = AllCategories };
             }
             if (State == "newOrder")
             {
@@ -63,7 +75,7 @@ public partial class ProductListWindow : Window
                 selectedItem = bl.Product.Get(productItem.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "display");
                 productWindow.ShowDialog();
-                ProductsListview.ItemsSource = bl.Product.GetCatalog();
+                DataContext = new { State = State, ItemSource = bl.Product.GetCatalog(), AllCategories = AllCategories };
             }
         }
         catch (BO.DalException ex)
@@ -98,38 +110,41 @@ public partial class ProductListWindow : Window
         cartListWindow.ShowDialog();
         ProductsListview.ItemsSource = bl.Product.GetCatalog();
     }
-}
 
-public class ChooseListViewConverter : IValueConverter
-{
-    BlApi.IBl bl = BlApi.Factory.Get();
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        string StringValue = (string)value;
-        if (StringValue == "admin")
-        {
-            //return new ObservableCollection<BO.ProductForList>(bl.Product.GetAll());
-            return bl.Product.GetAll();
-        }
-        else
-        {
-            return bl.Product.GetCatalog();
-        }
-    }
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        string StringValue = (string)value;
-        if (StringValue == "admin")
-        {
-            return bl.Product.GetAll();
-        }
-        else
-        {
-            return bl.Product.GetCatalog();
-        }
+
     }
 }
-
+//public class ChooseListViewConverter : IValueConverter
+//{
+//    BlApi.IBl bl = BlApi.Factory.Get();
+//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        string StringValue = (string)value;
+//        if (StringValue == "admin")
+//        {
+//            //return new ObservableCollection<BO.ProductForList>(bl.Product.GetAll());
+//            return bl.Product.GetAll();
+//        }
+//        else
+//        {
+//            return bl.Product.GetCatalog();
+//        }
+//    }
+//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        string StringValue = (string)value;
+//        if (StringValue == "admin")
+//        {
+//            return bl.Product.GetAll();
+//        }
+//        else
+//        {
+//            return bl.Product.GetCatalog();
+//        }
+//    }
+//}
 public class BtnCart_Available_Amount_Converter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -142,11 +157,11 @@ public class BtnCart_Available_Amount_Converter : IValueConverter
         else
         {
             return Visibility.Visible;
-        }         
+        }
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();       
+        throw new NotImplementedException();
     }
 }
 public class BtnAddProductConverter : IValueConverter

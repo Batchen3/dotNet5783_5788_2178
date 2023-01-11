@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="CustomerWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="232,59,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="20" TextChanged="txtName_TextChanged"/>
-        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="232,108,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="20" TextChanged="txtEmail_TextChanged"/>
-        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Margin="232,156,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="20" RenderTransformOrigin="0.485,0.43" TextChanged="txtAddress_TextChanged"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="232,59,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerName, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="20" />
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="232,108,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerEmail, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="20" />
+        <TextBox x:Name="txtAddress" HorizontalAlignment="Left" Margin="232,156,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerAddress, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="20" RenderTransformOrigin="0.485,0.43" />
         <Label Content="Customer name" HorizontalAlignment="Left" Margin="117,53,0,0" VerticalAlignment="Top" Height="30"/>
         <Label Content="Customer email" HorizontalAlignment="Left" Margin="118,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.33,-0.232"/>
         <Label Content="Customer address" HorizontalAlignment="Left" Margin="117,155,0,0" VerticalAlignment="Top"/>

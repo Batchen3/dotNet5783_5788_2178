@@ -1,9 +1,9 @@
 ﻿using BlImplementation;
 using BO;
-using DO;
 using PL.Product;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,10 +24,16 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get();
+        private ObservableCollection<OrderForList> _myCollection = new ObservableCollection<OrderForList>();
+
         public OrderListWindow()
         {
             InitializeComponent();
-            this.DataContext = bl.Order.GetOrders();
+            //IEnumerable<OrderForList> list = bl.Order.GetOrders();
+            //list.ToList().ForEach(item => _myCollection.Add(item));
+            _myCollection = new ObservableCollection<OrderForList>(bl.Order.GetOrders());
+            DataContext = _myCollection;
+            //this.DataContext = bl.Order.GetOrders();
         }
 
         private void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -39,7 +45,11 @@ namespace PL.Order
                 orderForList = (BO.OrderForList)OrdersListview.SelectedItem;
                 selectedItem = bl.Order.GetDetailsOfOrder(orderForList.ID);
                 OrderWindow orderWindow = new OrderWindow(selectedItem,"admin");
-                orderWindow.Show();
+                orderWindow.ShowDialog();
+               ObservableCollection<OrderForList>  aaa = new ObservableCollection<OrderForList>(bl.Order.GetOrders());
+                aaa.ToList().ForEach(o => _myCollection.Add(o));            
+                //DataContext = _myCollection;
+                //this.DataContext = bl.Order.GetOrders();
             }
             catch (BO.DalException ex)
             {

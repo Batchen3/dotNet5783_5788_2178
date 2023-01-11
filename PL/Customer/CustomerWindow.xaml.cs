@@ -26,26 +26,8 @@ namespace PL.Customer
         public CustomerWindow()
         {
             InitializeComponent();
+            DataContext = ICart.cart;
         }
-
-        private void txtName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string? name = txtName.Text;
-            ICart.cart.CustomerName = name;
-        }
-
-        private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string? email = txtEmail.Text;
-            ICart.cart.CustomerEmail = email;
-        }
-
-        private void txtAddress_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string? address = txtAddress.Text;
-            ICart.cart.CustomerAddress = address;
-        }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
