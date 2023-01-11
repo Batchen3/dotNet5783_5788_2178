@@ -85,7 +85,7 @@ namespace BlTest
                         Console.WriteLine("enter product's parve(0/1)");
                         parveString = Console.ReadLine();
                         int.TryParse(parveString, out parve);
-                        BO.Product product = new BO.Product { ID = pId, Name = pName, Price = pPrice, Category = (BO.ECategory)category, InStock = inStock, Parve = parve };
+                        BO.Product product = new BO.Product { ID = pId, Name = pName, Price = pPrice, Category = (BO.ECategory)category, InStock = inStock, Parve = Convert.ToBoolean(parve) }; 
                         try
                         {
                             Bl.Product.Add(product);
@@ -154,7 +154,7 @@ namespace BlTest
                         Console.WriteLine("enter product's parve(0/1)");
                         parveString = Console.ReadLine();
                         int.TryParse(parveString, out parve);
-                        BO.Product productForUpdate = new BO.Product { ID = id, Name = pName, Price = pPrice, Category = (BO.ECategory)category, InStock = inStock, Parve = parve }; 
+                        BO.Product productForUpdate = new BO.Product { ID = id, Name = pName, Price = pPrice, Category = (BO.ECategory)category, InStock = inStock, Parve = Convert.ToBoolean(parve) }; 
                         try
                         {
                             Bl.Product.Update(productForUpdate);

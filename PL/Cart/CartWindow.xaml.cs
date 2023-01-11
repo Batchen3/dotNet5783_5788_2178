@@ -24,30 +24,27 @@ namespace PL.Cart
     /// </summary>
     public partial class CartWindow : Window
     {
-        BlApi.IBl bl = BlApi.Factory.Get();
 
+        //לא מעדכן את המחיר כי הבינדינג משנה לפני כבר את הכמות
+
+        BlApi.IBl bl = BlApi.Factory.Get();
+        public BO.OrderItem OrderItem { get; set; }
         public CartWindow(BO.OrderItem orderItem)
         {
             InitializeComponent();
-            txtId.Text = orderItem.ID.ToString();
-            txtIdProduct.Text = orderItem.ProductID.ToString();
-            txtName.Text = orderItem.ProductName;
-            txtPrice.Text = orderItem.ProductPrice.ToString();
-            txtTotalPriceOfItems.Text = orderItem.TotalPriceOfItems.ToString();
-            txtAmountItems.Text = orderItem.AmountsItems.ToString();
-
-
+            OrderItem = orderItem;
+            DataContext = orderItem;
         }
 
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
         {
-            string? id = txtIdProduct.Text;
-            int.TryParse(id, out int productId);
-            string? newAmount = txtAmountItems.Text;
-            int.TryParse(newAmount, out int amount);
+            //string? id = txtIdProduct.Text;
+            //int.TryParse(id, out int productId);
+            //string? newAmount = txtAmountItems.Text;
+            //int.TryParse(newAmount, out int amount);
             try
             {
-                ICart.cart = bl.Cart.Update(ICart.cart, productId, amount);
+                ICart.cart = bl.Cart.Update(ICart.cart, OrderItem.ProductID, OrderItem.AmountsItems);
                 Close();
             }
             catch (Exception ex)
@@ -59,11 +56,11 @@ namespace PL.Cart
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            string? id = txtIdProduct.Text;
-            int.TryParse(id, out int productId);
+            //string? id = txtIdProduct.Text;
+            //int.TryParse(id, out int productId);
             try
             {
-                ICart.cart = bl.Cart.Update(ICart.cart, productId, 0);
+                ICart.cart = bl.Cart.Update(ICart.cart, OrderItem.ProductID, 0);
                 Close();
             }
             catch (Exception ex)

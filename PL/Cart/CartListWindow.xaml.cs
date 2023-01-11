@@ -26,7 +26,8 @@ namespace PL.Cart
         public CartListWindow()
         {
             InitializeComponent();
-            CartListview.ItemsSource = ICart.cart.Items;
+            DataContext= ICart.cart.Items;
+            //CartListview.ItemsSource = ICart.cart.Items;
         }
 
         private void CartListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -37,31 +38,11 @@ namespace PL.Cart
             CartListview.Items.Refresh();
         }
 
-        private void CartListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void btnSaveCart_Click(object sender, RoutedEventArgs e)
         {
             Customer.CustomerWindow customerWindow=new Customer.CustomerWindow();
             customerWindow.Show();
             Close();
-            //try
-            //{
-            //    bl.Cart.SaveCart(ICart.cart);
-            //    MessageBox.Show("the order was sent");
-            //    Close();
-            //    ICart.cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
-            //}
-            //catch (BO.DalException ex)
-            //{
-            //    MessageBox.Show(ex.Message + " " + ex.InnerException.Message);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
     }
 }

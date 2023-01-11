@@ -46,8 +46,8 @@ namespace PL.Order
                 selectedItem = bl.Order.GetDetailsOfOrder(orderForList.ID);
                 OrderWindow orderWindow = new OrderWindow(selectedItem,"admin");
                 orderWindow.ShowDialog();
-               ObservableCollection<OrderForList>  aaa = new ObservableCollection<OrderForList>(bl.Order.GetOrders());
-                aaa.ToList().ForEach(o => _myCollection.Add(o));            
+                _myCollection = new ObservableCollection<OrderForList>(bl.Order.GetOrders());
+                DataContext = _myCollection;
                 //DataContext = _myCollection;
                 //this.DataContext = bl.Order.GetOrders();
             }
