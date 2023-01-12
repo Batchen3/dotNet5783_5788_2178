@@ -62,10 +62,11 @@ public class Order
                  "\nOrder Date: " + OrderDate +
                  "\nShip Date: " + ShipDate +
                  "\nDelivery: " + Delivery+"\n";
-        for (int i = 0; i < Items?.Count; i++)
-        {
-            details += "item " + (i + 1) + ": " + Items[i] + "\n";
-        }
+        Items?.ForEach(item => details += item + "\n");
+        //for (int i = 0; i < Items?.Count; i++)
+        //{
+        //    details += "item " + (i + 1) + ": " + Items[i] + "\n";
+        //}
         details += "TotalPrice: " + TotalPrice;
         return details;
     }

@@ -23,7 +23,7 @@ public class Cart
     /// <summary>
     ///property  Items for cart
     /// </summary>
-    public List<OrderItem?> Items { get; set; }
+    public List<OrderItem?>? Items { get; set; }
     /// <summary>
     ///property  TotalPrice for cart
     /// </summary>
@@ -37,10 +37,11 @@ public class Cart
         string details = "Customer Name: " + CustomerName +
                 "\nCustomer Email: " + CustomerEmail +
                  "\nCustomerAddress: " + CustomerAddress + "\n";
-        for (int i = 0; i < Items.Count; i++)
-        {
-            details += "item " + (i + 1) + ": " + Items[i] + "\n";
-        }
+        Items?.ForEach(item => details += item + "\n");
+        //for (int i = 0; i < Items.Count; i++)
+        //{
+        //    details += "item " + (i + 1) + ": " + Items[i] + "\n";
+        //}
         details += "TotalPrice: " + TotalPrice;
         return details;
     }

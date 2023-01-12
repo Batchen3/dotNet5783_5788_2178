@@ -47,7 +47,7 @@ internal class BlCart : ICart
             {
                 BO.OrderItem newOrderItem = new BO.OrderItem { ID = 0, ProductID = product.Id, ProductName = product.Name, ProductPrice = product.Price, AmountsItems = 1, TotalPriceOfItems = product.Price };
                 c.TotalPrice += product.Price;
-                c.Items.Add(newOrderItem);
+                c.Items?.Add(newOrderItem);
             }
             return c;
         }
@@ -129,7 +129,7 @@ internal class BlCart : ICart
         //        }
         //    }
         if (amount == 0)
-            c.Items.Remove(orderItemToDelete);
+            c.Items?.Remove(orderItemToDelete);
         //if (!exist)
         //    throw new BO.ObjectNotFoundException();
         return c;
@@ -151,7 +151,7 @@ internal class BlCart : ICart
         }
         DO.Product product = new DO.Product();
 
-        c.Items.ToList().ForEach(orderItem =>
+        c.Items?.ToList().ForEach(orderItem =>
         {
             try
             {
@@ -193,7 +193,7 @@ internal class BlCart : ICart
         {
             int idOrder = dalList?.Order.Add(order) ?? throw new NullException(); ;
 
-            c.Items.ToList().ForEach(orderItem =>
+            c.Items?.ToList().ForEach(orderItem =>
             {
                 DO.OrderItem orderItemAdd = new DO.OrderItem { ProductID = orderItem?.ProductID?? throw new NullException(), Price = orderItem.ProductPrice, Amount = orderItem.AmountsItems, OrderID = idOrder };
                 dalList.OrderItem.Add(orderItemAdd);
