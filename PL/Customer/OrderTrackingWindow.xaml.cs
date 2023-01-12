@@ -24,29 +24,21 @@ public partial class OrderTrackingWindow : Window
 {
     BlApi.IBl bl = BlApi.Factory.Get();
     public string State { get; set; }
+    public OrderTracking OrderTracking { get; set; } = new OrderTracking();
     public OrderTrackingWindow()
     {
         InitializeComponent();
         State = "before";
-        DataContext = State;
+        DataContext = new { State = State, OrderTracking = OrderTracking };
     }
 
     private void btnSearch_Click(object sender, RoutedEventArgs e)
-    {
-        string? idString = txtOrderTrackingId.Text;
-        int.TryParse(idString, out int id);
+    {       
         try
         {
-            BO.OrderTracking orderTracking = bl.Order.OrderTracking(id);
+            OrderTracking = bl.Order.OrderTracking(OrderTracking.ID);
             State = "after";
-            DataContext = State;
-            // lblStatus.Visibility = Visibility.Visible;
-            txtStatus.Text = orderTracking.OrderStatus.ToString();
-            //txtStatus.Visibility = Visibility.Visible;
-            txtStatus.IsEnabled = false;
-            listViewStatus.ItemsSource = orderTracking.DateAndDescriptionOrder;
-            //listViewStatus.Visibility = Visibility.Visible;
-            //btnDetails.Visibility = Visibility.Visible;
+            DataContext = new { State = State, OrderTracking = OrderTracking };       
         }
         catch (BO.DalException ex)
         {
@@ -56,11 +48,9 @@ public partial class OrderTrackingWindow : Window
 
     private void btnDetails_Click(object sender, RoutedEventArgs e)
     {
-        string? idString = txtOrderTrackingId.Text;
-        int.TryParse(idString, out int id);
         try
         {
-            BO.Order order = bl.Order.GetDetailsOfOrder(id);
+            BO.Order order = bl.Order.GetDetailsOfOrder(OrderTracking.ID);
             OrderWindow orderWindow = new OrderWindow(order, "orderTracking");
             orderWindow.Show();
         }
@@ -77,11 +67,7 @@ public partial class OrderTrackingWindow : Window
 }
 public class StateVisibilityConverter : IValueConverter
 {
-    public object Convert(
-    object value,
-    Type targetType,
-    object parameter,
-    CultureInfo culture)
+    public object Convert(object value,Type targetType,object parameter,CultureInfo culture)
     {
         string stringValue = (string)value;
         if (stringValue == "before")
@@ -91,6 +77,30 @@ public class StateVisibilityConverter : IValueConverter
         else
         {
             return Visibility.Visible;
+        }
+    }
+    public object ConvertBack(
+    object value,
+    Type targetType,
+    object parameter,
+
+    CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class IDIsEnableConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "before")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
     public object ConvertBack(

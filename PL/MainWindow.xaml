@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="visibilityConverter" />
+    </Window.Resources>
     <Grid>
-        <Button x:Name="btnListProduct" Content="products" HorizontalAlignment="Left" Margin="219,118,0,0" VerticalAlignment="Top" Height="29" Width="79" Click="Button_Click" RenderTransformOrigin="0.517,0.55"/>
+        <Button x:Name="btnListProduct" Visibility="{Binding Converter={StaticResource visibilityConverter}}" Content="products" HorizontalAlignment="Left" Margin="219,118,0,0" VerticalAlignment="Top" Height="29" Width="79" Click="Button_Click" RenderTransformOrigin="0.517,0.55"/>
         <Button x:Name="btnAdmin" Content="admin" HorizontalAlignment="Left" Margin="75,41,0,0" VerticalAlignment="Top" Height="42" Width="97" RenderTransformOrigin="0.334,0.843" Click="btnAdmin_Click"/>
         <Button x:Name="btnNewOrder" Content="new order" HorizontalAlignment="Center" Margin="0,41,0,0" VerticalAlignment="Top" Height="42" Width="96" RenderTransformOrigin="1.226,0.603" Click="btnNewOrder_Click"/>
         <Button x:Name="btnOrderTracking" Content="order tracking" HorizontalAlignment="Left" Margin="611,41,0,0" VerticalAlignment="Top" Height="42" Width="93" RenderTransformOrigin="0.5,0.5" Click="btnOrderTracking_Click"/>
-        <Button x:Name="btnListOrder" Content="orders" HorizontalAlignment="Left" Margin="504,118,0,0" VerticalAlignment="Top" Height="29" Width="81" Click="btnListOrder_Click"/>
+        <Button x:Name="btnListOrder" Visibility="{Binding Converter={StaticResource visibilityConverter}}" Content="orders" HorizontalAlignment="Left" Margin="504,118,0,0" VerticalAlignment="Top" Height="29" Width="81" Click="btnListOrder_Click"/>
     </Grid>
 </Window>

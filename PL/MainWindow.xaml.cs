@@ -14,55 +14,72 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    BlApi.IBl bl = BlApi.Factory.Get();
+    public string Status { get; set; }
+    public MainWindow()
     {
-        BlApi.IBl bl = BlApi.Factory.Get();
-        public MainWindow()
-        {
-            InitializeComponent();
-            btnListProduct.Visibility = Visibility.Hidden;
-            btnListOrder.Visibility = Visibility.Hidden;
-        }
+        InitializeComponent();
+        Status = "start";
+        DataContext = Status;
+    }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ProductListWindow product = new ProductListWindow("admin");
-            product.Show();
-        }
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        ProductListWindow product = new ProductListWindow("admin");
+        product.Show();
+    }
 
-        private void btnAdmin_Click(object sender, RoutedEventArgs e)
-        {
-            btnListProduct.Visibility = Visibility.Visible;
-            btnListOrder.Visibility = Visibility.Visible;
-            //btnAdmin.Visibility = Visibility.Hidden;
-            //btnNewOrder.Visibility=Visibility.Hidden;
-            //btnOrderTracking.Visibility=Visibility.Hidden;
-        }
+    private void btnAdmin_Click(object sender, RoutedEventArgs e)
+    {
+        Status = "admin";
+        DataContext = Status;
+    }
 
-        private void btnListOrder_Click(object sender, RoutedEventArgs e)
-        {
-            OrderListWindow order = new OrderListWindow();
-            order.Show();
-        }
+    private void btnListOrder_Click(object sender, RoutedEventArgs e)
+    {
+        OrderListWindow order = new OrderListWindow();
+        order.Show();
+    }
 
-        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
-        {
-            ProductListWindow product = new ProductListWindow("newOrder");
-            product.Show();
-        }
+    private void btnNewOrder_Click(object sender, RoutedEventArgs e)
+    {
+        ProductListWindow product = new ProductListWindow("newOrder");
+        product.Show();
+    }
 
-        private void btnOrderTracking_Click(object sender, RoutedEventArgs e)
-        {
-            Customer.OrderTrackingWindow orderTracking = new Customer.OrderTrackingWindow();
-            orderTracking.Show();
-        }
+    private void btnOrderTracking_Click(object sender, RoutedEventArgs e)
+    {
+        Customer.OrderTrackingWindow orderTracking = new Customer.OrderTrackingWindow();
+        orderTracking.Show();
+    }
 
-      
+  
+}
+public class VisibilityConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        string stringValue = (string)value;
+        if (stringValue == "admin")
+        {
+            return Visibility.Visible;
+        }
+        else
+        {
+            return Visibility.Hidden;
+        }
+    }
+    public object ConvertBack(object value,Type targetType,object parameter,CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }
