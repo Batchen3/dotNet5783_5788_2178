@@ -19,8 +19,8 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
-                    <!--<GridViewColumn Header="Date" Width="100" DisplayMemberBinding="{Binding Item1}"/>
-                    <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Item2}"/>-->
+                    <!--<GridViewColumn Header="Date" Width="100" DisplayMemberBinding="{Binding OrderTracking.DateAndDescriptionOrder[0].Item1}"/>
+                    <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding OrderTracking.DateAndDescriptionOrder.Item2}"/>-->
                 </GridView>
             </ListView.View>
         </ListView>

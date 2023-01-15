@@ -38,7 +38,7 @@ public partial class OrderTrackingWindow : Window
         {
             OrderTracking = bl.Order.OrderTracking(OrderTracking.ID);
             State = "after";
-            DataContext = new { State = State, OrderTracking = OrderTracking };       
+            DataContext = new { State = State, OrderTracking = OrderTracking };
         }
         catch (BO.DalException ex)
         {
