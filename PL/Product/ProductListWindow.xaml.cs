@@ -27,18 +27,18 @@ public partial class ProductListWindow : Window
     BlApi.IBl bl = BlApi.Factory.Get();
     public string State { get; set; }
     public Array AllCategories { get; set; }
-    private ObservableCollection<BO.ProductForList> _productsListForAdmin =new ObservableCollection<BO.ProductForList>();
-    private ObservableCollection<BO.ProductItem> _productListForNewOrder =new ObservableCollection<BO.ProductItem>();
+    private ObservableCollection<BO.ProductForList> _productsListForAdmin = new ObservableCollection<BO.ProductForList>();
+    private ObservableCollection<BO.ProductItem> _productListForNewOrder = new ObservableCollection<BO.ProductItem>();
 
     public ProductListWindow(string from)
     {
-        InitializeComponent();                   
+        InitializeComponent();
         State = from;
-        AllCategories = Enum.GetValues(typeof(BO.ECategory)); 
+        AllCategories = Enum.GetValues(typeof(BO.ECategory));
         if (State == "admin")
         {
             _productsListForAdmin = new ObservableCollection<BO.ProductForList>(bl.Product.GetAll());
-           DataContext = new { State = State, ItemSource = _productsListForAdmin, AllCategories = AllCategories };
+            DataContext = new { State = State, ItemSource = _productsListForAdmin, AllCategories = AllCategories };
         }
         else
         {
