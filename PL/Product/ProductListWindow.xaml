@@ -59,6 +59,15 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
         <Button x:Name="btnAddProduct" Content="add product" Visibility="{Binding Path=State,Converter={StaticResource btnAddProductConverter}}" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"  Click="Button_Click"/>
         <Button x:Name="btnGoToCart" Content="go to cart" Visibility="{Binding Path=State,Converter={StaticResource btnCart_Available_Amount_Converter}}" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />

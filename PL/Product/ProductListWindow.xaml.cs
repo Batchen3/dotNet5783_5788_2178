@@ -44,6 +44,9 @@ public partial class ProductListWindow : Window
         {
             _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
             DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            view.GroupDescriptions.Add(groupDescription);
         }
     }
 
@@ -75,7 +78,11 @@ public partial class ProductListWindow : Window
                 selectedItem = bl.Product.Get(productItem.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "display");
                 productWindow.ShowDialog();
-                DataContext = new { State = State, ItemSource = bl.Product.GetCatalog(), AllCategories = AllCategories };
+                _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
+                DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+                view.GroupDescriptions.Add(groupDescription);
             }
         }
         catch (BO.DalException ex)
@@ -93,7 +100,13 @@ public partial class ProductListWindow : Window
         if (State == "admin")
             ProductsListview.ItemsSource = bl.Product.GetAll();
         if (State == "newOrder")
-            ProductsListview.ItemsSource = bl.Product.GetCatalog();
+        {
+            _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
+            DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            view.GroupDescriptions.Add(groupDescription);
+        }         
     }
 
     private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -101,14 +114,24 @@ public partial class ProductListWindow : Window
         if (State == "admin")
             ProductsListview.ItemsSource = bl.Product.GetByCategoryAdmin((BO.ECategory)CategorySelector.SelectedItem);
         if (State == "newOrder")
-            ProductsListview.ItemsSource = bl.Product.GetByCategoryForOrder((BO.ECategory)CategorySelector.SelectedItem);
+        {
+            _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetByCategoryForOrder((BO.ECategory)CategorySelector.SelectedItem));
+            DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            view.GroupDescriptions.Add(groupDescription);
+        }
     }
 
     private void btnGoToCart_Click(object sender, RoutedEventArgs e)
     {
         Cart.CartListWindow cartListWindow = new Cart.CartListWindow();
         cartListWindow.ShowDialog();
-        ProductsListview.ItemsSource = bl.Product.GetCatalog();
+        _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
+        DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
+        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
+        PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+        view.GroupDescriptions.Add(groupDescription);
     }
 
     private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
