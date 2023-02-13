@@ -4,76 +4,67 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using DalApi;
 using DO;
 
 namespace Dal;
 
-internal class Order:IOrder
+internal class Order : IOrder
 {
     public int Add(DO.Order value)
     {
-        XElement? Products = XDocument.Load("Products.xml").Root;
-        var list = Products?.Elements().ToList().Where(product => product?.Element("Id")?.Value.ToString() == value.Id.ToString());
-        if (list?.Count() > 0)
-            throw new ExistException();
-        Products?.Save("Products.xml");
+        if(value.Id == 0)//status of add
+        {
+            XElement? Config = XDocument.Load("../config.xml").Root;
+            XElement? idOrder = Config?.Element("OrderId");
+            int id = Convert.ToInt32(idOrder?.Value);
+            value.Id = id++;
+            idOrder.Value = id.ToString();
+            Config?.Save("../config.xml");
+        }
+        List<DO.Order> lst = GetAll().ToList();
+        lst.Add(value);
+        StreamWriter write = new StreamWriter("../Order.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<DO.Order>));
+        ser.Serialize(write, lst);
+        write.Close();
         return value.Id;
-
     }
     public void Delete(int id)
     {
-
-        id = 0;
+        List<DO.Order> lst = GetAll().ToList();
+        lst.Remove(Get(id));
+        StreamWriter w = new StreamWriter("../Order.xml");
+        XmlSerializer ser = new XmlSerializer(typeof(List<DO.Order>));
+        ser.Serialize(w, lst);
+        w.Close();
     }
     public void Update(DO.Order value)
     {
-        int id = 0;
+        Delete(value.Id);
+        Add(value);
     }
     public DO.Order Get(int id)
     {
-        XElement? Products = XDocument.Load("Products.xml").Root;
-        var found = Products?.Elements().ToList().Find(product => product?.Element("Id")?.Value.ToString() == id.ToString());
-        if (found?.Element("Id")?.Value.ToString() == "0")
+        List<DO.Order> lst = GetAll().ToList();
+        var found = lst.Find(x => x.Id == id);
+        if (found.Id == 0)
             throw new ExistException();
-        // return found;
-        return new DO.Order();
-
-        //List<DO.Product> lst= new List<DO.Product> { };
-        ////DO.Product p;
-        //StreamReader sr = new StreamReader("Products.xml");
-        //XmlSerializer ser= new XmlSerializer(typeof(List<Product>));
-        //lst = ser.Deserialize(sr);
-
-
-
-
-
-
-
-
-
-
-
-        //StreamWriter w = new StreamWriter("products.xml");
-        // XmlSerializer ser = new XmlSerializer(typeof(List<Product>));
-
-        //ser.Serialize(lst, w);
-
-        // StreamReader r = new StreamReader();
-
-        //lst = ser.Deserialize(r)
-        //  w.Close();
-
+        return new DO.Order { Id = found.Id, CustomerName = found.CustomerName, CustomerAddress = found.CustomerAddress, CustomerEmail = found.CustomerEmail, OrderDate = found.OrderDate, ShipDate = found.ShipDate, Delivery = found.Delivery };
     }
     public IEnumerable<DO.Order> GetAll(Func<DO.Order, bool>? func = null)
     {
-        IEnumerable<DO.Order> i = new List<DO.Order>();
-        return i;
+        List<DO.Order> lst = new List<DO.Order> { };
+        XmlSerializer ser = new XmlSerializer(typeof(List<DO.Order>));
+        StreamReader r = new StreamReader("../Order.xml");
+        lst = (List<DO.Order>)ser.Deserialize(r);
+        r.Close();
+        return (func == null) ? lst : lst?.Where(func);
     }
     public DO.Order Get(Predicate<DO.Order> func)
     {
-        return new DO.Order();
-
+        List<DO.Order> lst = GetAll().ToList();
+        return lst.Find(func);
     }
 }

@@ -10,71 +10,71 @@ using DalApi;
 
 
 namespace Dal;
-internal class OrderItem:IOrderItem
+internal class OrderItem : IOrderItem
 {
     public int Add(DO.OrderItem value)
     {
-        XElement? Products = XDocument.Load("Products.xml").Root;
-        var list = Products?.Elements().ToList().Where(product => product?.Element("Id")?.Value.ToString() == value.Id.ToString());
+        if (value.Id == 0)//status of add
+        {
+            XElement? Config = XDocument.Load("../Config.xml").Root;
+            XElement? orderItemId = Config?.Element("OrderItemId");
+            int id = Convert.ToInt32(orderItemId?.Value);
+            value.Id = id++;
+            orderItemId.Value = id.ToString();
+            Config?.Save("../config.xml");
+        }
+        XElement? OrdersItems = XDocument.Load("../OrderItem.xml").Root;
+        var list = OrdersItems?.Elements().ToList().Where(orderItem => orderItem?.Element("Id")?.Value.ToString() == value.Id.ToString());
         if (list?.Count() > 0)
             throw new ExistException();
-        Products?.Save("Products.xml");
+        XElement? orderItem = new XElement("OrderItem");
+        XElement? Id = new XElement("Id", value.Id);
+        orderItem.Add(Id);
+        XElement? ProductId = new XElement("ProductID", value.ProductID);
+        orderItem.Add(ProductId);
+        XElement? OrderID = new XElement("OrderID", value.OrderID);
+        orderItem.Add(OrderID);
+        XElement? Price = new XElement("Price", value.Price);
+        orderItem.Add(Price);
+        XElement? Amount = new XElement("Amount", value.Amount);
+        orderItem.Add(Amount);
+        OrdersItems?.Add(orderItem);
+        OrdersItems?.Save("../OrderItem.xml");
         return value.Id;
-
     }
     public void Delete(int id)
     {
-
-        id = 0;
+        XElement? OrdersItems = XDocument.Load("../OrederItem.xml").Root;
+        OrdersItems?.Elements().ToList().Find(orderItem => Convert.ToInt32(orderItem?.Element("Id")?.Value) == id)?.Remove();
+        OrdersItems?.Save("../OrederItem.xml");
     }
     public void Update(DO.OrderItem value)
     {
-        int id = 0;
+        Delete(value.Id);
+        Add(value);
     }
     public DO.OrderItem Get(int id)
     {
-        XElement? Products = XDocument.Load("Products.xml").Root;
-        var found = Products?.Elements().ToList().Find(product => product?.Element("Id")?.Value.ToString() == id.ToString());
-        if (found?.Element("Id")?.Value.ToString() == "0")
+        XElement? OrdersItems = XDocument.Load("../OrderItem.xml").Root;
+        var found = OrdersItems?.Elements().ToList().Find(OrderItem => Convert.ToInt32(OrderItem?.Element("Id")?.Value) == id);
+        if (found == null)
             throw new ExistException();
-        // return found;
-        return new DO.OrderItem();
-
-        //List<DO.Product> lst= new List<DO.Product> { };
-        ////DO.Product p;
-        //StreamReader sr = new StreamReader("Products.xml");
-        //XmlSerializer ser= new XmlSerializer(typeof(List<Product>));
-        //lst = ser.Deserialize(sr);
-
-
-
-
-
-
-
-
-
-
-
-        //StreamWriter w = new StreamWriter("products.xml");
-        // XmlSerializer ser = new XmlSerializer(typeof(List<Product>));
-
-        //ser.Serialize(lst, w);
-
-        // StreamReader r = new StreamReader();
-
-        //lst = ser.Deserialize(r)
-        //  w.Close();
-
+        return new DO.OrderItem { Id = Convert.ToInt32(found?.Element("Id")?.Value), ProductID = Convert.ToInt32(found?.Element("ProductID")?.Value), OrderID = Convert.ToInt32(found?.Element("OrderID")?.Value), Price = Convert.ToInt32(found?.Element("Price")?.Value), Amount = Convert.ToInt32(found?.Element("Amount")?.Value) };
     }
     public IEnumerable<DO.OrderItem> GetAll(Func<DO.OrderItem, bool>? func = null)
     {
-        IEnumerable<DO.OrderItem> i = new List<DO.OrderItem>();
-        return i;
+        XElement? OrdersItems = XDocument.Load("../OrderItem.xml").Root;
+        List<DO.OrderItem> lst = new List<DO.OrderItem> { };
+        OrdersItems?.Elements().ToList().ForEach(o =>
+        {
+            lst.Add(new DO.OrderItem { Id = Convert.ToInt32(o?.Element("Id")?.Value), ProductID = Convert.ToInt32(o?.Element("ProductID")?.Value), OrderID = Convert.ToInt32(o?.Element("OrderID")?.Value), Price = Convert.ToInt32(o?.Element("Price")?.Value), Amount = Convert.ToInt32(o?.Element("Amount")?.Value) });
+        });
+        return func == null ? lst : lst.Where(func);
     }
     public DO.OrderItem Get(Predicate<DO.OrderItem> func)
     {
-        return new DO.OrderItem ();
-
+        IEnumerable<DO.OrderItem> lst = GetAll();
+        return lst.ToList().Find(func);
     }
 }
+

@@ -26,7 +26,7 @@ internal class BlOrder : BlApi.IOrder
                 orderItemsById.ToList().ForEach(orderItem => sum += orderItem.Price * orderItem.Amount);
                 orders.Add(new BO.OrderForList { ID = item.Id, CustomerName = item.CustomerName, AmountOfItems = orderItemsById.Count(), OrderStatus = calculateStatus(item), TotalPrice = sum });
             });
-            return orders;
+            return orders.OrderBy(i=>i.ID);
         }
         catch (NullException ex)
         {

@@ -7,17 +7,17 @@
         mc:Ignorable="d"
         Title="CartWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txtId" Text="{Binding Path=ID}" HorizontalAlignment="Left" Margin="149,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" IsEnabled="False"/>
+        <TextBox x:Name="txtId"  HorizontalAlignment="Left" Margin="149,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" IsEnabled="False"/>
         <Label x:Name="lblId" Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtIdProduct" Text="{Binding Path=ProductID}" HorizontalAlignment="Left" Margin="149,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" IsEnabled="False"/>
+        <TextBox x:Name="txtIdProduct" HorizontalAlignment="Left" Margin="149,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" IsEnabled="False"/>
         <Label x:Name="lblIdProduct" Content="Id product" HorizontalAlignment="Left" Margin="56,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.045,1.499"/>
-        <TextBox x:Name="txtName" Text="{Binding Path=ProductName}" HorizontalAlignment="Left" Margin="149,141,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" IsEnabled="False" RenderTransformOrigin="0.463,1.591"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="149,141,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" IsEnabled="False" RenderTransformOrigin="0.463,1.591"/>
         <Label x:Name="lblName" Content="Name product" HorizontalAlignment="Left" Margin="49,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.148,0.258"/>
-        <TextBox x:Name="txtPrice" Text="{Binding Path=ProductPrice}" HorizontalAlignment="Left" Margin="149,176,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="149,176,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label x:Name="lblPrice"  Content="Price product" HorizontalAlignment="Left" Margin="49,171,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="88"/>
-        <TextBox x:Name="txtAmountItems" Text="{Binding Path=AmountsItems}" HorizontalAlignment="Left" Margin="149,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtAmountItems" HorizontalAlignment="Left" Margin="149,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
         <Label x:Name="lblAmountItems" Content="Amount of items" HorizontalAlignment="Left" Margin="31,212,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="105"/>
-        <TextBox x:Name="txtTotalPriceOfItems" Text="{Binding Path=TotalPriceOfItems}" HorizontalAlignment="Left" Margin="149,264,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <TextBox x:Name="txtTotalPriceOfItems" HorizontalAlignment="Left" Margin="149,264,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
         <Label x:Name="lblTotalPriceOfItems" Content="Total price of items" HorizontalAlignment="Left" Margin="22,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="134"/>
         <Button x:Name="btnChangeAmount" Content="change amount" HorizontalAlignment="Left" Margin="293,216,0,0" VerticalAlignment="Top" Width="107" Click="btnChangeAmount_Click"/>
         <Button x:Name="btnDelete" Content="delete" HorizontalAlignment="Left" Margin="105,306,0,0" VerticalAlignment="Top" Width="74" Height="23" Click="btnDelete_Click"/>
