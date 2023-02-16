@@ -101,7 +101,7 @@
     <Name>aaaaaaaaa</Name>
     <Price>22</Price>
     <Category>cakes</Category>
-    <InStock>31</InStock>
+    <InStock>30</InStock>
     <Parve>true</Parve>
   </Product>
   <Product>
@@ -109,7 +109,7 @@
     <Name>zzzz</Name>
     <Price>3</Price>
     <Category>cakes</Category>
-    <InStock>19</InStock>
+    <InStock>17</InStock>
     <Parve>false</Parve>
   </Product>
 </Products>

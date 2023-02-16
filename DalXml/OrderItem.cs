@@ -24,7 +24,7 @@ internal class OrderItem : IOrderItem
             Config?.Save("../config.xml");
         }
         XElement? OrdersItems = XDocument.Load("../OrderItem.xml").Root;
-        var list = OrdersItems?.Elements().ToList().Where(orderItem => orderItem?.Element("Id")?.Value.ToString() == value.Id.ToString());
+        var list = OrdersItems?.Elements().ToList().Where(orderItem => Convert.ToInt32(orderItem?.Element("Id")?.Value) == value.Id);
         if (list?.Count() > 0)
             throw new ExistException();
         XElement? orderItem = new XElement("OrderItem");
