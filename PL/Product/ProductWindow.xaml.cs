@@ -23,37 +23,58 @@ namespace PL.Product;
 /// </summary>
 public partial class ProductWindow : Window
 {
-    BO.Product product = new BO.Product();
+    class Properties : DependencyObject
+    {
+        public string Status
+        {
+            get { return (string)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
+        }
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("Status", typeof(string), typeof(Properties), new UIPropertyMetadata());
+        public Array AllCategories
+        {
+            get { return (Array)GetValue(AllCategoriesProperty); }
+            set { SetValue(AllCategoriesProperty, value); }
+        }
+        public static readonly DependencyProperty AllCategoriesProperty = DependencyProperty.Register("AllCategories", typeof(Array), typeof(Properties), new PropertyMetadata());
+        public BO.Product Product
+        {
+            get { return (BO.Product)GetValue(ProductProperty); }
+            set { SetValue(ProductProperty, value); }
+        }
+        public static readonly DependencyProperty ProductProperty = DependencyProperty.Register("Product", typeof(BO.Product), typeof(Properties), new PropertyMetadata(new BO.Product()));
+    }
+
+
+    Properties properties=new Properties();
     BlApi.IBl bl = BlApi.Factory.Get();
-    public string Status { get; set; }
-    public Array AllCategories { get; set; }
     public ProductWindow()
     {
         InitializeComponent();
-        AllCategories = Enum.GetValues(typeof(BO.ECategory));
-        Status = "add";
-        this.DataContext = new{ product,Status = Status, AllCategories = AllCategories };
+        properties.AllCategories = Enum.GetValues(typeof(BO.ECategory));
+        properties.Status = "add";
+        DataContext = properties;
     }
     public ProductWindow(BO.Product selectedProduct, string state)
     {
         InitializeComponent();
-        Status = state;
-        AllCategories = Enum.GetValues(typeof(BO.ECategory));
-        product = selectedProduct;
-        this.DataContext = new { product, Status = Status, AllCategories = AllCategories };
+        properties.Status = state;
+        properties.AllCategories = Enum.GetValues(typeof(BO.ECategory));
+        properties.Product = selectedProduct;
+        DataContext = properties;
     } 
     private void btnSaveAdding_Click(object sender, RoutedEventArgs e)
     {
 
         try
         {
-            if (Status == "add")
+            if (properties.Status == "add")
             {
-                bl.Product.Add(product);
+                bl.Product.Add(properties.Product);
             }
             else
             {
-                bl.Product.Update(product);
+                bl.Product.Update(properties.Product);
             }
             Close();
         }
@@ -71,7 +92,7 @@ public partial class ProductWindow : Window
     {
         try
         {
-            ICart.cart = bl.Cart.Add(ICart.cart, product.ID);
+            ICart.cart = bl.Cart.Add(ICart.cart, properties.Product.ID);
         }
         catch (BO.DalException ex)
         {

@@ -27,7 +27,6 @@ namespace PL.Cart
         {
             InitializeComponent();
             DataContext= ICart.cart.Items;
-            //CartListview.ItemsSource = ICart.cart.Items;
         }
 
         private void CartListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)

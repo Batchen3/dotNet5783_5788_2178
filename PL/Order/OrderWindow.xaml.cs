@@ -23,21 +23,37 @@ namespace PL.Order;
 /// </summary>
 public partial class OrderWindow : Window
 {
-    BlApi.IBl bl = BlApi.Factory.Get();
-    public string State { get; set; }
+    class Properties : DependencyObject
+    {
+        public BO.Order Order
+        {
+            get { return (BO.Order)GetValue(OrderProperty); }
+            set { SetValue(OrderProperty, value); }
+        }
+        public static readonly DependencyProperty OrderProperty = DependencyProperty.Register("Order", typeof(BO.Order), typeof(Properties), new PropertyMetadata(new BO.Order()));
+        public string State
+        {
+            get { return (string)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
+        }
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(string), typeof(Properties), new PropertyMetadata());
 
+    }
+    BlApi.IBl bl = BlApi.Factory.Get();
+    Properties properties = new Properties();
     public OrderWindow(BO.Order selectedOrder, string status)
     {
         InitializeComponent();
-        State = status;
-        this.DataContext = new { selectedOrder, State = State };
+        properties.State = status;
+        properties.Order = selectedOrder;
+        DataContext= properties;
     }
     private void btnShipDate_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             BO.Order updateOrder = bl.Order.UpdateSentOrder(Convert.ToInt32(txtId.Text));
-            this.DataContext = new { selectedOrder = updateOrder, State = State };
+            properties.Order=updateOrder;
         }
         catch (BO.DalException ex)
         {
@@ -54,7 +70,7 @@ public partial class OrderWindow : Window
         try
         {
             BO.Order updateOrder = bl.Order.UpdateArrivedOrder(Convert.ToInt32(txtId.Text));
-            this.DataContext = new { selectedOrder = updateOrder, State = State };
+            properties.Order = updateOrder;
         }
         catch (BO.DalException ex)
         {

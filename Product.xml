@@ -9,22 +9,6 @@
     <Parve>true</Parve>
   </Product>
   <Product>
-    <Id>453666</Id>
-    <Name>kurason</Name>
-    <Price>28</Price>
-    <Category>cookies</Category>
-    <InStock>60</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>445890</Id>
-    <Name>chocolate_balls</Name>
-    <Price>67</Price>
-    <Category>cups</Category>
-    <InStock>78</InStock>
-    <Parve>false</Parve>
-  </Product>
-  <Product>
     <Id>990878</Id>
     <Name>rogalach</Name>
     <Price>67</Price>
@@ -73,14 +57,6 @@
     <Parve>true</Parve>
   </Product>
   <Product>
-    <Id>454567</Id>
-    <Name>aabbaabb</Name>
-    <Price>34</Price>
-    <Category>cakes</Category>
-    <InStock>34</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
     <Id>123455</Id>
     <Name>rols</Name>
     <Price>24</Price>
@@ -89,27 +65,67 @@
     <Parve>true</Parve>
   </Product>
   <Product>
-    <Id>889889</Id>
-    <Name>ddffdd</Name>
-    <Price>55</Price>
-    <Category>cups</Category>
-    <InStock>52</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
     <Id>334433</Id>
-    <Name>aaaaaaaaa</Name>
+    <Name>speical-cake</Name>
     <Price>22</Price>
     <Category>cakes</Category>
     <InStock>30</InStock>
     <Parve>true</Parve>
   </Product>
   <Product>
+    <Id>222333</Id>
+    <Name>banana-cold</Name>
+    <Price>55</Price>
+    <Category>cups</Category>
+    <InStock>34</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>454567</Id>
+    <Name>pai-apples</Name>
+    <Price>34</Price>
+    <Category>cakes</Category>
+    <InStock>34</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>789678</Id>
+    <Name>vanila_cake</Name>
+    <Price>55</Price>
+    <Category>cakes</Category>
+    <InStock>7</InStock>
+    <Parve>false</Parve>
+  </Product>
+  <Product>
     <Id>667667</Id>
-    <Name>zzzz</Name>
+    <Name>mini_secret_cake</Name>
     <Price>3</Price>
     <Category>cakes</Category>
     <InStock>17</InStock>
     <Parve>false</Parve>
+  </Product>
+  <Product>
+    <Id>889889</Id>
+    <Name>oreo_chocolate</Name>
+    <Price>55</Price>
+    <Category>cups</Category>
+    <InStock>52</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>453666</Id>
+    <Name>kurason</Name>
+    <Price>28</Price>
+    <Category>cookies</Category>
+    <InStock>60</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>445890</Id>
+    <Name>chocolate_balls</Name>
+    <Price>67</Price>
+    <Category>cups</Category>
+    <InStock>78</InStock>
+    <Parve>true</Parve>
   </Product>
 </Products>

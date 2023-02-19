@@ -13,7 +13,7 @@
                 <RowDefinition Height="400*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView x:Name="OrdersListview" ItemsSource="{Binding}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" MouseDoubleClick="OrdersListview_MouseDoubleClick" Grid.RowSpan="2">
+            <ListView x:Name="OrdersListview" ItemsSource="{Binding Path=Orders}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" MouseDoubleClick="OrdersListview_MouseDoubleClick" Grid.RowSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding ID}" />

@@ -23,22 +23,37 @@ namespace PL.Customer;
 public partial class OrderTrackingWindow : Window
 {
     BlApi.IBl bl = BlApi.Factory.Get();
-    public string State { get; set; }
-    public OrderTracking OrderTracking { get; set; } = new OrderTracking();
+    Properties properties = new Properties();
+    class Properties : DependencyObject
+    { 
+        public string State
+        {
+            get { return (string)GetValue(StateProperty); }
+            set { SetValue(StateProperty, value); }
+        }
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(string), typeof(Properties), new PropertyMetadata());
+        public OrderTracking OrderTracking
+        {
+            get { return (OrderTracking)GetValue(OrderTrackingProperty); }
+            set { SetValue(OrderTrackingProperty, value); }
+        }
+        public static readonly DependencyProperty OrderTrackingProperty = DependencyProperty.Register("OrderTracking", typeof(OrderTracking), typeof(Properties), new PropertyMetadata(new OrderTracking()));
+
+    }
+
     public OrderTrackingWindow()
     {
         InitializeComponent();
-        State = "before";
-        DataContext = new { State = State, OrderTracking = OrderTracking };
+        properties.State = "before";
+        DataContext = properties;
     }
 
     private void btnSearch_Click(object sender, RoutedEventArgs e)
     {       
         try
         {
-            OrderTracking = bl.Order.OrderTracking(OrderTracking.ID);
-            State = "after";
-            DataContext = new { State = State, OrderTracking = OrderTracking };
+            properties.OrderTracking = bl.Order.OrderTracking(properties.OrderTracking.ID);
+            properties.State = "after";
         }
         catch (BO.DalException ex)
         {
@@ -50,7 +65,7 @@ public partial class OrderTrackingWindow : Window
     {
         try
         {
-            BO.Order order = bl.Order.GetDetailsOfOrder(OrderTracking.ID);
+            BO.Order order = bl.Order.GetDetailsOfOrder(properties.OrderTracking.ID);
             OrderWindow orderWindow = new OrderWindow(order, "orderTracking");
             orderWindow.Show();
         }

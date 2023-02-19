@@ -1,20 +1,12 @@
-﻿using BlApi;
-using BlImplementation;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace PL.Product;
 
@@ -23,30 +15,60 @@ namespace PL.Product;
 /// </summary>
 public partial class ProductListWindow : Window
 {
+    class Properties : DependencyObject
+    {
+        public string State
+        {
+            get{return(string)GetValue(StateProperty);}
+            set{SetValue(StateProperty, value);}
+        }
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register("State", typeof(string), typeof(Properties), new UIPropertyMetadata());
+        public Array AllCategories
+        {
+            get{return(Array)GetValue(AllCategoriesProperty);}
+            set{SetValue(AllCategoriesProperty, value);}
+        }
+        public static readonly DependencyProperty AllCategoriesProperty = DependencyProperty.Register("AllCategories", typeof(Array), typeof(Properties), new PropertyMetadata());
+        public List<BO.ProductForList> ProductsListForAdmin
+        {
+            get { return (List<BO.ProductForList>)GetValue(ProductsListForAdminProperty); }
+            set { SetValue(ProductsListForAdminProperty, value); }
+        }
+        public static readonly DependencyProperty ProductsListForAdminProperty = DependencyProperty.Register("ProductsListForAdmin", typeof(List<BO.ProductForList>), typeof(Properties), new PropertyMetadata());
+
+        public List<BO.ProductItem> ProductsListForNewOrder
+        {
+            get { return (List<BO.ProductItem>)GetValue(ProductsListForNewOrderProperty); }
+            set { SetValue(ProductsListForNewOrderProperty, value); }
+        }
+        public static readonly DependencyProperty ProductsListForNewOrderProperty = DependencyProperty.Register("ProductsListForNewOrder", typeof(List<BO.ProductItem>), typeof(Properties), new PropertyMetadata());
+
+    }
+
 
     BlApi.IBl bl = BlApi.Factory.Get();
-    public string State { get; set; }
-    public Array AllCategories { get; set; }
-    private ObservableCollection<BO.ProductForList> _productsListForAdmin = new ObservableCollection<BO.ProductForList>();
-    private ObservableCollection<BO.ProductItem> _productListForNewOrder = new ObservableCollection<BO.ProductItem>();
-
+    Properties properties=new Properties();
+    private void SortByCategory()
+    {
+        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(properties.ProductsListForNewOrder);
+        PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+        view.GroupDescriptions.Add(groupDescription);
+    }
     public ProductListWindow(string from)
     {
         InitializeComponent();
-        State = from;
-        AllCategories = Enum.GetValues(typeof(BO.ECategory));
-        if (State == "admin")
+        properties.State = from;
+        properties.AllCategories = Enum.GetValues(typeof(BO.ECategory));
+        if (properties.State == "admin")
         {
-            _productsListForAdmin = new ObservableCollection<BO.ProductForList>(bl.Product.GetAll());
-            DataContext = new { State = State, ItemSource = _productsListForAdmin, AllCategories = AllCategories };
+            properties.ProductsListForAdmin = new List<BO.ProductForList>(bl.Product.GetAll());
+            DataContext = properties;
         }
         else
         {
-            _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
-            DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-            view.GroupDescriptions.Add(groupDescription);
+            properties.ProductsListForNewOrder = new List<BO.ProductItem>(bl.Product.GetCatalog());
+            DataContext = properties;
+            SortByCategory();
         }
     }
 
@@ -54,7 +76,7 @@ public partial class ProductListWindow : Window
     {
         ProductWindow product = new ProductWindow();
         product.ShowDialog();
-        DataContext = new { State = State, ItemSource = bl.Product.GetAll(), AllCategories = AllCategories };
+        properties.ProductsListForAdmin = bl.Product.GetAll().ToList();
     }
 
     private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -64,25 +86,22 @@ public partial class ProductListWindow : Window
         BO.Product? selectedItem = null;
         try
         {
-            if (State == "admin")
+            if (properties.State == "admin")
             {
                 productForList = (BO.ProductForList)ProductsListview.SelectedItem;
                 selectedItem = bl.Product.Get(productForList.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "update");
                 productWindow.ShowDialog();
-                DataContext = new { State = State, ItemSource = bl.Product.GetAll(), AllCategories = AllCategories };
+                properties.ProductsListForAdmin = bl.Product.GetAll().ToList();
             }
-            if (State == "newOrder")
+            if (properties.State == "newOrder")
             {
-                productItem = (BO.ProductItem)ProductsListview.SelectedItem;
+                productItem = (BO.ProductItem)ProductsListviewCatalog.SelectedItem;
                 selectedItem = bl.Product.Get(productItem.ID);
                 ProductWindow productWindow = new ProductWindow(selectedItem, "display");
                 productWindow.ShowDialog();
-                _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
-                DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-                view.GroupDescriptions.Add(groupDescription);
+                properties.ProductsListForNewOrder = bl.Product.GetCatalog().ToList();
+                SortByCategory();
             }
         }
         catch (BO.DalException ex)
@@ -97,29 +116,23 @@ public partial class ProductListWindow : Window
     }
     private void btnShowAll_Click(object sender, RoutedEventArgs e)
     {
-        if (State == "admin")
-            ProductsListview.ItemsSource = bl.Product.GetAll();
-        if (State == "newOrder")
+        if (properties.State == "admin")
+            properties.ProductsListForAdmin = bl.Product.GetAll().ToList();
+        if (properties.State == "newOrder")
         {
-            _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
-            DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-            view.GroupDescriptions.Add(groupDescription);
+            properties.ProductsListForNewOrder = bl.Product.GetCatalog().ToList();
+            SortByCategory();
         }         
     }
 
     private void CategorySelector_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
     {
-        if (State == "admin")
-            ProductsListview.ItemsSource = bl.Product.GetByCategoryAdmin((BO.ECategory)CategorySelector.SelectedItem);
-        if (State == "newOrder")
+        if (properties.State == "admin")
+            properties.ProductsListForAdmin = bl.Product.GetByCategoryAdmin((BO.ECategory)CategorySelector.SelectedItem).ToList();
+        if (properties.State == "newOrder")
         {
-            _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetByCategoryForOrder((BO.ECategory)CategorySelector.SelectedItem));
-            DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-            view.GroupDescriptions.Add(groupDescription);
+            properties.ProductsListForNewOrder = bl.Product.GetByCategoryForOrder((BO.ECategory)CategorySelector.SelectedItem).ToList();
+            SortByCategory();
         }
     }
 
@@ -127,48 +140,12 @@ public partial class ProductListWindow : Window
     {
         Cart.CartListWindow cartListWindow = new Cart.CartListWindow();
         cartListWindow.ShowDialog();
-        _productListForNewOrder = new ObservableCollection<BO.ProductItem>(bl.Product.GetCatalog());
-        DataContext = new { State = State, ItemSource = _productListForNewOrder, AllCategories = AllCategories };
-        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(_productListForNewOrder);
-        PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-        view.GroupDescriptions.Add(groupDescription);
-    }
-
-    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
+        properties.ProductsListForNewOrder = bl.Product.GetCatalog().ToList();
+        SortByCategory();
     }
 }
-//public class ChooseListViewConverter : IValueConverter
-//{
-//    BlApi.IBl bl = BlApi.Factory.Get();
-//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        string StringValue = (string)value;
-//        if (StringValue == "admin")
-//        {
-//            //return new ObservableCollection<BO.ProductForList>(bl.Product.GetAll());
-//            return bl.Product.GetAll();
-//        }
-//        else
-//        {
-//            return bl.Product.GetCatalog();
-//        }
-//    }
-//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        string StringValue = (string)value;
-//        if (StringValue == "admin")
-//        {
-//            return bl.Product.GetAll();
-//        }
-//        else
-//        {
-//            return bl.Product.GetCatalog();
-//        }
-//    }
-//}
-public class BtnCart_Available_Amount_Converter : IValueConverter
+
+public class NewOrder_Converter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -187,7 +164,7 @@ public class BtnCart_Available_Amount_Converter : IValueConverter
         throw new NotImplementedException();
     }
 }
-public class BtnAddProductConverter : IValueConverter
+public class Admin_Converter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

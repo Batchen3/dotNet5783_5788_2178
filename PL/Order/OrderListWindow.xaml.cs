@@ -24,16 +24,22 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get();
-        private ObservableCollection<OrderForList> _myCollection = new ObservableCollection<OrderForList>();
+        Properties properties = new Properties();
+        class Properties : DependencyObject
+        {
+            public List<BO.OrderForList> Orders
+            {
+                get { return (List<BO.OrderForList>)GetValue(OrdersProperty); }
+                set { SetValue(OrdersProperty, value); }
+            }
+            public static readonly DependencyProperty OrdersProperty = DependencyProperty.Register("Orders", typeof(List<BO.OrderForList>), typeof(Properties), new PropertyMetadata());
 
+        }
         public OrderListWindow()
         {
             InitializeComponent();
-            //IEnumerable<OrderForList> list = bl.Order.GetOrders();
-            //list.ToList().ForEach(item => _myCollection.Add(item));
-            _myCollection = new ObservableCollection<OrderForList>(bl.Order.GetOrders());
-            DataContext = _myCollection;
-            //this.DataContext = bl.Order.GetOrders();
+            properties.Orders =bl.Order.GetOrders().ToList();
+            DataContext = properties;
         }
 
         private void OrdersListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -46,10 +52,7 @@ namespace PL.Order
                 selectedItem = bl.Order.GetDetailsOfOrder(orderForList.ID);
                 OrderWindow orderWindow = new OrderWindow(selectedItem,"admin");
                 orderWindow.ShowDialog();
-                _myCollection = new ObservableCollection<OrderForList>(bl.Order.GetOrders());
-                DataContext = _myCollection;
-                //DataContext = _myCollection;
-                //this.DataContext = bl.Order.GetOrders();
+                properties.Orders = bl.Order.GetOrders().ToList();
             }
             catch (BO.DalException ex)
             {

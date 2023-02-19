@@ -24,9 +24,6 @@ namespace PL.Cart
     /// </summary>
     public partial class CartWindow : Window
     {
-
-        //לא מעדכן את המחיר כי הבינדינג משנה לפני כבר את הכמות
-
         BlApi.IBl bl = BlApi.Factory.Get();
         public BO.OrderItem OrderItem { get; set; }
         public CartWindow(BO.OrderItem orderItem)
@@ -38,8 +35,6 @@ namespace PL.Cart
             txtPrice.Text = orderItem.ProductPrice.ToString();
             txtTotalPriceOfItems.Text = orderItem.TotalPriceOfItems.ToString();
             txtAmountItems.Text = orderItem.AmountsItems.ToString();
-            //OrderItem = orderItem;
-            // DataContext = orderItem;
         }
 
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
