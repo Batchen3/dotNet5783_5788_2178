@@ -7,11 +7,11 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using DO;
 using DalApi;
-
-
+using System.Runtime.CompilerServices;
 namespace Dal;
 internal class OrderItem : IOrderItem
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.OrderItem value)
     {
         if (value.Id == 0)//status of add
@@ -42,17 +42,23 @@ internal class OrderItem : IOrderItem
         OrdersItems?.Save("../OrderItem.xml");
         return value.Id;
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement? OrdersItems = XDocument.Load("../OrederItem.xml").Root;
         OrdersItems?.Elements().ToList().Find(orderItem => Convert.ToInt32(orderItem?.Element("Id")?.Value) == id)?.Remove();
         OrdersItems?.Save("../OrederItem.xml");
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.OrderItem value)
     {
         Delete(value.Id);
         Add(value);
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem Get(int id)
     {
         XElement? OrdersItems = XDocument.Load("../OrderItem.xml").Root;
@@ -61,6 +67,8 @@ internal class OrderItem : IOrderItem
             throw new ExistException();
         return new DO.OrderItem { Id = Convert.ToInt32(found?.Element("Id")?.Value), ProductID = Convert.ToInt32(found?.Element("ProductID")?.Value), OrderID = Convert.ToInt32(found?.Element("OrderID")?.Value), Price = Convert.ToInt32(found?.Element("Price")?.Value), Amount = Convert.ToInt32(found?.Element("Amount")?.Value) };
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.OrderItem> GetAll(Func<DO.OrderItem, bool>? func = null)
     {
         XElement? OrdersItems = XDocument.Load("../OrderItem.xml").Root;
@@ -71,6 +79,8 @@ internal class OrderItem : IOrderItem
         });
         return func == null ? lst : lst.Where(func);
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem Get(Predicate<DO.OrderItem> func)
     {
         IEnumerable<DO.OrderItem> lst = GetAll();

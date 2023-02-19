@@ -9,11 +9,11 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using DalApi;
 using DO;
-
+using System.Runtime.CompilerServices;
 namespace Dal;
-
 internal class Product : IProduct
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product value)
     {
         XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -38,18 +38,24 @@ internal class Product : IProduct
         return value.Id;
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement? Products = XDocument.Load("../Product.xml").Root;
         Products?.Elements().ToList().Find(product => Convert.ToInt32(product?.Element("Id")?.Value) == id)?.Remove();
         Products?.Save("../Product.xml");
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product value)
     {
         Delete(value.Id);
         Add(value);
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product Get(int id)
     {
         XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -59,6 +65,8 @@ internal class Product : IProduct
         DO.ECategory.TryParse(found?.Element("Category")?.Value, out DO.ECategory myCategory); ;
         return new DO.Product { Id = Convert.ToInt32(found?.Element("Id")?.Value), Name = found?.Element("Name")?.Value.ToString(), InStock = Convert.ToInt32(found?.Element("InStock")?.Value), Category = myCategory, Parve = Convert.ToBoolean(found?.Element("Parve")?.Value), Price = Convert.ToInt32(found?.Element("Price")?.Value) };
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product> GetAll(Func<DO.Product, bool>? func = null)
     {
         XElement? Products = XDocument.Load("../Product.xml").Root;
@@ -71,6 +79,8 @@ internal class Product : IProduct
 
         return func == null ? lst : lst.Where(func);
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product Get(Predicate<DO.Product> func)
     {
         IEnumerable<DO.Product> lst = GetAll();

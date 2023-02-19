@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-
 using DalApi;
-
+using System.Runtime.CompilerServices;
 namespace BlImplementation;
-
 internal class BlOrder : BlApi.IOrder
 {
     private IDal? dalList = DalApi.Factory.Get();
 
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList> GetOrders(Func<DO.Order, bool>? func = null)//get all orders
     {
         try
@@ -33,7 +34,6 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.DalException(ex);
         }      
     }
-
     /// <summary>
     /// help function that calculate status
     /// </summary>
@@ -46,6 +46,8 @@ internal class BlOrder : BlApi.IOrder
             return BO.EStatus.sent;
         return BO.EStatus.confirmed;
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetDetailsOfOrder(int id)
     {
         if (id > 0)//check if id is valid
@@ -78,6 +80,9 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.NotValidException();
 
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateSentOrder(int id)
     {
         try
@@ -103,6 +108,8 @@ internal class BlOrder : BlApi.IOrder
             throw new BO.DalException(ex);
         }
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateArrivedOrder(int id)
     {
         try
@@ -130,6 +137,8 @@ internal class BlOrder : BlApi.IOrder
         }
     }
     //bonuus
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateOrder(int idOrder, int idProduct, int amount)
     {
         try
@@ -183,6 +192,8 @@ internal class BlOrder : BlApi.IOrder
         }
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTracking(int orderId)
     {
         try
@@ -214,6 +225,15 @@ internal class BlOrder : BlApi.IOrder
         {
             throw new BO.DalException(ex);
         }
+    }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int? ChooseOrderToHandler()
+    {
+        IEnumerable<DO.Order>? ordersWithoutDeliveryAndShipDate = dalList?.Order.GetAll(item => item.ShipDate == null && item.Delivery == null);
+        ordersWithoutDeliveryAndShipDate?.ToList().Sort((item1, item2) => item1.OrderDate.CompareTo(item2.OrderDate));
+        return 0;
     }
 }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BlApi;
 using BO;
 using DalApi;
-
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -14,6 +14,7 @@ internal class BlProduct : BlApi.IProduct
 {
     private IDal? dalList = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)//manager:get all products as product-for-list
     {
         try
@@ -29,6 +30,7 @@ internal class BlProduct : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetCatalog(Func<DO.Product, bool>? func = null)//customer:get all products as product-item
     {
         try
@@ -44,6 +46,8 @@ internal class BlProduct : BlApi.IProduct
         }
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product Get(int id)//to get product by id
     {
         if (id > 0)//check if id valid
@@ -69,6 +73,8 @@ internal class BlProduct : BlApi.IProduct
         }
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem Get(int id, BO.Cart cart)
     {
         if (id > 0)
@@ -105,6 +111,7 @@ internal class BlProduct : BlApi.IProduct
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Add(BO.Product p)//to add product
     {
         if (p.ID <= 0 || p.Name == null || p.InStock < 0 || p.Price <= 0)//check if the parameters are valid
@@ -123,6 +130,8 @@ internal class BlProduct : BlApi.IProduct
         }
 
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)//delete certain product
     {
         DO.OrderItem? orderItem;
@@ -149,6 +158,8 @@ internal class BlProduct : BlApi.IProduct
         else
             throw new BO.ProductInOrderException();
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(BO.Product p)//update a product
     {
         if (p.ID <= 0 || p.Name == null || p.InStock < 0 || p.Price <= 0)//check if the parameters are valid
@@ -165,11 +176,13 @@ internal class BlProduct : BlApi.IProduct
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetByCategoryAdmin(BO.ECategory category)
     {
         return GetAll(item => item.Category == (DO.ECategory)category);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetByCategoryForOrder(BO.ECategory category)
     {
         return GetCatalog(item => item.Category == (DO.ECategory)category);

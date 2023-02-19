@@ -10,14 +10,24 @@ namespace Simulator
     {
         private static BO.EStatus _prev;
         private static BO.EStatus _next;
-       // private static event EventHandler stopEvent;
+        private static Thread thread;
+        private static volatile bool _shouldStop;
+        private static event EventHandler stopEvent;
+        private static event EventHandler updateProcessEvent;
+
+        // private static event EventHandler stopEvent;
         public static void run()
         {
-            Thread thread; 
+            new Thread(הזמנה בחירת תהליך).Start();
+           
+            בחירת הזמנה השהיה סטטוס
+                3דק לפי ההגרלה ;
+            
+           
         }
         public static void stop()
         {
-
+            _shouldStop = true;
         }
     }
 }

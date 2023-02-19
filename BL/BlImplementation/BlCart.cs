@@ -8,14 +8,15 @@ using BlApi;
 using DalApi;
 using DalFacade;
 using System.Collections;
-
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
 internal class BlCart : ICart
 {
     private IDal? dalList = DalApi.Factory.Get();
-    //public static BO.Cart cart = new BO.Cart { CustomerName = "aaa", CustomerEmail = "aaa@gmail.com", CustomerAddress = "aaa", Items = new List<BO.OrderItem?>() };
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Add(BO.Cart c, int id)//add item to cart
     {
         try
@@ -60,6 +61,8 @@ internal class BlCart : ICart
             throw new BO.DalException(ex);
         }
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Update(BO.Cart c, int id, int amount)//update product
     {
         BO.OrderItem orderItemToDelete = new BO.OrderItem();
@@ -134,6 +137,8 @@ internal class BlCart : ICart
         //    throw new BO.ObjectNotFoundException();
         return c;
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void SaveCart(BO.Cart c)
     {
         if (c.CustomerName == null|| c.CustomerName=="" || c.CustomerAddress == null)//check if the params are valid

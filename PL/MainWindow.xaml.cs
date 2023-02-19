@@ -62,7 +62,11 @@ public partial class MainWindow : Window
         orderTracking.Show();
     }
 
-  
+    private void btnStartImaging_Click(object sender, RoutedEventArgs e)
+    {
+        Simulator.Simulator simulator=new Simulator.Simulator();
+        simulator.Show();
+    }
 }
 public class VisibilityConverter : IValueConverter
 {

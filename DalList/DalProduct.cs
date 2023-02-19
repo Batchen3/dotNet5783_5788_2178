@@ -3,7 +3,7 @@
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
-
+using System.Runtime.CompilerServices;
 using DO;
 using System;
 using System.Linq;
@@ -16,7 +16,7 @@ using DalApi;
 
 internal class DalProduct : IProduct
 {
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product value)
     {
         if (s_listProduct.Count == NUMPRODUCTS)
@@ -37,6 +37,7 @@ internal class DalProduct : IProduct
        
     }//add product to arr
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(int id)
     {
         var product = (from item in s_listProduct
@@ -48,15 +49,19 @@ internal class DalProduct : IProduct
 
     }//read the product according id
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product> GetAll(Func<Product, bool>? func = null)
     {
         return (func == null) ? s_listProduct : s_listProduct.Where(func);
     }//read all the products by condition or not
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Predicate<Product> func)
     {
         return s_listProduct.Find(func);
     }//get by condition
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product value)
     {
         try
@@ -70,6 +75,8 @@ internal class DalProduct : IProduct
             throw ex;
         }
     }//update a product 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         try

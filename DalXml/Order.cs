@@ -7,11 +7,11 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using DalApi;
 using DO;
-
+using System.Runtime.CompilerServices;
 namespace Dal;
-
 internal class Order : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order value)
     {
         if(value.Id == 0)//status of add
@@ -31,6 +31,9 @@ internal class Order : IOrder
         write.Close();
         return value.Id;
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<DO.Order> lst = GetAll().ToList();
@@ -40,11 +43,17 @@ internal class Order : IOrder
         ser.Serialize(w, lst);
         w.Close();
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order value)
     {
         Delete(value.Id);
         Add(value);
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order Get(int id)
     {
         List<DO.Order> lst = GetAll().ToList();
@@ -53,6 +62,9 @@ internal class Order : IOrder
             throw new ExistException();
         return new DO.Order { Id = found.Id, CustomerName = found.CustomerName, CustomerAddress = found.CustomerAddress, CustomerEmail = found.CustomerEmail, OrderDate = found.OrderDate, ShipDate = found.ShipDate, Delivery = found.Delivery };
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order> GetAll(Func<DO.Order, bool>? func = null)
     {
         List<DO.Order> lst = new List<DO.Order> { };
@@ -62,6 +74,9 @@ internal class Order : IOrder
         r.Close();
         return (func == null) ? lst : lst?.Where(func);
     }
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order Get(Predicate<DO.Order> func)
     {
         List<DO.Order> lst = GetAll().ToList();

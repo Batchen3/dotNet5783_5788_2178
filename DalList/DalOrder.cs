@@ -3,18 +3,19 @@
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
-
 using DalApi;
 using DO;
 using System;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using static Dal.DataSource;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
 internal class DalOrder : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order value)
     {
         value.Id = Config.IdOrder++;
@@ -24,6 +25,8 @@ internal class DalOrder : IOrder
             s_listOrder.Add(value);
         return value.Id;
     }//create an order
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(int id)
     {
         var order = (from item in s_listOrder
@@ -34,15 +37,22 @@ internal class DalOrder : IOrder
         return order;
 
     }//read order according id 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
     {
         return (func == null) ? s_listOrder : s_listOrder.Where(func);
     }//read all the orders by condition or not
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Predicate<Order> func)
     {
         return s_listOrder.Find(func);
     }//get by condition
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order value)
     {
         try
@@ -58,6 +68,9 @@ internal class DalOrder : IOrder
 
 
     }//update the order
+
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         try

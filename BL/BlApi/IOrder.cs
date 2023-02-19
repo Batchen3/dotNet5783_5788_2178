@@ -36,5 +36,11 @@ public interface IOrder
     public BO.Order UpdateArrivedOrder(int id);
     //bonus
     public void UpdateOrder(int idOrder,int idProduct,int amount);
+    /// <summary>
+    /// function for simulator
+    /// choose order to handler
+    /// </summary>
+    /// <returns>id of order or null</returns>
+    public int? ChooseOrderToHandler();
 
 }

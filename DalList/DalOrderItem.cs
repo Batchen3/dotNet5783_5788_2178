@@ -3,7 +3,7 @@
 //using System.Linq;
 //using System.Text;
 //using System.Threading.Tasks;
-
+using System.Runtime.CompilerServices;
 
 using DalApi;
 using DO;
@@ -14,6 +14,7 @@ namespace Dal;
 
 internal class DalOrderItem : IOrderItem
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem value)
     {
         value.Id = Config.IdOrderItem++;
@@ -23,6 +24,8 @@ internal class DalOrderItem : IOrderItem
             s_listOrderItem.Add(value);
         return value.Id;
     }//create order item
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(int id)
     {
         var orderItem = (from item in s_listOrderItem
@@ -32,36 +35,42 @@ internal class DalOrderItem : IOrderItem
             throw new NoSuchObjectException();
         return orderItem;
     }//read order item
-    //public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
-    //{
-    //    for (int i = 0; i < s_listOrderItem.Count; i++)
-    //    {
-    //        if (s_listOrderItem[i].OrderID == idOrder && s_listOrderItem[i].ProductID == idProduct)
-    //            return s_listOrderItem[i];
-    //    }
-    //    throw new NoSuchObjectException();
-    //}
-    //read order item by order id and product id
-    //public IEnumerable<OrderItem> readByOrder(int idOrder)
-    //{
-    //    List<OrderItem> list = new List<OrderItem>();
-    //    for (int i = 0; i < s_listOrderItem.Count; i++)
-    //    {
-    //        if (s_listOrderItem[i].OrderID == idOrder)
-    //        {
-    //            list.Add(s_listOrderItem[i]);
-    //        }
-    //    }
-    //    return list;
-    //}//read by order id
+     //public OrderItem readByOrderAndProduct(int idOrder, int idProduct)
+     //{
+     //    for (int i = 0; i < s_listOrderItem.Count; i++)
+     //    {
+     //        if (s_listOrderItem[i].OrderID == idOrder && s_listOrderItem[i].ProductID == idProduct)
+     //            return s_listOrderItem[i];
+     //    }
+     //    throw new NoSuchObjectException();
+     //}
+     //read order item by order id and product id
+     //public IEnumerable<OrderItem> readByOrder(int idOrder)
+     //{
+     //    List<OrderItem> list = new List<OrderItem>();
+     //    for (int i = 0; i < s_listOrderItem.Count; i++)
+     //    {
+     //        if (s_listOrderItem[i].OrderID == idOrder)
+     //        {
+     //            list.Add(s_listOrderItem[i]);
+     //        }
+     //    }
+     //    return list;
+     //}//read by order id
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Predicate<OrderItem> func)
     {
         return s_listOrderItem.Find(func);
     }//get by condition
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? func = null)
     {
         return (func == null) ? s_listOrderItem : s_listOrderItem.Where(func);
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem value)
     {
         try
@@ -76,6 +85,8 @@ internal class DalOrderItem : IOrderItem
         }
 
     }//update the order item
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         try
