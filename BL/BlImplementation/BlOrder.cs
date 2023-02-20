@@ -231,9 +231,32 @@ internal class BlOrder : BlApi.IOrder
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int? ChooseOrderToHandler()
     {
-        IEnumerable<DO.Order>? ordersWithoutDeliveryAndShipDate = dalList?.Order.GetAll(item => item.ShipDate == null && item.Delivery == null);
-        ordersWithoutDeliveryAndShipDate?.ToList().Sort((item1, item2) => item1.OrderDate.CompareTo(item2.OrderDate));
-        return 0;
+        IEnumerable<DO.Order>? ordersWithoutDelivery = dalList?.Order.GetAll(item => item.Delivery == null);
+        ordersWithoutDelivery?.ToList().Sort((item1, item2) =>
+        {
+            if(item1.ShipDate!=null && item2.ShipDate!=null)
+            {
+                DateTime dateItem1= item1.ShipDate??throw new NullException();
+                DateTime dateItem2 = item2.ShipDate ?? throw new NullException();
+                return dateItem1.CompareTo(dateItem2);
+            }
+            if (item1.ShipDate != null)//2=null
+            {
+                DateTime dateItem1 = item1.ShipDate ?? throw new NullException();
+                DateTime dateItem2 = item2.OrderDate ?? throw new NullException();
+                return dateItem1.CompareTo(dateItem2);
+            }
+            if (item2.ShipDate != null)//1=null
+            {
+                DateTime dateItem1 = item1.OrderDate ?? throw new NullException();
+                DateTime dateItem2 = item2.ShipDate ?? throw new NullException();
+                return dateItem1.CompareTo(dateItem2);
+            }
+            DateTime date1 = item1.OrderDate ?? throw new NullException();
+            DateTime date2 = item2.OrderDate ?? throw new NullException();
+            return date1.CompareTo(date2);
+        });
+        return ordersWithoutDelivery?.Count()>0? ordersWithoutDelivery?.First().Id:null;
     }
 }
 
