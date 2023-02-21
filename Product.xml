@@ -1,75 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Products>
   <Product>
-    <Id>233452</Id>
-    <Name>Cheesecake</Name>
-    <Price>45</Price>
-    <Category>cookies</Category>
-    <InStock>45</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>990878</Id>
-    <Name>rogalach</Name>
-    <Price>67</Price>
-    <Category>cookies</Category>
-    <InStock>56</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>778656</Id>
-    <Name>makaroon</Name>
-    <Price>56</Price>
-    <Category>cookies</Category>
-    <InStock>89</InStock>
-    <Parve>false</Parve>
-  </Product>
-  <Product>
-    <Id>667676</Id>
-    <Name>mousse_cake</Name>
-    <Price>67</Price>
-    <Category>cakes</Category>
-    <InStock>6</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>99878</Id>
-    <Name>oreo_cups</Name>
-    <Price>24</Price>
-    <Category>cups</Category>
-    <InStock>30</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>334334</Id>
-    <Name>lotus_cups</Name>
-    <Price>66</Price>
-    <Category>cups</Category>
-    <InStock>30</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
     <Id>999999</Id>
     <Name>sufle</Name>
     <Price>6</Price>
     <Category>cakes</Category>
     <InStock>44</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>123455</Id>
-    <Name>rols</Name>
-    <Price>24</Price>
-    <Category>cookies</Category>
-    <InStock>30</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>334433</Id>
-    <Name>speical-cake</Name>
-    <Price>22</Price>
-    <Category>cakes</Category>
-    <InStock>30</InStock>
     <Parve>true</Parve>
   </Product>
   <Product>
@@ -81,19 +17,35 @@
     <Parve>true</Parve>
   </Product>
   <Product>
+    <Id>99878</Id>
+    <Name>oreo_cups</Name>
+    <Price>24</Price>
+    <Category>cups</Category>
+    <InStock>29</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
     <Id>454567</Id>
     <Name>pai-apples</Name>
     <Price>34</Price>
     <Category>cakes</Category>
-    <InStock>34</InStock>
+    <InStock>32</InStock>
     <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>778656</Id>
+    <Name>makaroon</Name>
+    <Price>56</Price>
+    <Category>cookies</Category>
+    <InStock>88</InStock>
+    <Parve>false</Parve>
   </Product>
   <Product>
     <Id>789678</Id>
     <Name>vanila_cake</Name>
     <Price>55</Price>
     <Category>cakes</Category>
-    <InStock>7</InStock>
+    <InStock>6</InStock>
     <Parve>false</Parve>
   </Product>
   <Product>
@@ -101,23 +53,31 @@
     <Name>mini_secret_cake</Name>
     <Price>3</Price>
     <Category>cakes</Category>
-    <InStock>17</InStock>
+    <InStock>16</InStock>
     <Parve>false</Parve>
   </Product>
   <Product>
-    <Id>889889</Id>
-    <Name>oreo_chocolate</Name>
-    <Price>55</Price>
+    <Id>334334</Id>
+    <Name>lotus_cups</Name>
+    <Price>66</Price>
     <Category>cups</Category>
-    <InStock>52</InStock>
+    <InStock>27</InStock>
     <Parve>true</Parve>
   </Product>
   <Product>
-    <Id>453666</Id>
-    <Name>kurason</Name>
-    <Price>28</Price>
+    <Id>233452</Id>
+    <Name>Cheesecake</Name>
+    <Price>45</Price>
     <Category>cookies</Category>
-    <InStock>60</InStock>
+    <InStock>43</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>990878</Id>
+    <Name>rogalach</Name>
+    <Price>67</Price>
+    <Category>cookies</Category>
+    <InStock>54</InStock>
     <Parve>true</Parve>
   </Product>
   <Product>
@@ -125,7 +85,47 @@
     <Name>chocolate_balls</Name>
     <Price>67</Price>
     <Category>cups</Category>
-    <InStock>78</InStock>
+    <InStock>69</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>334433</Id>
+    <Name>speical-cake</Name>
+    <Price>22</Price>
+    <Category>cakes</Category>
+    <InStock>27</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>889889</Id>
+    <Name>oreo_chocolate</Name>
+    <Price>55</Price>
+    <Category>cups</Category>
+    <InStock>48</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>123455</Id>
+    <Name>rols</Name>
+    <Price>24</Price>
+    <Category>cookies</Category>
+    <InStock>26</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>453666</Id>
+    <Name>kurason</Name>
+    <Price>28</Price>
+    <Category>cookies</Category>
+    <InStock>57</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>667676</Id>
+    <Name>mousse_cake</Name>
+    <Price>67</Price>
+    <Category>cakes</Category>
+    <InStock>3</InStock>
     <Parve>true</Parve>
   </Product>
 </Products>

@@ -11,9 +11,16 @@
         <local:IDIsEnableConverter x:Key="iDIsEnableConverter" />
     </Window.Resources>
     <Grid>
-        <Label x:Name="lblOrderTrackingId"  Content="id order" HorizontalAlignment="Left" Margin="78,31,0,0" VerticalAlignment="Top"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE9E6EA"/>
+                <GradientStop Color="#FFC184B3" Offset="1"/>
+                <GradientStop Color="#FFFBFAFB" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label x:Name="lblOrderTrackingId"  Style="{StaticResource lblStyle}" Content="id order" HorizontalAlignment="Left" Margin="78,31,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtOrderTrackingId"  IsEnabled="{Binding Path=State, Converter={StaticResource iDIsEnableConverter}}" Text="{Binding Path=OrderTracking.ID, Mode=TwoWay}" HorizontalAlignment="Left" Margin="135,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblStatus" Visibility="{Binding Path=State, Converter={StaticResource stateVisibilityConverter}}" Content="status" HorizontalAlignment="Left" Margin="78,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblStatus" Style="{StaticResource lblStyle}" Visibility="{Binding Path=State, Converter={StaticResource stateVisibilityConverter}}" Content="status" HorizontalAlignment="Left" Margin="78,94,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtStatus" Text="{Binding Path=OrderTracking.OrderStatus, Mode=TwoWay}" Visibility="{Binding Path=State, Converter={StaticResource stateVisibilityConverter}}" HorizontalAlignment="Left" Margin="135,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <ListView x:Name="listViewStatus" ItemsSource="{Binding Path=OrderTracking.DateAndDescriptionOrder}" Visibility="{Binding Path=State, Converter={StaticResource stateVisibilityConverter}}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="78,146,390,146">
             <ListView.View>
@@ -24,7 +31,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btnDetails" Visibility="{Binding Path=State, Converter={StaticResource stateVisibilityConverter}}" Content="show more details" HorizontalAlignment="Left" Margin="106,331,0,0" VerticalAlignment="Top" Height="30" Width="133" Click="btnDetails_Click"/>
-        <Button x:Name="btnSearch" Content="search" HorizontalAlignment="Left" Margin="295,33,0,0" VerticalAlignment="Top" Click="btnSearch_Click"/>
+        <Button x:Name="btnDetails"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Visibility="{Binding Path=State, Converter={StaticResource stateVisibilityConverter}}" Content="show more details" HorizontalAlignment="Left" Margin="106,331,0,0" VerticalAlignment="Top" Height="30" Width="133" Click="btnDetails_Click"/>
+        <Button x:Name="btnSearch"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="search" HorizontalAlignment="Left" Margin="295,33,0,0" VerticalAlignment="Top" Click="btnSearch_Click"/>
     </Grid>
 </Window>

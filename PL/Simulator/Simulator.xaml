@@ -5,18 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Simulator"
         mc:Ignorable="d" 
-        Title="Simulator" Height="450" Width="800" WindowStyle="None">
+        Title="Simulator" Height="450" Width="800" Closing="Window_Closing">
     <Grid>
-        <Button x:Name="btnStopImaging" Content="stop imaging" HorizontalAlignment="Left" Margin="34,134,0,0" VerticalAlignment="Top" Width="147" Height="48" Click="btnStopImaging_Click"/>
-        <TextBlock x:Name="txtblcTimer" HorizontalAlignment="Left" Margin="34,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Width="147"/>
-        <Label x:Name="lblOrderId" Content="order id" HorizontalAlignment="Left" Margin="298,30,0,0" VerticalAlignment="Top" Width="68"/>
-        <Label x:Name="lblCustomerName" Content="customer name&#xD;&#xA;" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Width="106"/>
-        <Label x:Name="lblCustomerEmail" Content="customer email&#xD;&#xA;" HorizontalAlignment="Left" Margin="275,91,0,0" VerticalAlignment="Top"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE9E6EA"/>
+                <GradientStop Color="#FFC184B3" Offset="1"/>
+                <GradientStop Color="#FFFBFAFB" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button x:Name="btnStopImaging"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="stop imaging" HorizontalAlignment="Left" Margin="321,347,0,0" VerticalAlignment="Top" Width="147" Height="48" Click="btnStopImaging_Click"/>
+        <TextBlock x:Name="txtblcTimer" HorizontalAlignment="Left" FontSize="55px"  Margin="10,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="97" Width="236"/>
+        <Label x:Name="lblOrderId" Style="{StaticResource lblStyle}" Content="order id" HorizontalAlignment="Left" Margin="298,30,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label x:Name="lblCustomerName" Style="{StaticResource lblStyle}" Content="customer name&#xD;&#xA;" HorizontalAlignment="Left" Margin="279,61,0,0" VerticalAlignment="Top" Width="106"/>
+        <Label x:Name="lblCustomerEmail" Style="{StaticResource lblStyle}" Content="customer email&#xD;&#xA;" HorizontalAlignment="Left" Margin="275,91,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="400,34,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="400,64,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="400,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblProcess" Content="" HorizontalAlignment="Left" Margin="321,145,0,0" VerticalAlignment="Top" Width="222"/>
-        <Label x:Name="lblProcess2" Content="" HorizontalAlignment="Left" Margin="321,0,0,0" VerticalAlignment="Center" Width="222" Height="36"/>
+        <Label x:Name="lblProcess" Style="{StaticResource lblStyle}" Content="" HorizontalAlignment="Left" Margin="321,144,0,0" VerticalAlignment="Top" Width="456" RenderTransformOrigin="0.5,0.5" Height="37">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.56"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="lblProcess2" Style="{StaticResource lblStyle}" Content="" HorizontalAlignment="Left" Margin="321,207,0,0" VerticalAlignment="Top" Width="440" Height="88"/>
 
     </Grid>
 </Window>

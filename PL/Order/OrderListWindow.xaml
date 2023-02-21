@@ -8,6 +8,13 @@
         Title="OrderListWindow" Height="450" Width="800">
     <Grid>
         <Grid Name="MainGrid">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE9E6EA"/>
+                    <GradientStop Color="#FFC184B3" Offset="1"/>
+                    <GradientStop Color="#FFFBFAFB" Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*"/>
                 <RowDefinition Height="400*"/>

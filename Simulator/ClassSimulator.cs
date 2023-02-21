@@ -13,14 +13,13 @@ public static class ClassSimulator
 {
     private static BO.EStatus _prev;
     private static BO.EStatus _next;
-    private static Thread? _ourThread;
     private static volatile bool _shouldStop = false;
     public static event StopEvent? stopEvent = null;
     public static event UpdateProcessEvent? updateProcessEvent = null;
     public static event StartProcessEvent? startProcessEvent = null;
     public static void run()
     {
-        _ourThread = new Thread(() =>
+        Thread? _ourThread = new Thread(() =>
         {
             Random random = new Random();
             BlApi.IBl bl = BlApi.Factory.Get();
@@ -29,28 +28,27 @@ public static class ClassSimulator
                 int? id = bl.Order.ChooseOrderToHandler();
                 if (id == null)
                 {
-                    stop();
-                    if (stopEvent != null)
-                        stopEvent();
+                    stop();                  
                 }
                 else
                 {
                     BO.Order order = bl.Order.GetDetailsOfOrder((int)id);
                     _prev= order.OrderStatus;
-                    int index = random.Next(5000);
+                    int index = random.Next(4000,9000);
                     if (startProcessEvent != null)
-                        startProcessEvent(order,index);
-                   
+                        startProcessEvent(order,index);                   
                     Thread.Sleep(index);
                     if (order.ShipDate == null)
-                        bl.Order.UpdateSentOrder((int)id);
+                        order=bl.Order.UpdateSentOrder((int)id);
                     else
-                        bl.Order.UpdateArrivedOrder((int)id);
+                        order=bl.Order.UpdateArrivedOrder((int)id);
                     _next= order.OrderStatus;
                     if (updateProcessEvent != null)
                         updateProcessEvent(_prev,_next);
                 }
             }
+            if (stopEvent != null)
+                stopEvent();
         });
         _ourThread.Start();
     }

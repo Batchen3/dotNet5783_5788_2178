@@ -7,19 +7,26 @@
         mc:Ignorable="d"
         Title="CartWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE9E6EA"/>
+                <GradientStop Color="#FFC184B3" Offset="1"/>
+                <GradientStop Color="#FFFBFAFB" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <TextBox x:Name="txtId"  HorizontalAlignment="Left" Margin="149,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" IsEnabled="False"/>
-        <Label x:Name="lblId" Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblId" Style="{StaticResource lblStyle}" Content="Id" HorizontalAlignment="Left" Margin="95,57,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtIdProduct" HorizontalAlignment="Left" Margin="149,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" Height="26" IsEnabled="False"/>
-        <Label x:Name="lblIdProduct" Content="Id product" HorizontalAlignment="Left" Margin="56,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.045,1.499"/>
+        <Label x:Name="lblIdProduct" Style="{StaticResource lblStyle}" Content="Id product" HorizontalAlignment="Left" Margin="56,96,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.045,1.499"/>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="149,141,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="94" Height="21" IsEnabled="False" RenderTransformOrigin="0.463,1.591"/>
-        <Label x:Name="lblName" Content="Name product" HorizontalAlignment="Left" Margin="49,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.148,0.258"/>
+        <Label x:Name="lblName" Style="{StaticResource lblStyle}" Content="Name product" HorizontalAlignment="Left" Margin="49,136,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.148,0.258"/>
         <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="149,176,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Label x:Name="lblPrice"  Content="Price product" HorizontalAlignment="Left" Margin="49,171,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="88"/>
+        <Label x:Name="lblPrice"  Style="{StaticResource lblStyle}" Content="Price product" HorizontalAlignment="Left" Margin="49,171,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="88"/>
         <TextBox x:Name="txtAmountItems" HorizontalAlignment="Left" Margin="149,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" />
-        <Label x:Name="lblAmountItems" Content="Amount of items" HorizontalAlignment="Left" Margin="31,212,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="105"/>
+        <Label x:Name="lblAmountItems" Style="{StaticResource lblStyle}" Content="Amount of items" HorizontalAlignment="Left" Margin="31,212,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="105"/>
         <TextBox x:Name="txtTotalPriceOfItems" HorizontalAlignment="Left" Margin="149,264,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-        <Label x:Name="lblTotalPriceOfItems" Content="Total price of items" HorizontalAlignment="Left" Margin="22,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="134"/>
-        <Button x:Name="btnChangeAmount" Content="change amount" HorizontalAlignment="Left" Margin="293,216,0,0" VerticalAlignment="Top" Width="107" Click="btnChangeAmount_Click"/>
-        <Button x:Name="btnDelete" Content="delete" HorizontalAlignment="Left" Margin="105,306,0,0" VerticalAlignment="Top" Width="74" Height="23" Click="btnDelete_Click"/>
+        <Label x:Name="lblTotalPriceOfItems" Style="{StaticResource lblStyle}" Content="Total price of items" HorizontalAlignment="Left" Margin="22,255,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.088,1.272" Height="27" Width="134"/>
+        <Button x:Name="btnChangeAmount"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="change amount" HorizontalAlignment="Left" Margin="293,216,0,0" VerticalAlignment="Top" Width="107" Click="btnChangeAmount_Click"/>
+        <Button x:Name="btnDelete"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="delete" HorizontalAlignment="Left" Margin="105,306,0,0" VerticalAlignment="Top" Width="74" Height="23" Click="btnDelete_Click"/>
     </Grid>
 </Window>

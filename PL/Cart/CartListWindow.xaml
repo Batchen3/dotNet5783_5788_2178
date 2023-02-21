@@ -8,6 +8,13 @@
         Title="CartListWindow" Height="483" Width="800">
     <Grid>
         <Grid Name="MainGrid">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFE9E6EA"/>
+                    <GradientStop Color="#FFC184B3" Offset="1"/>
+                    <GradientStop Color="#FFFBFAFB" Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*"/>
                 <RowDefinition Height="400*"/>
@@ -25,7 +32,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="btnSaveCart" Content="finish" Grid.Row="2" HorizontalAlignment="Left" Margin="732,0,0,0" Padding="5" Click="btnSaveCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Center" />
+            <Button x:Name="btnSaveCart"   BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="finish" Grid.Row="2" HorizontalAlignment="Left" Margin="732,0,0,0" Padding="5" Click="btnSaveCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </Window>

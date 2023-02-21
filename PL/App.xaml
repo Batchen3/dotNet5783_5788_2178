@@ -4,6 +4,23 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="FontWeight" Value="ExtraBold" />
+            <Setter Property="FontFamily" Value="Century Gothic" />
+        </Style>
+        <Style x:Key="lblStyle" TargetType="Label">
+            <Setter Property="FontWeight" Value="ExtraBold" />
+            <Setter Property="FontFamily" Value="Century Gothic" />
+        </Style>
+        <LinearGradientBrush  x:Key="buttonBorder" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush  x:Key="backgrountPink" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFE9E6EA"/>
+            <GradientStop Color="#FFC184B3" Offset="1"/>
+            <GradientStop Color="#FFFBFAFB" Offset="0"/>
+        </LinearGradientBrush>
     </Application.Resources>
 </Application>

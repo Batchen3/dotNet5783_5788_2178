@@ -12,27 +12,34 @@
         <local:BtnDeliveryDateConverter x:Key="btnDeliveryDateConverter" />
     </Window.Resources>
     <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE9E6EA"/>
+                <GradientStop Color="#FFC184B3" Offset="1"/>
+                <GradientStop Color="#FFFBFAFB" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="179*"/>
             <RowDefinition Height="38*"/>
         </Grid.RowDefinitions>
-        <Label x:Name="lblId" Content="Id"  HorizontalAlignment="Left" Margin="52,53,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblId" Style="{StaticResource lblStyle}" Content="Id"  HorizontalAlignment="Left" Margin="52,53,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtId" IsEnabled ="False" Text="{Binding Path=Order.ID, Mode=TwoWay }" HorizontalAlignment="Left" Margin="175,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.712,0.935"/>
-        <Label x:Name="lblCustomerName" Content="Customer name" HorizontalAlignment="Left" Margin="52,88,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCustomerName" Style="{StaticResource lblStyle}" Content="Customer name" HorizontalAlignment="Left" Margin="52,88,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtCustomerName" IsEnabled ="False" Text="{Binding Path=Order.CustomerName, Mode=TwoWay }"  HorizontalAlignment="Left" Margin="175,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblCustomerEmail" Content="Customer email" HorizontalAlignment="Left" Margin="52,126,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCustomerEmail" Style="{StaticResource lblStyle}" Content="Customer email" HorizontalAlignment="Left" Margin="52,126,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtCustomerEmail" IsEnabled ="False" Text="{Binding Path=Order.CustomerEmail, Mode=TwoWay }" HorizontalAlignment="Left" Margin="175,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="218"/>
-        <Label x:Name="lblCustomerAddress" Content="Customer address" HorizontalAlignment="Left" Margin="52,0,0,0" VerticalAlignment="Center"/>
+        <Label x:Name="lblCustomerAddress" Style="{StaticResource lblStyle}" Content="Customer address" HorizontalAlignment="Left" Margin="52,0,0,0" VerticalAlignment="Center"/>
         <TextBox x:Name="txtCustomerAddress" IsEnabled ="False" Text="{Binding Path=Order.CustomerAddress, Mode=TwoWay }" HorizontalAlignment="Left" Margin="175,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-        <Label x:Name="lblOrderStatus" Content="Status" HorizontalAlignment="Left" Margin="52,199,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblOrderStatus" Style="{StaticResource lblStyle}" Content="Status" HorizontalAlignment="Left" Margin="52,199,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtOrderStatus" IsEnabled ="False" Text="{Binding Path=Order.OrderStatus, Mode=TwoWay }" HorizontalAlignment="Left" Margin="175,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblOrderDate" Content="Order date" HorizontalAlignment="Left" Margin="52,230,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblOrderDate" Style="{StaticResource lblStyle}" Content="Order date" HorizontalAlignment="Left" Margin="52,230,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtOrderDate" IsEnabled ="False" Text="{Binding Path=Order.OrderDate, Mode=TwoWay }" HorizontalAlignment="Left" Margin="175,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblShipDate" Content="Ship date" HorizontalAlignment="Left" Margin="52,260,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblShipDate" Style="{StaticResource lblStyle}" Content="Ship date" HorizontalAlignment="Left" Margin="52,260,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtShipDate" IsEnabled ="False" Text="{Binding Path=Order.ShipDate, Mode=TwoWay }" HorizontalAlignment="Left" Margin="175,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblDelivery" Content="Delivery" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDelivery" Style="{StaticResource lblStyle}" Content="Delivery" HorizontalAlignment="Center" Margin="0,53,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtDelivery" IsEnabled ="False" Text="{Binding Path=Order.Delivery, Mode=TwoWay }" HorizontalAlignment="Left" Margin="461,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Label x:Name="lblItems" Content="Items" HorizontalAlignment="Left" Margin="374,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.487,0.53"/>
+        <Label x:Name="lblItems" Content="Items" Style="{StaticResource lblStyle}" HorizontalAlignment="Left" Margin="374,88,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.487,0.53"/>
         <ListView x:Name="ItemsListView" ItemsSource="{Binding Path=Order.Items}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="461,93,10,102">
             <ListView.View>
                 <GridView>
@@ -45,10 +52,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="lblTotalPrice" Content="Total price" HorizontalAlignment="Left" Margin="361,260,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblTotalPrice" Style="{StaticResource lblStyle}" Content="Total price" HorizontalAlignment="Left" Margin="361,260,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtTotalPrice" IsEnabled ="False" Text="{Binding Path=Order.TotalPrice, Mode=TwoWay }" HorizontalAlignment="Left" Margin="461,264,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnShipDate" IsEnabled="{Binding ElementName=txtOrderStatus, Path=Text,Converter={StaticResource btnShipDateConverter}}" Visibility="{Binding Path=State,Converter={StaticResource btndateConverter }}"  Content="update ship date" HorizontalAlignment="Left" Margin="145,352,0,0" VerticalAlignment="Top" Width="164" Click="btnShipDate_Click" Grid.RowSpan="2"/>
-        <Button x:Name="btnDeliveryDate" IsEnabled="{Binding ElementName=txtOrderStatus, Path=Text,Converter={StaticResource btnDeliveryDateConverter}}" Visibility="{Binding Path=State,Converter={StaticResource btndateConverter }}" Content="update delivery date" HorizontalAlignment="Left" Margin="452,352,0,0" VerticalAlignment="Top" Width="174" Click="btnDeliveryDate_Click" Grid.RowSpan="2"/>
+        <Button x:Name="btnShipDate"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" IsEnabled="{Binding ElementName=txtOrderStatus, Path=Text,Converter={StaticResource btnShipDateConverter}}" Visibility="{Binding Path=State,Converter={StaticResource btndateConverter }}"  Content="update ship date" HorizontalAlignment="Left" Margin="145,352,0,0" VerticalAlignment="Top" Width="164" Click="btnShipDate_Click" Grid.RowSpan="2"/>
+        <Button x:Name="btnDeliveryDate"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" IsEnabled="{Binding ElementName=txtOrderStatus, Path=Text,Converter={StaticResource btnDeliveryDateConverter}}" Visibility="{Binding Path=State,Converter={StaticResource btndateConverter }}" Content="update delivery date" HorizontalAlignment="Left" Margin="452,352,0,0" VerticalAlignment="Top" Width="174" Click="btnDeliveryDate_Click" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

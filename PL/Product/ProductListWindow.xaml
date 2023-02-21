@@ -11,6 +11,13 @@
         <local:Admin_Converter x:Key="admin_Converter" />
     </Window.Resources>
     <Grid Name="MainGrid">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE9E6EA"/>
+                <GradientStop Color="#FFC184B3" Offset="1"/>
+                <GradientStop Color="#FFFBFAFB" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
@@ -23,7 +30,7 @@
             </Grid.ColumnDefinitions >
             <ComboBox Name="CategorySelector" ItemsSource="{Binding AllCategories}" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged_1"/>
             <Label Content="category:" HorizontalAlignment="Left" Margin="209,8,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.316,-2.387" Height="54" Width="148" FontSize="24" FontWeight="Bold"/>
-            <Button x:Name="btnShowAll" Content="show all" HorizontalAlignment="Left" Margin="324,-14,0,0" VerticalAlignment="Top" Height="31" RenderTransformOrigin="-0.18,-0.122" Width="66" Click="btnShowAll_Click">
+            <Button x:Name="btnShowAll"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="show all" HorizontalAlignment="Left" Margin="324,-14,0,0" VerticalAlignment="Top" Height="31" RenderTransformOrigin="-0.18,-0.122" Width="66" Click="btnShowAll_Click">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="1"/>
@@ -34,7 +41,7 @@
                 </Button.RenderTransform>
             </Button>
         </Grid>
-        <ListView x:Name="ProductsListview" ItemsSource="{Binding Path=ProductsListForAdmin}" Visibility="{Binding Path=State,Converter={StaticResource admin_Converter}}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.RowSpan="2" >
+        <ListView x:Name="ProductsListview" ItemsSource="{Binding Path=ProductsListForAdmin}" Visibility="{Binding Path=State,Converter={StaticResource admin_Converter}}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="54,29,28,11" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.Row="1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="75" DisplayMemberBinding="{Binding ID}" />
@@ -52,7 +59,7 @@
             </ListView.View>
         </ListView>
 
-        <ListView x:Name="ProductsListviewCatalog" ItemsSource="{Binding Path=ProductsListForNewOrder}" Visibility="{Binding Path=State,Converter={StaticResource newOrder_Converter}}"   d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,65,0,10" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.RowSpan="2" >
+        <ListView x:Name="ProductsListviewCatalog" ItemsSource="{Binding Path=ProductsListForNewOrder}" Visibility="{Binding Path=State,Converter={StaticResource newOrder_Converter}}"   d:ItemsSource="{d:SampleData ItemCount=5}" Margin="28,29,28,28" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.Row="1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="75" DisplayMemberBinding="{Binding ID}" />
@@ -80,8 +87,8 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Button x:Name="btnAddProduct" Content="add product" Visibility="{Binding Path=State,Converter={StaticResource admin_Converter}}" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"  Click="Button_Click"/>
-        <Button x:Name="btnGoToCart" Content="go to cart" Visibility="{Binding Path=State,Converter={StaticResource newOrder_Converter}}" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />
+        <Button x:Name="btnAddProduct"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="add product" Visibility="{Binding Path=State,Converter={StaticResource admin_Converter}}" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5"  Click="Button_Click"/>
+        <Button x:Name="btnGoToCart"  BorderBrush="{StaticResource buttonBorder}" Style="{StaticResource buttonStyle}" Content="go to cart" Visibility="{Binding Path=State,Converter={StaticResource newOrder_Converter}}" Grid.Row="2" HorizontalAlignment="Left" Margin="693,10,0,0" Padding="5" Click="btnGoToCart_Click" RenderTransformOrigin="0.5,0.5" Height="28" VerticalAlignment="Top" />
     </Grid>
 
 </Window>
