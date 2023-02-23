@@ -9,7 +9,7 @@ namespace DalTest;
 class Program
 {
 
-    private static IDal? dalList = DalApi.Factory.Get();
+    private static IDal? dal = DalApi.Factory.Get();
 
     public static void InfoOfProduct(char x)
     {
@@ -39,7 +39,7 @@ class Program
                 Product p = new Product { Id = idInt, Name = nameString, InStock = inStockInt, Parve =Convert.ToBoolean(parveInt), Price = priceDouble, Category = (ECategory)categoryInt };
                 try
                 {
-                    int result = dalList?.Product.Add(p)??throw new NullException();
+                    int result = dal?.Product.Add(p)??throw new NullException();
                     Console.WriteLine("the product was added");
                 }
                 catch (ExistException ex)
@@ -61,7 +61,7 @@ class Program
                 int.TryParse(idStringForGet, out int idIntForGet);
                 try
                 {
-                    Console.WriteLine(dalList?.Product.Get(idIntForGet));
+                    Console.WriteLine(dal?.Product.Get(idIntForGet));
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -72,7 +72,7 @@ class Program
                 Console.WriteLine("all the products:");
                 try
                 {
-                    IEnumerable<Product> arrReadAllProducts = dalList?.Product.GetAll() ?? throw new NullException();
+                    IEnumerable<Product> arrReadAllProducts = dal?.Product.GetAll() ?? throw new NullException();
                     foreach (var item in arrReadAllProducts)
                         Console.WriteLine(item);
                 }
@@ -103,7 +103,7 @@ class Program
                     parveString = Console.ReadLine();
                     int.TryParse(parveString, out parveInt);
                     Product pUpdate = new Product { Id = idUpdate, Name = nameString, InStock = inStockInt, Parve = Convert.ToBoolean(parveInt), Price = priceDouble, Category = (ECategory)categoryInt };
-                    dalList?.Product.Update(pUpdate);
+                    dal?.Product.Update(pUpdate);
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -116,7 +116,7 @@ class Program
                 int.TryParse(idString, out int idDelete);
                 try
                 {
-                    dalList?.Product.Delete(idDelete);
+                    dal?.Product.Delete(idDelete);
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -148,7 +148,7 @@ class Program
                 o.Delivery = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
-                    dalList?.Order.Add(o);
+                    dal?.Order.Add(o);
                 }
                 catch (FullListException ex)
                 {
@@ -161,7 +161,7 @@ class Program
                 int.TryParse(idString, out int id);
                 try
                 {
-                    Console.WriteLine(dalList?.Order.Get(id));
+                    Console.WriteLine(dal?.Order.Get(id));
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -172,7 +172,7 @@ class Program
                 Console.WriteLine("all the orders with their customers:");
                 try
                 {
-                    IEnumerable<Order> arrReadAllOrders = dalList?.Order.GetAll() ?? throw new NullException(); ;
+                    IEnumerable<Order> arrReadAllOrders = dal?.Order.GetAll() ?? throw new NullException(); ;
                     foreach (var item in arrReadAllOrders)
                         Console.WriteLine(item);
                 }
@@ -187,7 +187,7 @@ class Program
                 int.TryParse(idString, out int idUpdate);
                 try
                 {
-                    Console.WriteLine(dalList?.Order.Get(idUpdate));
+                    Console.WriteLine(dal?.Order.Get(idUpdate));
                     Order oUpdate = new Order();
                     oUpdate.Id = idUpdate;
                     Console.WriteLine("enter order's customer name");
@@ -202,7 +202,7 @@ class Program
                     oUpdate.ShipDate = Convert.ToDateTime(Console.ReadLine());
                     Console.WriteLine("enter order's date of delivery");
                     oUpdate.Delivery = Convert.ToDateTime(Console.ReadLine());
-                    dalList?.Order.Update(oUpdate);
+                    dal?.Order.Update(oUpdate);
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -215,7 +215,7 @@ class Program
                 int.TryParse(idString, out int idDelete);
                 try
                 {
-                    dalList?.Order.Delete(idDelete);
+                    dal?.Order.Delete(idDelete);
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -249,7 +249,7 @@ class Program
                 OrderItem oi = new OrderItem { ProductID = productId, OrderID = orderId, Amount = amount, Price = price };
                 try
                 {
-                    dalList?.OrderItem.Add(oi);
+                    dal?.OrderItem.Add(oi);
                 }
                 catch (FullListException ex)
                 {
@@ -262,7 +262,7 @@ class Program
                 int.TryParse(idString, out int id);
                 try
                 {
-                    Console.WriteLine(dalList?.OrderItem.Get(id));
+                    Console.WriteLine(dal?.OrderItem.Get(id));
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -273,7 +273,7 @@ class Program
                 Console.WriteLine("all the items in orders:");
                 try
                 {
-                    IEnumerable<OrderItem> arrReadAllOrdersItems = dalList?.OrderItem.GetAll() ?? throw new NullException();
+                    IEnumerable<OrderItem> arrReadAllOrdersItems = dal?.OrderItem.GetAll() ?? throw new NullException();
                     foreach (var item in arrReadAllOrdersItems)
                         Console.WriteLine(item);
                 }
@@ -302,7 +302,7 @@ class Program
                     amountString = Console.ReadLine();
                     int.TryParse(amountString, out amount);
                     OrderItem oiUpdate = new OrderItem { Id = idUpdate, ProductID = productId, OrderID = orderId, Amount = amount, Price = price };
-                    dalList?.OrderItem.Update(oiUpdate);
+                    dal?.OrderItem.Update(oiUpdate);
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -315,7 +315,7 @@ class Program
                 int.TryParse(idString, out int idDelete);
                 try
                 {
-                    dalList?.OrderItem.Delete(idDelete);
+                    dal?.OrderItem.Delete(idDelete);
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -330,7 +330,7 @@ class Program
                 int.TryParse(orderIdString, out int idProduct);
                 try
                 {
-                    Console.WriteLine(dalList?.OrderItem.Get(element => element.OrderID == idOrder && element.ProductID == idProduct));
+                    Console.WriteLine(dal?.OrderItem.Get(element => element.OrderID == idOrder && element.ProductID == idProduct));
                 }
                 catch (NoSuchObjectException ex)
                 {
@@ -343,7 +343,7 @@ class Program
                 int.TryParse(orderIdString, out int idOfOrder);
                 try
                 {
-                    IEnumerable<OrderItem> allItemsInOrders = dalList?.OrderItem.GetAll(element => element.Id == idOfOrder) ?? throw new NullException(); ;
+                    IEnumerable<OrderItem> allItemsInOrders = dal?.OrderItem.GetAll(element => element.Id == idOfOrder) ?? throw new NullException(); ;
                     foreach (var item in allItemsInOrders)
                     {
                         if (item.OrderID == idOfOrder)
@@ -361,7 +361,7 @@ class Program
     }
     public static void Main(string[] args)
     {
-        // dalList.Product.d();
+        // dal.Product.d();
         Console.WriteLine("for product press 1");
         Console.WriteLine("for order press 2");
         Console.WriteLine("for item in order press 3");

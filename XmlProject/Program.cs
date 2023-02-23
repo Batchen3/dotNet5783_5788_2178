@@ -14,11 +14,11 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-       IDal? dalList = DalApi.Factory.Get();
+       IDal? dal = DalApi.Factory.Get();
 
        // var y = dalList?.OrderItem.GetAll();
         DO.Order order = new DO.Order { Id=88439,CustomerName="aaa",CustomerAddress="aaa",CustomerEmail="aaa@aa.aa", OrderDate=DateTime.Now};
-        dalList?.Order.Update(order);
+        dal?.Order.Update(order);
         //DO.Order order1 = new DO.Order { Id=11111,CustomerName="aaa",CustomerAddress="aaa",CustomerEmail="aaa@aa.aa", OrderDate=DateTime.Now};
         // DO.OrderItem aa = new DO.OrderItem();
         //var e= dalList?.OrderItem.Add(aa);

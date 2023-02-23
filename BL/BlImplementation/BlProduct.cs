@@ -12,14 +12,15 @@ namespace BlImplementation;
 
 internal class BlProduct : BlApi.IProduct
 {
-    private IDal? dalList = DalApi.Factory.Get();
+    private IDal? dal = DalApi.Factory.Get();
 
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)//manager:get all products as product-for-list
     {
         try
         {
-            IEnumerable<DO.Product> listOfProducts = dalList?.Product.GetAll(func) ?? throw new NullException();
+            IEnumerable<DO.Product> listOfProducts;
+           lock(dal) listOfProducts = dal?.Product.GetAll(func) ?? throw new NullException();
             List<BO.ProductForList> productForList = new List<BO.ProductForList> { };
             listOfProducts.ToList().ForEach(product => productForList.Add(new BO.ProductForList { ID = product.Id, Parve = product.Parve, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category }));
             return productForList.OrderBy(product=>product.ProductName);
@@ -35,7 +36,8 @@ internal class BlProduct : BlApi.IProduct
     {
         try
         {
-            IEnumerable<DO.Product> listOfProducts = dalList?.Product.GetAll(func) ?? throw new NullException();
+            IEnumerable<DO.Product> listOfProducts;
+           lock(dal) listOfProducts = dal?.Product.GetAll(func) ?? throw new NullException();
             List<BO.ProductItem> productItem = new List<BO.ProductItem> { };
             listOfProducts.ToList().ForEach(product => productItem.Add(new BO.ProductItem { ID = product.Id, Parve = product.Parve, ProductPrice = product.Price, ProductName = product.Name, Category = (BO.ECategory)product.Category, available = product.InStock > 0 ? true : false, AmountInCart = 0 }));
             return productItem.OrderBy(product => product.ProductName);
@@ -54,7 +56,8 @@ internal class BlProduct : BlApi.IProduct
         {
             try
             {
-                DO.Product product = dalList?.Product.Get(id)??throw new NullException();//get the product from dal
+                DO.Product product;
+               lock(dal) product = dal?.Product.Get(id)??throw new NullException();//get the product from dal
                 BO.Product newProduct = new BO.Product { ID = product.Id, Name = product.Name, Price = product.Price, Category = (BO.ECategory)product.Category, InStock = product.InStock, Parve = product.Parve };//create BO.Product from info of DO.Product
                 return newProduct;
             }
@@ -81,16 +84,13 @@ internal class BlProduct : BlApi.IProduct
         {
             try
             {
-                DO.Product product = dalList?.Product.Get(id) ?? throw new NullException();//get the product from dal
+                DO.Product product;
+              lock(dal)product = dal?.Product.Get(id) ?? throw new NullException();//get the product from dal
                 int amount = 0;
                 amount = (from item in cart.Items
                           let idInCart=item.ID
                           where idInCart == id
                           select item.AmountsItems).FirstOrDefault();
-
-                //foreach (var item in cart.Items)
-                //    if (item.ProductID == id)
-                //        amount = item.AmountsItems;
                 if (amount == 0)
                     throw new BO.ObjectNotInCartException();
                 BO.ProductItem newProductItem = new BO.ProductItem { ID = product.Id, AmountInCart = amount, ProductName = product.Name, available = product.InStock > 0 ? true : false, Category = (BO.ECategory)product.Category, Parve = product.Parve, ProductPrice = product.Price };
@@ -118,7 +118,7 @@ internal class BlProduct : BlApi.IProduct
             throw new BO.NotValidException();
         try
         {
-            dalList?.Product.Add(new DO.Product { Id = p.ID, Name = p.Name, InStock = p.InStock, Category = (DO.ECategory)p.Category, Parve = p.Parve, Price = p.Price });
+           lock(dal) dal?.Product.Add(new DO.Product { Id = p.ID, Name = p.Name, InStock = p.InStock, Category = (DO.ECategory)p.Category, Parve = p.Parve, Price = p.Price });
         }
         catch (ExistException ex)
         {
@@ -137,7 +137,8 @@ internal class BlProduct : BlApi.IProduct
         DO.OrderItem? orderItem;
         try
         {
-            IEnumerable<DO.OrderItem> AllOrderItems = dalList?.OrderItem.GetAll() ?? throw new NullException();
+            IEnumerable<DO.OrderItem> AllOrderItems;
+           lock(dal) AllOrderItems = dal?.OrderItem.GetAll() ?? throw new NullException();
             orderItem = AllOrderItems.First(item => id == item.ProductID);
         }
         catch (NullException ex)
@@ -148,7 +149,7 @@ internal class BlProduct : BlApi.IProduct
         {
             try
             {
-                dalList?.Product.Delete(id);
+               lock(dal) dal?.Product.Delete(id);
             }
             catch (NoSuchObjectException ex)
             {
@@ -167,7 +168,7 @@ internal class BlProduct : BlApi.IProduct
         DO.Product newProduct = new DO.Product { Id = p.ID, Name = p.Name, Price = p.Price, Category = (DO.ECategory)p.Category, InStock = p.InStock, Parve = p.Parve };//create the product in order to update
         try
         {
-            dalList?.Product.Update(newProduct);
+           lock(dal) dal?.Product.Update(newProduct);
         }
         catch (NoSuchObjectException ex)
         {

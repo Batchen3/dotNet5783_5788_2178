@@ -8,12 +8,12 @@ namespace BO;
 
 public class OutOfStockException: Exception//Out Of Stock Exception
 {
-    public override string Message => "out of stock";
+    public override string Message => "An error occurred out of stock";
 }
 
 public class ObjectNotFoundException : Exception//Object Not Found Exception
 {
-   public override string Message => "object not found";
+   public override string Message => "An error occurred object not found";
 }
 
 public class DalException : Exception//Dal Exception
@@ -23,21 +23,21 @@ public class DalException : Exception//Dal Exception
 
 public class NotValidException : Exception//Not Valid Exception
 {
-    public override string Message => "one or more parameters are not valid";
+    public override string Message => "An error occurred one or more parameters are not valid";
 }
 public class ProductInOrderException : Exception//Product In Order Exception
 {
-    public override string Message => "can't delete: the product in order";
+    public override string Message => "An error occurred can't delete: the product in order";
 }
 public class DateWasException : Exception//Date Was Exception
 {
-    public override string Message => "the date was already";
+    public override string Message => "An error occurred the date was already";
 }
 public class DatesNotInCorrectOrderException : Exception//Date Was Exception
 {
-    public override string Message => "dates not in correct order";
+    public override string Message => "An error occurred dates not in correct order";
 }
 public class ObjectNotInCartException : Exception//Object Not In Cart Exception
 {
-    public override string Message => "product not in cart";
+    public override string Message => "An error occurred product not in cart";
 }

@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using BlApi;
 using DalApi;
-using DalFacade;
-using System.Collections;
 using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
 internal class BlCart : ICart
 {
-    private IDal? dalList = DalApi.Factory.Get();
+    private IDal? dal = DalApi.Factory.Get();
 
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Add(BO.Cart c, int id)//add item to cart
     {
         try
         {
-            DO.Product product = dalList?.Product.Get(id) ?? throw new NullException();//get product
+            DO.Product product;
+            lock (dal)
+            {
+                product = dal?.Product.Get(id) ?? throw new NullException();//get product
+            }
             if (product.InStock <= 0)//Checking if in stock
                 throw new BO.OutOfStockException();
             bool exist = false;
@@ -35,15 +32,6 @@ internal class BlCart : ICart
                 orderItem.TotalPriceOfItems += product.Price;
                 c.TotalPrice += product.Price;
             }
-            //foreach (var orderItem in c.Items)//if it exist in cart
-            //    if (orderItem.ProductID == id)
-            //    {
-            //        exist = true;
-            //        orderItem.AmountsItems++;
-            //        orderItem.TotalPriceOfItems += product.Price;
-            //        c.TotalPrice += product.Price;
-            //    }
-
             if (!exist)//if not exist in cart
             {
                 BO.OrderItem newOrderItem = new BO.OrderItem { ID = 0, ProductID = product.Id, ProductName = product.Name, ProductPrice = product.Price, AmountsItems = 1, TotalPriceOfItems = product.Price };
@@ -68,15 +56,19 @@ internal class BlCart : ICart
         BO.OrderItem orderItemToDelete = new BO.OrderItem();
         BO.OrderItem? orderItem;
         orderItem = (from item in c.Items
-                         where item.ProductID == id
-                         select item).FirstOrDefault();
+                     where item.ProductID == id
+                     select item).FirstOrDefault();
         if (orderItem?.ProductID != 0)
         {
             try
             {
                 if (amount > orderItem?.AmountsItems)//add to amount
                 {
-                    DO.Product product = dalList?.Product.Get(id) ?? throw new NullException();
+                    DO.Product product;
+                    lock (dal)
+                    {
+                        product = dal?.Product.Get(id) ?? throw new NullException();
+                    }
                     if (product.InStock < amount - orderItem.AmountsItems)//check if in stock
                         throw new BO.OutOfStockException();
                     orderItem.TotalPriceOfItems = amount * orderItem.ProductPrice;
@@ -111,7 +103,7 @@ internal class BlCart : ICart
         //        exist = true;
         //        if (amount > orderItem.AmountsItems)//add to amount
         //        {
-        //            DO.Product product = dalList.Product.Get(id);
+        //            DO.Product product = dal.Product.Get(id);
         //            if (product.InStock < amount - orderItem.AmountsItems)//check if in stock
         //                throw new BO.OutOfStockException();
         //            orderItem.TotalPriceOfItems = amount * orderItem.ProductPrice;
@@ -141,7 +133,7 @@ internal class BlCart : ICart
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void SaveCart(BO.Cart c)
     {
-        if (c.CustomerName == null|| c.CustomerName=="" || c.CustomerAddress == null)//check if the params are valid
+        if (c.CustomerName == null || c.CustomerName == "" || c.CustomerAddress == null)//check if the params are valid
             throw new BO.NotValidException();
         if (c.CustomerEmail != null)
         {
@@ -160,7 +152,10 @@ internal class BlCart : ICart
         {
             try
             {
-                product = dalList?.Product.Get(orderItem?.ProductID?? throw new NullException()) ?? throw new NullException();
+                lock (dal)
+                {
+                    product = dal?.Product.Get(orderItem?.ProductID ?? throw new NullException()) ?? throw new NullException();
+                }
                 if (orderItem.AmountsItems <= 0)
                     throw new BO.NotValidException();
                 if (orderItem.AmountsItems > product.InStock)
@@ -175,45 +170,26 @@ internal class BlCart : ICart
                 throw new BO.DalException(ex);
             }
         });
-
-        //foreach (var orderItem in c.Items)//check if the params are valid
-        //{
-        //    try
-        //    {
-        //        product = dalList.Product.Get(orderItem.ProductID);
-        //        if (orderItem.AmountsItems <= 0)
-        //            throw new BO.NotValidException();
-        //        if (orderItem.AmountsItems > product.InStock)
-        //            throw new BO.OutOfStockException();
-        //    }
-        //    catch (NoSuchObjectException e)
-        //    {
-        //        throw new BO.DalException(e);
-        //    }
-        //}
-
         //create new order
         DO.Order order = new DO.Order { CustomerName = c.CustomerName, CustomerAddress = c.CustomerAddress, CustomerEmail = c.CustomerEmail, OrderDate = DateTime.Now, ShipDate = null, Delivery = null };
         try
         {
-            int idOrder = dalList?.Order.Add(order) ?? throw new NullException(); ;
-
+            int idOrder;
+            lock (dal)
+            {
+                idOrder = dal?.Order.Add(order) ?? throw new NullException(); ;
+            }
             c.Items?.ToList().ForEach(orderItem =>
             {
-                DO.OrderItem orderItemAdd = new DO.OrderItem { ProductID = orderItem?.ProductID?? throw new NullException(), Price = orderItem.ProductPrice, Amount = orderItem.AmountsItems, OrderID = idOrder };
-                dalList.OrderItem.Add(orderItemAdd);
-                product = dalList.Product.Get(orderItem.ProductID);
-                product.InStock -= orderItem.AmountsItems;
-                dalList.Product.Update(product);
-            });
-            //foreach (var orderItem in c.Items)//create items in order
-            //{
-            //    DO.OrderItem orderItemAdd = new DO.OrderItem { ProductID = orderItem.ProductID, Price = orderItem.ProductPrice, Amount = orderItem.AmountsItems, OrderID = idOrder };
-            //    dalList.OrderItem.Add(orderItemAdd);
-            //    product = dalList.Product.Get(orderItem.ProductID);
-            //    product.InStock -= orderItem.AmountsItems;
-            //    dalList.Product.Update(product);
-            //}
+                DO.OrderItem orderItemAdd = new DO.OrderItem { ProductID = orderItem?.ProductID ?? throw new NullException(), Price = orderItem.ProductPrice, Amount = orderItem.AmountsItems, OrderID = idOrder };
+                lock (dal)
+                {
+                    dal.OrderItem.Add(orderItemAdd);
+                    product = dal.Product.Get(orderItem.ProductID);
+                    product.InStock -= orderItem.AmountsItems;
+                    dal.Product.Update(product);
+                }
+            });  
         }
         catch (FullListException ex)
         {

@@ -13,15 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Cart\background.jpg" />
-    <None Remove="Customer\background.jpg" />
     <None Remove="home.jpg" />
-    <None Remove="Order\background.jpg" />
-    <None Remove="Product\background.jpg" />
-    <None Remove="Product\background1.jpg" />
-    <None Remove="Product\background2.jpg" />
-    <None Remove="Product\home.jpg" />
-    <None Remove="Simulator\background.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,15 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Cart\background.jpg" />
-    <Resource Include="Customer\background.jpg" />
     <Resource Include="home.jpg" />
-    <Resource Include="Order\background.jpg" />
-    <Resource Include="Product\background.jpg" />
-    <Resource Include="Product\background1.jpg" />
-    <Resource Include="Product\background2.jpg" />
-    <Resource Include="Product\home.jpg" />
-    <Resource Include="Simulator\background.jpg" />
   </ItemGroup>
 
 </Project>
