@@ -9,14 +9,6 @@
     <Parve>true</Parve>
   </Product>
   <Product>
-    <Id>222333</Id>
-    <Name>banana-cold</Name>
-    <Price>55</Price>
-    <Category>cups</Category>
-    <InStock>34</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
     <Id>789678</Id>
     <Name>vanila_cake</Name>
     <Price>55</Price>
@@ -38,14 +30,6 @@
     <Price>28</Price>
     <Category>cookies</Category>
     <InStock>56</InStock>
-    <Parve>true</Parve>
-  </Product>
-  <Product>
-    <Id>334334</Id>
-    <Name>lotus_cups</Name>
-    <Price>66</Price>
-    <Category>cups</Category>
-    <InStock>24</InStock>
     <Parve>true</Parve>
   </Product>
   <Product>
@@ -121,11 +105,35 @@
     <Parve>true</Parve>
   </Product>
   <Product>
+    <Id>334334</Id>
+    <Name>lotus_cups</Name>
+    <Price>4</Price>
+    <Category>cups</Category>
+    <InStock>24</InStock>
+    <Parve>false</Parve>
+  </Product>
+  <Product>
     <Id>889889</Id>
     <Name>oreo_chocolate</Name>
     <Price>55</Price>
     <Category>cups</Category>
-    <InStock>44</InStock>
+    <InStock>43</InStock>
     <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>222333</Id>
+    <Name>banana-cold</Name>
+    <Price>55</Price>
+    <Category>cups</Category>
+    <InStock>33</InStock>
+    <Parve>true</Parve>
+  </Product>
+  <Product>
+    <Id>113243</Id>
+    <Name>mini-magmum</Name>
+    <Price>10</Price>
+    <Category>cookies</Category>
+    <InStock>35</InStock>
+    <Parve>false</Parve>
   </Product>
 </Products>
