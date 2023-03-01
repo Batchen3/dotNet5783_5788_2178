@@ -20,6 +20,7 @@ namespace PL.Cart
     /// <summary>
     /// Interaction logic for CartListWindow.xaml
     /// </summary>
+    /// 
     public partial class CartListWindow : Window
     {
         BlApi.IBl bl = BlApi.Factory.Get();
